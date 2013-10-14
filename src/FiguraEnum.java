@@ -1,0 +1,35 @@
+public enum FiguraEnum {
+	DWOJKA, TROJKA, CZWORKA, PIATKA, SZOSTKA, SIODEMKA, OSEMKA, DZIEWIATKA, DZIESIATKA, JOPEK, DAMA, KROL, AS;
+
+	public String toString() {
+		switch (this) {
+		case DWOJKA:
+			return "2";
+		case TROJKA:
+			return "3";
+		case CZWORKA:
+			return "4";
+		case PIATKA:
+			return "5";
+		case SZOSTKA:
+			return "6";
+		case SIODEMKA:
+			return "7";
+		case OSEMKA:
+			return "8";
+		case DZIEWIATKA:
+			return "9";
+		case DZIESIATKA:
+			return "10";
+		case JOPEK:
+			return "J";
+		case DAMA:
+			return "Q";
+		case KROL:
+			return "K";
+		case AS:
+			return "A";
+		}
+		return null;
+	}
+}
