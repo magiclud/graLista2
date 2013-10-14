@@ -14,8 +14,6 @@ public enum KolorEnum {
 			return "\u2663";
 
 		}
-		// TODO tu powinien byc wyjatek IllegalStateException("nieprawidkolo") a
-		// nie null
-		return null;
+		throw new IllegalStateException("nieprawidlowy kolor karty");
 	}
 }
