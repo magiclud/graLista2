@@ -1,6 +1,9 @@
 import static org.junit.Assert.assertEquals;
 import static org.junit.Assert.assertFalse;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 
@@ -16,8 +19,10 @@ public class DeckTest {
 	@Test
 	public void testSprawdzaCzyPoDrugimSortowaniuOtrzymamInnyUkladKart(){
 		Deck secondDeck = new Deck();
+		List<Card> someCards = new ArrayList<>(secondDeck.getDeck());
 		Deck afterShuffle = new Deck();
-		assertFalse(secondDeck.equals(afterShuffle));
+		List<Card> anotherSomeCards = new ArrayList<>(afterShuffle.getDeck());
+		assertFalse(someCards.equals(anotherSomeCards));
 	}
 
 	@Test

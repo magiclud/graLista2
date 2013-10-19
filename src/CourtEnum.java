@@ -1,33 +1,33 @@
 public enum CourtEnum {
-	DWOJKA, TROJKA, CZWORKA, PIATKA, SZOSTKA, SIODEMKA, OSEMKA, DZIEWIATKA, DZIESIATKA, JOPEK, DAMA, KROL, AS;
+	TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE;
 	public String toString() {
 
 		switch (this) {
-		case DWOJKA:
+		case TWO:
 			return "2";
-		case TROJKA:
+		case THREE:
 			return "3";
-		case CZWORKA:
+		case FOUR:
 			return "4";
-		case PIATKA:
+		case FIVE:
 			return "5";
-		case SZOSTKA:
+		case SIX:
 			return "6";
-		case SIODEMKA:
+		case SEVEN:
 			return "7";
-		case OSEMKA:
+		case EIGHT:
 			return "8";
-		case DZIEWIATKA:
+		case NINE:
 			return "9";
-		case DZIESIATKA:
+		case TEN:
 			return "10";
-		case JOPEK:
+		case JACK:
 			return "J";
-		case DAMA:
+		case QUEEN:
 			return "Q";
-		case KROL:
+		case KING:
 			return "K";
-		case AS:
+		case ACE:
 			return "A";
 		}
 		throw new IllegalStateException("nieprawidlowa figura karty");

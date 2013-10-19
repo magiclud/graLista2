@@ -8,24 +8,24 @@ public class CardTest {
 
 	@Test
 	public void testAsDzwonekJestWiekszaOdKrolaPik() {
-		Card asDzwonek = new Card(CourtEnum.AS, SuitEnum.DIAMOND);
-		Card krolTrefl = new Card(CourtEnum.KROL, SuitEnum.CLUB);
+		Card asDzwonek = new Card(CourtEnum.ACE, SuitEnum.DIAMOND);
+		Card krolTrefl = new Card(CourtEnum.KING, SuitEnum.CLUB);
 
 		assertTrue(asDzwonek.isWieksza(krolTrefl));
 	}
 
 	@Test
 	public void testAsDwojkaJestMniejszaOdCzworki() {
-		Card dwojkaSerce = new Card(CourtEnum.DWOJKA, SuitEnum.HEART);
-		Card czworkaTrefl = new Card(CourtEnum.CZWORKA, SuitEnum.CLUB);
+		Card dwojkaSerce = new Card(CourtEnum.TWO, SuitEnum.HEART);
+		Card czworkaTrefl = new Card(CourtEnum.FOUR, SuitEnum.CLUB);
 
 		assertFalse(dwojkaSerce.isWieksza(czworkaTrefl));
 	}
 
 	@Test
 	public void testPiatkaJestWiekszaOdPiatki() {
-		Card piatkaSerce = new Card(CourtEnum.PIATKA, SuitEnum.HEART);
-		Card piatkaPik = new Card(CourtEnum.PIATKA, SuitEnum.SPADE);
+		Card piatkaSerce = new Card(CourtEnum.FIVE, SuitEnum.HEART);
+		Card piatkaPik = new Card(CourtEnum.FIVE, SuitEnum.SPADE);
 
 		assertTrue(piatkaSerce.isWieksza(piatkaPik));
 	}
