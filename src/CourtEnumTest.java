@@ -8,25 +8,24 @@ public class CourtEnumTest {
 
 	@Test
 	public void sprawdzanieKolejnosciWszystkichFigurWEnumie() {
-		CourtEnum array[] = { CourtEnum.DWOJKA, CourtEnum.TROJKA, CourtEnum.CZWORKA, CourtEnum.PIATKA, CourtEnum.SZOSTKA,
-				CourtEnum.SIODEMKA, CourtEnum.OSEMKA, CourtEnum.DZIEWIATKA, CourtEnum.DZIESIATKA, CourtEnum.JOPEK, CourtEnum.DAMA,
-				CourtEnum.KROL, CourtEnum.AS };
+		CourtEnum array[] = { CourtEnum.TWO, CourtEnum.THREE, CourtEnum.FOUR, CourtEnum.FIVE, CourtEnum.SIX, CourtEnum.SEVEN,
+				CourtEnum.EIGHT, CourtEnum.NINE, CourtEnum.TEN, CourtEnum.JACK, CourtEnum.QUEEN, CourtEnum.KING, CourtEnum.ACE };
 		assertArrayEquals(CourtEnum.values(), array);
 	}
 
 	@Test
 	public void testujZeAsJestWiekszyOdKrola() {
-		assertTrue(CourtEnum.AS.isBigger(CourtEnum.KROL));
+		assertTrue(CourtEnum.ACE.isGreater(CourtEnum.KING));
 	}
 
 	@Test
 	public void testujZeDziesiatkaJestMniejszaOdKrola() {
-		assertFalse(CourtEnum.DZIESIATKA.isBigger(CourtEnum.KROL));
+		assertFalse(CourtEnum.TEN.isGreater(CourtEnum.KING));
 	}
 
 	@Test
 	public void testujZeJopekJestWiekszyOdJopka() {
-		assertFalse(CourtEnum.JOPEK.isBigger(CourtEnum.JOPEK));
+		assertFalse(CourtEnum.JACK.isGreater(CourtEnum.JACK));
 	}
 
 }

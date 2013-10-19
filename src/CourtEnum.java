@@ -33,7 +33,7 @@ public enum CourtEnum {
 		throw new IllegalStateException("nieprawidlowa figura karty");
 	}
 
-	public boolean isBigger(CourtEnum secondCourt) {
+	public boolean isGreater(CourtEnum secondCourt) {
 		if (this.ordinal() > secondCourt.ordinal()) {
 			return true;
 		}

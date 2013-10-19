@@ -11,7 +11,7 @@ public class CardTest {
 		Card asDzwonek = new Card(CourtEnum.ACE, SuitEnum.DIAMOND);
 		Card krolTrefl = new Card(CourtEnum.KING, SuitEnum.CLUB);
 
-		assertTrue(asDzwonek.isWieksza(krolTrefl));
+		assertTrue(asDzwonek.isGreater(krolTrefl));
 	}
 
 	@Test
@@ -19,7 +19,7 @@ public class CardTest {
 		Card dwojkaSerce = new Card(CourtEnum.TWO, SuitEnum.HEART);
 		Card czworkaTrefl = new Card(CourtEnum.FOUR, SuitEnum.CLUB);
 
-		assertFalse(dwojkaSerce.isWieksza(czworkaTrefl));
+		assertFalse(dwojkaSerce.isGreater(czworkaTrefl));
 	}
 
 	@Test
@@ -27,7 +27,7 @@ public class CardTest {
 		Card piatkaSerce = new Card(CourtEnum.FIVE, SuitEnum.HEART);
 		Card piatkaPik = new Card(CourtEnum.FIVE, SuitEnum.SPADE);
 
-		assertTrue(piatkaSerce.isWieksza(piatkaPik));
+		assertTrue(piatkaSerce.isGreater(piatkaPik));
 	}
 
 

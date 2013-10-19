@@ -47,10 +47,10 @@ public class Deck {
 		return newCard;
 	}
 
-	public void print() {
-		// WYŚWIETLENIE PRZY UŻYCIU PĘTLI FOR EACH
-		for (Card card : deck) {
-			System.out.println(card.getKarta());
-		}
-	}
+//	public void print() {
+//		// WYŚWIETLENIE PRZY UŻYCIU PĘTLI FOR EACH
+//		for (Card card : deck) {
+//			System.out.println(card.getKarta());
+//		}
+	// }
 }

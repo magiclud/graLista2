@@ -9,9 +9,9 @@ public class Card {
 		this.suit = suit;
 	}
 
-	String getKarta() {
-		return court + "" + suit;
-	}
+	// String getKarta() {
+	// return court + "" + suit;
+	// }
 
 	CourtEnum getCourt() {
 		return court;
@@ -51,11 +51,11 @@ public class Card {
 	//
 	// }
 
-	boolean isWieksza(Card card) {
-		if (this.getCourt().equals(card) && this.getSuit().isBigger(card.getSuit())) {
+	boolean isGreater(Card card) {
+		if (this.getCourt().equals(card) && this.getSuit().isGreater(card.getSuit())) {
 			return true;
 		}
-		if (this.getCourt().isBigger(card.getCourt())) {
+		if (this.getCourt().isGreater(card.getCourt())) {
 			return true;
 		}
 		return false;

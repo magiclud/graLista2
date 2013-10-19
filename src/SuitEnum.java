@@ -32,7 +32,7 @@ public enum SuitEnum {
 	 * @param drugiKolor
 	 * @return
 	 */
-	boolean isBigger(SuitEnum secondColour) {
+	boolean isGreater(SuitEnum secondColour) {
 		// metoda ordinal zwraca pozycje na ktorej znajduje sie Enum
 		if (this.ordinal() > secondColour.ordinal()) {
 			return true;
