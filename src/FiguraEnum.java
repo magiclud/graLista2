@@ -1,7 +1,7 @@
 public enum FiguraEnum {
 	DWOJKA, TROJKA, CZWORKA, PIATKA, SZOSTKA, SIODEMKA, OSEMKA, DZIEWIATKA, DZIESIATKA, JOPEK, DAMA, KROL, AS;
-
 	public String toString() {
+
 		switch (this) {
 		case DWOJKA:
 			return "2";
@@ -30,6 +30,14 @@ public enum FiguraEnum {
 		case AS:
 			return "A";
 		}
-		return null;
+		throw new IllegalStateException("nieprawidlowa figura karty");
 	}
+
+	public boolean isWieksza(FiguraEnum drugaFigura) {
+		if (this.ordinal() > drugaFigura.ordinal()) {
+			return true;
+		}
+		return false;
+	}
+
 }
