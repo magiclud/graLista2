@@ -11,7 +11,7 @@ public class PlayerTest {
 	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() {
 		Deck deckOfCards = new Deck();
 		List<Card> someCards = new ArrayList<>(deckOfCards.getDeck());
-		firstPlayer = new Player(someCards);
+		// firstPlayer = new Player(someCards);
 
 	}
 

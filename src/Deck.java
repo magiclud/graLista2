@@ -12,11 +12,12 @@ import java.util.List;
 public class Deck {
 
 	private List<Card> deck;
+	private ArrayList<Card> givenBack;
 
 	/**
 	 * tasowanie odbywa sie konstruktorze i nie jest dostepne jako public, czyli
 	 * kazda nowa rozgrywka bedzie wymalala utworzenia obeiktu na nowo = tak
-	 * jest bezpieczniej
+	 * jest bezpieczniej ok ok xo xo :)
 	 */
 	public Deck() {
 		deck = new ArrayList<>(52);
@@ -45,6 +46,17 @@ public class Deck {
 		Card newCard = deck.get(0);
 		deck.remove(0);
 		return newCard;
+	}
+	
+	// Ja dodaję metodę, która z talii kart usuwa n najwyższych kart
+	
+	public ArrayList<Card> giveCards(int numbOfCards) {
+		ArrayList<Card> temp = new ArrayList<Card>(numbOfCards);
+		for(int i = 0; i < numbOfCards; ++i) {
+			temp.add(deck.get(deck.size()-1));
+			deck.remove(deck.size()-1);
+		}
+		return temp;
 	}
 
 //	public void print() {

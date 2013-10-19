@@ -1,8 +1,10 @@
+import java.util.ArrayList;
 
-public class Human {
 
-	public Human() {
-		// TODO Auto-generated constructor stub
+public class Human extends Player {
+
+	public Human(ArrayList<Card> givenCards) {
+		super(givenCards);
 	}
 
 }
