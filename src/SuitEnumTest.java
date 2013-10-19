@@ -4,87 +4,87 @@ import static org.junit.Assert.assertTrue;
 import org.junit.Test;
 
 
-public class KolorEnumTest {
+public class SuitEnumTest {
 
 
 	@Test
 	public void testujZeSerceJestWiekszeOdDzwonka() {
-		assertTrue(KolorEnum.HEART.isWieksza(KolorEnum.DIAMOND));
+		assertTrue(SuitEnum.HEART.isBigger(SuitEnum.DIAMOND));
 	}
 
 	@Test
 	public void testujZeSerceJestWiekszeOdZoledzia() {
-		assertTrue(KolorEnum.HEART.isWieksza(KolorEnum.CLUB));
+		assertTrue(SuitEnum.HEART.isBigger(SuitEnum.CLUB));
 	}
 
 	@Test
 	public void testujZeSerceJestWiekszeOdWina() {
-		assertTrue(KolorEnum.HEART.isWieksza(KolorEnum.SPADE));
+		assertTrue(SuitEnum.HEART.isBigger(SuitEnum.SPADE));
 	}
 
 	@Test
 	public void testujZeSerceNieJestWiekszeOdSerca() {
-		assertFalse(KolorEnum.HEART.isWieksza(KolorEnum.HEART));
+		assertFalse(SuitEnum.HEART.isBigger(SuitEnum.HEART));
 	}
 
 	@Test
 	public void testujZeDzwonekJestMniejszyOdSerca() {
-		assertFalse(KolorEnum.DIAMOND.isWieksza(KolorEnum.HEART));
+		assertFalse(SuitEnum.DIAMOND.isBigger(SuitEnum.HEART));
 	}
 
 	@Test
 	public void testujZeDzwonekJestWiekszyOdZoledzia() {
-		assertTrue(KolorEnum.DIAMOND.isWieksza(KolorEnum.CLUB));
+		assertTrue(SuitEnum.DIAMOND.isBigger(SuitEnum.CLUB));
 	}
 
 	@Test
 	public void testujZeDzwonekJestWiekszeOdWina() {
-		assertTrue(KolorEnum.DIAMOND.isWieksza(KolorEnum.SPADE));
+		assertTrue(SuitEnum.DIAMOND.isBigger(SuitEnum.SPADE));
 	}
 
 	@Test
 	public void testujZeDzwonekJestWiekszeOdDzwonka() {
-		assertFalse(KolorEnum.DIAMOND.isWieksza(KolorEnum.DIAMOND));
+		assertFalse(SuitEnum.DIAMOND.isBigger(SuitEnum.DIAMOND));
 	}
 
 	@Test
 	public void testujZeZoledzJestMniejszyOdSerca() {
-		assertFalse(KolorEnum.CLUB.isWieksza(KolorEnum.HEART));
+		assertFalse(SuitEnum.CLUB.isBigger(SuitEnum.HEART));
 	}
 
 	@Test
 	public void testujZeZoledzJestMniejszyOdDzwonka() {
-		assertFalse(KolorEnum.CLUB.isWieksza(KolorEnum.DIAMOND));
+		assertFalse(SuitEnum.CLUB.isBigger(SuitEnum.DIAMOND));
 	}
 
 	@Test
 	public void testujZeZoledzJestWiekszyOdWina() {
-		assertTrue(KolorEnum.CLUB.isWieksza(KolorEnum.SPADE));
+		assertTrue(SuitEnum.CLUB.isBigger(SuitEnum.SPADE));
 	}
 
 	@Test
 	public void testujZeZoledzJestWiekszyOdZoledzia() {
-		assertFalse(KolorEnum.CLUB.isWieksza(KolorEnum.CLUB));
+		assertFalse(SuitEnum.CLUB.isBigger(SuitEnum.CLUB));
 	}
 
 	@Test
 	public void testujZeWinoJestMniejszeOdSerca() {
-		assertFalse(KolorEnum.SPADE.isWieksza(KolorEnum.HEART));
+		assertFalse(SuitEnum.SPADE.isBigger(SuitEnum.HEART));
 	}
 
 	@Test
 	public void testujZeWinoJestMniejszeOdDzwonka() {
-		assertFalse(KolorEnum.SPADE.isWieksza(KolorEnum.DIAMOND));
+		assertFalse(SuitEnum.SPADE.isBigger(SuitEnum.DIAMOND));
 	}
 
 	@Test
 	public void testujZeWinoJestMniejszeOdZoledzia() {
-		assertFalse(KolorEnum.SPADE.isWieksza(KolorEnum.CLUB));
+		assertFalse(SuitEnum.SPADE.isBigger(SuitEnum.CLUB));
 	}
 
 	@Test
 	public void testujZeWInoJestWiekszeOdWina() {
-		assertFalse(KolorEnum.SPADE.isWieksza(KolorEnum.SPADE));
+		assertFalse(SuitEnum.SPADE.isBigger(SuitEnum.SPADE));
 	}
 
 }

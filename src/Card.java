@@ -1,31 +1,36 @@
 public class Card {
 
-	private FiguraEnum figura;
-	private KolorEnum kolor;
+	private CourtEnum court;
+	private SuitEnum suit;
 
-	public Card(FiguraEnum figura, KolorEnum kolor) {
+	public Card(CourtEnum court, SuitEnum suit) {
 
-		this.figura = figura;
-		this.kolor = kolor;
+		this.court = court;
+		this.suit = suit;
 	}
 
 	String getKarta() {
-		return figura + "" + kolor;
+		return court + "" + suit;
 	}
 
-	FiguraEnum getCard() {
-		return figura;
+	CourtEnum getCourt() {
+		return court;
 	}
 
-	KolorEnum getSuit() {
-		return kolor;
+	SuitEnum getSuit() {
+		return suit;
 	}
 
-	boolean isWieksza(Card karta) {
-		if (this.getCard().equals(karta.getCard()) && this.getSuit().isWieksza(karta.getSuit())) {
+	CourtEnum equals(Card secondCard) {
+		return secondCard.getCourt();
+
+	}
+
+	boolean isWieksza(Card card) {
+		if (this.getCourt().equals(card) && this.getSuit().isBigger(card.getSuit())) {
 			return true;
 		}
-		if (this.getCard().isWieksza(karta.getCard())) {
+		if (this.getCourt().isBigger(card.getCourt())) {
 			return true;
 		}
 		return false;

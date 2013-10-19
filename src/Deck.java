@@ -11,31 +11,46 @@ import java.util.List;
  */
 public class Deck {
 
-	private List<Card> talia;
+	private List<Card> deck;
 
+	/**
+	 * tasowanie odbywa sie konstruktorze i nie jest dostepne jako public, czyli
+	 * kazda nowa rozgrywka bedzie wymalala utworzenia obeiktu na nowo = tak
+	 * jest bezpieczniej
+	 */
 	public Deck() {
-		talia = new ArrayList<>(52);
+		deck = new ArrayList<>(52);
 
-		for (FiguraEnum figura : FiguraEnum.values()) {
-			for (KolorEnum kolor : KolorEnum.values()) {
-				this.talia.add(new Card(figura, kolor));
+		for (CourtEnum court : CourtEnum.values()) {
+			for (SuitEnum suit : SuitEnum.values()) {
+				this.deck.add(new Card(court, suit));
 			}
 		}
-
-		if (talia.size() != 52) {
-			throw new IndexOutOfBoundsException("Talia nie zawiera 52 kart.");
-		}
-
+		shuffle();
 	}
 
-	public void tasuj() {
-		Collections.shuffle(this.talia);
+	public List<Card> getDeck() {
+		return deck;
 	}
 
-	public void wypisz() {
+	public int getSize() {
+		return deck.size();
+	}
+
+	private void shuffle() {
+		Collections.shuffle(this.deck);
+	}
+
+	public Card getCard() {
+		Card newCard = deck.get(0);
+		deck.remove(0);
+		return newCard;
+	}
+
+	public void print() {
 		// WYŚWIETLENIE PRZY UŻYCIU PĘTLI FOR EACH
-		for (Card karta : talia) {
-			System.out.println(karta.getKarta());
+		for (Card card : deck) {
+			System.out.println(card.getKarta());
 		}
 	}
 }

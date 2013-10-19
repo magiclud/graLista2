@@ -1,4 +1,4 @@
-public enum FiguraEnum {
+public enum CourtEnum {
 	DWOJKA, TROJKA, CZWORKA, PIATKA, SZOSTKA, SIODEMKA, OSEMKA, DZIEWIATKA, DZIESIATKA, JOPEK, DAMA, KROL, AS;
 	public String toString() {
 
@@ -33,8 +33,8 @@ public enum FiguraEnum {
 		throw new IllegalStateException("nieprawidlowa figura karty");
 	}
 
-	public boolean isWieksza(FiguraEnum drugaFigura) {
-		if (this.ordinal() > drugaFigura.ordinal()) {
+	public boolean isBigger(CourtEnum secondCourt) {
+		if (this.ordinal() > secondCourt.ordinal()) {
 			return true;
 		}
 		return false;

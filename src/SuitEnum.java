@@ -8,7 +8,7 @@
  * 
  */
 
-public enum KolorEnum {
+public enum SuitEnum {
 
 	SPADE, CLUB, DIAMOND, HEART;
 
@@ -32,9 +32,9 @@ public enum KolorEnum {
 	 * @param drugiKolor
 	 * @return
 	 */
-	boolean isWieksza(KolorEnum drugiKolor) {
+	boolean isBigger(SuitEnum secondColour) {
 		// metoda ordinal zwraca pozycje na ktorej znajduje sie Enum
-		if (this.ordinal() > drugiKolor.ordinal()) {
+		if (this.ordinal() > secondColour.ordinal()) {
 			return true;
 		}
 		return false;
