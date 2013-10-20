@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.Collections;
-import java.util.Comparator;
 import java.util.List;
 
 /**
@@ -43,23 +42,6 @@ public class Deck {
 		Collections.shuffle(this.deck);
 	}
 
-	class cardsCourtComparator implements Comparator<Card> {
-		public int compare(Card card1, Card card2) {
-			return card1.getCourt().ordinal() - card2.getCourt().ordinal();
-		}
-	}
-
-	class cardsSuitComparator implements Comparator<Card> {
-		public int compare(Card card1, Card card2) {
-			return card1.getSuit().ordinal() - card2.getSuit().ordinal();
-		}
-	}
-
-	public void sort(ArrayList<Card> cardsToSort) {
-		Collections.sort(cardsToSort);
-		Collections.sort(cardsToSort, new cardsCourtComparator());
-		Collections.sort(cardsToSort, new cardsSuitComparator());
-	}
 	public Card getCard() {
 		Card newCard = deck.get(0);
 		deck.remove(0);
