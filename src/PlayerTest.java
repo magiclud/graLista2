@@ -39,6 +39,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 		firstPlayer = new Player(someCards);
+		assertEquals(5, firstPlayer.ownCards.size());
 	}
 
 	@Test
@@ -51,20 +52,8 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 
 		Player checkSort = new Player(someCards);
-		// checkSort.sort(someCards);
-		assertEquals(someCards, checkSort);
+		assertEquals(someCards, checkSort.getOwnCards());
 
-		/*
-		 * ArrayList<Card> cardsInOrder = new ArrayList<>();
-		 * cardsInOrder.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
-		 * cardsInOrder.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
-		 * cardsInOrder.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		 * cardsInOrder.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
-		 * cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		 * cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		 * 
-		 * assertEquals(someCards, cardsInOrder);
-		 */
 	}
 
 	@Test
