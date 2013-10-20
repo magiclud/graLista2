@@ -16,7 +16,7 @@ public class Deck {
 
 	/**
 	 * tasowanie odbywa sie konstruktorze i nie jest dostepne jako public, czyli
-	 * kazda nowa rozgrywka bedzie wymalala utworzenia obeiktu na nowo = tak
+	 * kazda nowa rozgrywka bedzie wymagala utworzenia obeiktu na nowo = tak
 	 * jest bezpieczniej ok ok xo xo :)
 	 */
 	public Deck() {
