@@ -12,12 +12,16 @@ public class Player {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
 		this.ownCards = givenCards;
+
+		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
+		sort(givenCards);
 	}
 
 	public void sort(ArrayList<Card> cardsToSort) {
-		Collections.sort(cardsToSort);
+		// Collections.sort(cardsToSort);
 		Collections.sort(cardsToSort, new cardsSuitComparator());
 		Collections.sort(cardsToSort, new cardsCourtComparator());
+
 	}
 
 	class cardsCourtComparator implements Comparator<Card> {
