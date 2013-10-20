@@ -9,8 +9,10 @@ public class PlayerTest {
 	@Test(expected = IllegalStateException.class)
 	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() {
 		Deck deckOfCards = new Deck();
-		ArrayList<Card> someCards = new ArrayList<>(deckOfCards.getDeck());
+		ArrayList<Card> someCards = new ArrayList<>(7);
+
 		firstPlayer = new Player(someCards);
+
 
 	}
 

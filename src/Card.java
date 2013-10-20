@@ -52,8 +52,10 @@ public class Card {
 	// }
 
 	boolean isGreater(Card card) {
-		if (this.getCourt().equals(card.getCourt()) && this.getSuit().isGreater(card.getSuit())) {
+		if (this.getCourt().equals(card.getCourt())) {
+			if (this.getSuit().isGreater(card.getSuit())) {
 				return true;
+			}
 		}
 		if (this.getCourt().isGreater(card.getCourt())) {
 			return true;

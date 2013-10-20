@@ -42,6 +42,9 @@ public class Deck {
 		Collections.shuffle(this.deck);
 	}
 
+	public void sort(){
+
+	}
 	public Card getCard() {
 		Card newCard = deck.get(0);
 		deck.remove(0);
