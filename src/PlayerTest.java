@@ -80,7 +80,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveFourOfAKing() {
+	public void checkIfPlayerHaveFourOfAKingFromBeggining() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -94,11 +94,39 @@ public class PlayerTest {
 	}
 
 	@Test
+	public void checkIfPlayerHaveFourOfAKing() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+
+		Player checkFourOfAKing = new Player(someCards);
+
+		assertTrue(checkFourOfAKing.checkIfFourOfAKing());
+	}
+
+	@Test
 	public void checkIfPlayerHaveFullHouse() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+
+		Player checkFullHouse = new Player(someCards);
+
+		assertTrue(checkFullHouse.checkIfFullHouse());
+	}
+
+	@Test
+	public void checkIfPlayerHaveFullHouseSecondOption() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
@@ -129,6 +157,20 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+
+		Player checkStrit = new Player(someCards);
+
+		assertTrue(checkStrit.checkIfStrit());
+	}
+
+	@Test
+	public void checkIfPlayerHaveStritWithAce() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.ACE, SuitEnum.SPADE));
 
 		Player checkStrit = new Player(someCards);
 
