@@ -14,6 +14,12 @@ public class Table {
 		this.numHumans = numHumans;
 		this.numBots = numBots;
 	}
+
+	public static SequenceEnum checkHighCard() {
+		// metoda sprawdzajaca najwyższa kartę, tak żeby stół mógł podjąć
+		// decyzje kto wygrał.
+		return null;
+	}
 	
 	// Metoda, która nadaje graczowi możliwość gry
 	

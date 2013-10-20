@@ -76,7 +76,7 @@ public class PlayerTest {
 
 		Player checkStraightFlush = new Player(someCards);
 
-		assertTrue(checkStraightFlush.checkWynik().equals(SequenceEnum.STRAIGHT_TFLUSH));
+		assertTrue(checkStraightFlush.checkScore().equals(SequenceEnum.STRAIGHT_TFLUSH));
 	}
 
 	@Test
@@ -90,7 +90,7 @@ public class PlayerTest {
 
 		Player checkFourOfAKing = new Player(someCards);
 
-		assertTrue(checkFourOfAKing.checkWynik().equals(SequenceEnum.FOUR_OF_A_KIND));
+		assertTrue(checkFourOfAKing.checkScore().equals(SequenceEnum.FOUR_OF_A_KIND));
 	}
 
 	@Test
@@ -104,7 +104,7 @@ public class PlayerTest {
 
 		Player checkFourOfAKing = new Player(someCards);
 
-		assertTrue(checkFourOfAKing.checkWynik().equals(SequenceEnum.FOUR_OF_A_KIND));
+		assertTrue(checkFourOfAKing.checkScore().equals(SequenceEnum.FOUR_OF_A_KIND));
 	}
 
 	@Test
@@ -118,7 +118,7 @@ public class PlayerTest {
 
 		Player checkFullHouse = new Player(someCards);
 
-		assertTrue(checkFullHouse.checkWynik().equals(SequenceEnum.FULL_HOUSE));
+		assertTrue(checkFullHouse.checkScore().equals(SequenceEnum.FULL_HOUSE));
 	}
 
 	@Test
@@ -132,7 +132,7 @@ public class PlayerTest {
 
 		Player checkFullHouse = new Player(someCards);
 
-		assertTrue(checkFullHouse.checkWynik().equals(SequenceEnum.FULL_HOUSE));
+		assertTrue(checkFullHouse.checkScore().equals(SequenceEnum.FULL_HOUSE));
 	}
 
 	@Test
@@ -146,7 +146,7 @@ public class PlayerTest {
 
 		Player checkFlush = new Player(someCards);
 
-		assertTrue(checkFlush.checkWynik().equals(SequenceEnum.FLUSH));
+		assertTrue(checkFlush.checkScore().equals(SequenceEnum.FLUSH));
 	}
 
 	@Test
@@ -160,7 +160,7 @@ public class PlayerTest {
 
 		Player checkStrit = new Player(someCards);
 
-		assertTrue(checkStrit.checkWynik().equals(SequenceEnum.STRAIGHT));
+		assertTrue(checkStrit.checkScore().equals(SequenceEnum.STRAIGHT));
 	}
 
 	@Test
@@ -174,7 +174,7 @@ public class PlayerTest {
 
 		Player checkStrit = new Player(someCards);
 
-		assertTrue(checkStrit.checkWynik().equals(SequenceEnum.STRAIGHT));
+		assertTrue(checkStrit.checkScore().equals(SequenceEnum.STRAIGHT));
 	}
 
 	@Test
@@ -188,7 +188,7 @@ public class PlayerTest {
 
 		Player checkThreeOfAKind = new Player(someCards);
 
-		assertTrue(checkThreeOfAKind.checkWynik().equals(SequenceEnum.TREE_OF_A_KIND));
+		assertTrue(checkThreeOfAKind.checkScore().equals(SequenceEnum.TREE_OF_A_KIND));
 	}
 
 	@Test
@@ -202,7 +202,7 @@ public class PlayerTest {
 
 		Player checkTwoPair = new Player(someCards);
 
-		assertTrue(checkTwoPair.checkWynik().equals(SequenceEnum.TWO_PAIR));
+		assertTrue(checkTwoPair.checkScore().equals(SequenceEnum.TWO_PAIR));
 	}
 
 

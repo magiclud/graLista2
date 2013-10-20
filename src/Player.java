@@ -163,7 +163,7 @@ public class Player {
 		return false;
 	}
 
-	public SequenceEnum checkWynik() {
+	public SequenceEnum checkScore() {
 		if (checkIfStraightFlash()) {
 			return SequenceEnum.STRAIGHT_TFLUSH;
 		}
@@ -185,7 +185,7 @@ public class Player {
 		if (checkIfTwoPair()) {
 			return SequenceEnum.TWO_PAIR;
 		}
-		return null;// TODO
+		return Table.checkHighCard();
 	}
 
 	public void chooseCardsToExchange() {
