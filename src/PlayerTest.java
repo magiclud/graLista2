@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 
@@ -65,8 +66,19 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void checkStraightFlush() {
+	public void checkIfPlayerHaveStraightFlush() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+
+		Player checkStraightFlush = new Player(someCards);
+
+		assertTrue(checkStraightFlush.checkIfStraightFlash());
 
 	}
+
 
 }
