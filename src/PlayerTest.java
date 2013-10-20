@@ -52,7 +52,15 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 
 		Player checkSort = new Player(someCards);
-		assertEquals(someCards, checkSort.getOwnCards());
+
+		ArrayList<Card> cardsInOrder = new ArrayList<>();
+		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		cardsInOrder.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
+		cardsInOrder.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
+		cardsInOrder.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
+
+		assertEquals(cardsInOrder, checkSort.getOwnCards());
 
 	}
 

@@ -40,4 +40,8 @@ public class Player {
 	public ArrayList<Card> getOwnCards() {
 		return ownCards;
 	}
+
+	public void chooseCardsToExchange() {
+
+	}
 }
