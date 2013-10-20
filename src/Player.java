@@ -40,7 +40,7 @@ public class Player {
 		return ownCards;
 	}
 
-	public boolean checkIfStraightFlash() {
+	private boolean checkIfStraightFlash() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -59,7 +59,7 @@ public class Player {
 		return false;
 	}
 
-	public boolean checkIfFourOfAKing() {
+	private boolean checkIfFourOfAKing() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -78,7 +78,7 @@ public class Player {
 		return false;
 	}
 
-	public boolean checkIfFullHouse() {
+	private boolean checkIfFullHouse() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -97,7 +97,7 @@ public class Player {
 		return false;
 	}
 
-	public boolean checkIfFlush() {
+	private boolean checkIfFlush() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -112,7 +112,7 @@ public class Player {
 		return false;
 	}
 
-	public boolean checkIfStrit() {
+	private boolean checkIfStrit() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -124,10 +124,15 @@ public class Player {
 				&& pierwszaKarta.getCourt().ordinal() + 4 == piataKarta.getCourt().ordinal()) {
 			return true;
 		}
+		if (pierwszaKarta.getCourt() == CourtEnum.TWO && drugaKarta.getCourt() == CourtEnum.THREE
+				&& trzeciaKarta.getCourt() == CourtEnum.FOUR && czwartaKarta.getCourt() == CourtEnum.FIVE
+				&& piataKarta.getCourt() == CourtEnum.ACE) {
+			return true;
+		}
 		return false;
 	}
 
-	public boolean checkIfThreeOfAKind() {
+	private boolean checkIfThreeOfAKind() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -145,7 +150,7 @@ public class Player {
 		return false;
 	}
 
-	public boolean checkIfTwoPair(){
+	private boolean checkIfTwoPair() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
 		Card trzeciaKarta = ownCards.get(2);
@@ -158,9 +163,33 @@ public class Player {
 		return false;
 	}
 
+	public SequenceEnum checkWynik() {
+		if (checkIfStraightFlash()) {
+			return SequenceEnum.STRAIGHT_TFLUSH;
+		}
+		if (checkIfFourOfAKing()) {
+			return SequenceEnum.FOUR_OF_A_KIND;
+		}
+		if (checkIfFullHouse()) {
+			return SequenceEnum.FULL_HOUSE;
+		}
+		if (checkIfFlush()) {
+			return SequenceEnum.FLUSH;
+		}
+		if (checkIfStrit()) {
+			return SequenceEnum.STRAIGHT;
+		}
+		if (checkIfThreeOfAKind()) {
+			return SequenceEnum.TREE_OF_A_KIND;
+		}
+		if (checkIfTwoPair()) {
+			return SequenceEnum.TWO_PAIR;
+		}
+		return null;// TODO
+	}
 
 	public void chooseCardsToExchange() {
-
+		// TODO
 
 	}
 }
