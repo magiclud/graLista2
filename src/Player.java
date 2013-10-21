@@ -2,7 +2,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 
-public class Player {
+public abstract class Player {
 
 	ArrayList<Card> ownCards;
 
@@ -185,7 +185,7 @@ public class Player {
 		if (checkIfTwoPair()) {
 			return SequenceEnum.TWO_PAIR;
 		}
-		return Table.checkHighCard();
+		return SequenceEnum.HIGH_CARD;
 	}
 
 	public void chooseCardsToExchange() {

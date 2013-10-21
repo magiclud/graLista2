@@ -19,7 +19,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		firstPlayer = new Player(someCards);
+		firstPlayer = new Human(someCards);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -28,7 +28,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
 		someCards.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
-		firstPlayer = new Player(someCards);
+		firstPlayer = new Human(someCards);
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		firstPlayer = new Player(someCards);
+		firstPlayer = new Human(someCards);
 		assertEquals(5, firstPlayer.ownCards.size());
 	}
 
@@ -52,7 +52,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 
-		Player checkSort = new Player(someCards);
+		Player checkSort = new Human(someCards);
 
 		ArrayList<Card> cardsInOrder = new ArrayList<>();
 		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
@@ -74,7 +74,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		Player checkStraightFlush = new Player(someCards);
+		Player checkStraightFlush = new Human(someCards);
 
 		assertTrue(checkStraightFlush.checkScore().equals(SequenceEnum.STRAIGHT_TFLUSH));
 	}
@@ -88,7 +88,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		Player checkFourOfAKing = new Player(someCards);
+		Player checkFourOfAKing = new Human(someCards);
 
 		assertTrue(checkFourOfAKing.checkScore().equals(SequenceEnum.FOUR_OF_A_KIND));
 	}
@@ -102,7 +102,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		Player checkFourOfAKing = new Player(someCards);
+		Player checkFourOfAKing = new Human(someCards);
 
 		assertTrue(checkFourOfAKing.checkScore().equals(SequenceEnum.FOUR_OF_A_KIND));
 	}
@@ -116,7 +116,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		Player checkFullHouse = new Player(someCards);
+		Player checkFullHouse = new Human(someCards);
 
 		assertTrue(checkFullHouse.checkScore().equals(SequenceEnum.FULL_HOUSE));
 	}
@@ -130,7 +130,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		Player checkFullHouse = new Player(someCards);
+		Player checkFullHouse = new Human(someCards);
 
 		assertTrue(checkFullHouse.checkScore().equals(SequenceEnum.FULL_HOUSE));
 	}
@@ -144,7 +144,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TEN, SuitEnum.CLUB));
 
-		Player checkFlush = new Player(someCards);
+		Player checkFlush = new Human(someCards);
 
 		assertTrue(checkFlush.checkScore().equals(SequenceEnum.FLUSH));
 	}
@@ -158,7 +158,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 
-		Player checkStrit = new Player(someCards);
+		Player checkStrit = new Human(someCards);
 
 		assertTrue(checkStrit.checkScore().equals(SequenceEnum.STRAIGHT));
 	}
@@ -172,7 +172,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.ACE, SuitEnum.SPADE));
 
-		Player checkStrit = new Player(someCards);
+		Player checkStrit = new Human(someCards);
 
 		assertTrue(checkStrit.checkScore().equals(SequenceEnum.STRAIGHT));
 	}
@@ -186,7 +186,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 
-		Player checkThreeOfAKind = new Player(someCards);
+		Player checkThreeOfAKind = new Human(someCards);
 
 		assertTrue(checkThreeOfAKind.checkScore().equals(SequenceEnum.TREE_OF_A_KIND));
 	}
@@ -200,7 +200,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 
-		Player checkTwoPair = new Player(someCards);
+		Player checkTwoPair = new Human(someCards);
 
 		assertTrue(checkTwoPair.checkScore().equals(SequenceEnum.TWO_PAIR));
 	}
