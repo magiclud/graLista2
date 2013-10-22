@@ -12,7 +12,7 @@ import java.util.List;
 public class Deck {
 
 	private List<Card> deck;
-	private ArrayList<Card> givenBack;
+	private List<Card> givenBack;
 
 	/**
 	 * tasowanie odbywa sie konstruktorze i nie jest dostepne jako public, czyli
@@ -50,8 +50,8 @@ public class Deck {
 	
 	// Ja dodaję metodę, która z talii kart usuwa n najwyższych kart
 	
-	public ArrayList<Card> giveCards(int numbOfCards) {
-		ArrayList<Card> temp = new ArrayList<Card>(numbOfCards);
+	public List<Card> giveCards(int numbOfCards) {
+		List<Card> temp = new ArrayList<Card>(numbOfCards);
 		for(int i = 0; i < numbOfCards; ++i) {
 			temp.add(deck.get(deck.size()-1));
 			deck.remove(deck.size()-1);

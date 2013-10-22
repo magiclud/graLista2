@@ -1,10 +1,10 @@
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Bot extends Player {
 
-	public Bot(ArrayList<Card> givenCards) {
-		super(givenCards);
+	public Bot(List<Card> list) {
+		super(list);
 	}
 
 }

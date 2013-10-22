@@ -1,26 +1,26 @@
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
+import java.util.List;
 
 public abstract class Player {
 
-	ArrayList<Card> ownCards;
+	List<Card> ownCards;
 
-	public Player(ArrayList<Card> givenCards) { // Player ma przecież dostawać
+	public Player(List<Card> list) { // Player ma przecież dostawać
 												// karty od stołu !
-		if (givenCards.size() != 5) {
+		if (list.size() != 5) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
-		this.ownCards = givenCards;
+		this.ownCards = list;
 
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
-		sort(givenCards);
+		sort(list);
 	}
 
-	public void sort(ArrayList<Card> cardsToSort) {
+	public void sort(List<Card> list) {
 		// Collections.sort(cardsToSort);
-		Collections.sort(cardsToSort, new cardsSuitComparator());
-		Collections.sort(cardsToSort, new cardsCourtComparator());
+		Collections.sort(list, new cardsSuitComparator());
+		Collections.sort(list, new cardsCourtComparator());
 
 	}
 
@@ -36,7 +36,7 @@ public abstract class Player {
 		}
 	}
 
-	public ArrayList<Card> getOwnCards() {
+	public List<Card> getOwnCards() {
 		return ownCards;
 	}
 
