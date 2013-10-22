@@ -1,26 +1,50 @@
+import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public abstract class Player {
 
-	List<Card> ownCards;
+	ArrayList<Card> ownCards;
+	Table currentTable;
 
-	public Player(List<Card> list) { // Player ma przecież dostawać
+	public Player(ArrayList<Card> givenCards, Table currentTable) { // Player ma przecież dostawać
 												// karty od stołu !
-		if (list.size() != 5) {
+		if (givenCards.size() != 5) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
-		this.ownCards = list;
-
+		this.ownCards = givenCards;
+		this.currentTable = currentTable;
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
-		sort(list);
+		sort(ownCards); // było sort(givenCards) 
+		// W sensie, że sortowanie to układanie kart na ręku "po kolei" ????????//
 	}
+	
+	abstract ArrayList<Card> joinGame(); // Jak human albo bot będzie sobie grał
+	
+	// żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist itemków i numbOfCards żądanych !
+	// i w ogóle tylko od 1 do 4 wymieniamy !
+	void requestCards(int numbOfCards, ArrayList<Card> abandonedCards ) {
+		
+		// Usuwa stare karty
+		for(int i = 0; i < abandonedCards.size(); ++i) { 
+			ownCards.remove(abandonedCards.get(i));
+		}
+		// Pobiera nowe karty
+		List<Card> tempCards = currentTable.giveCards(numbOfCards);
+		for(int i = 0; i < tempCards.size(); ++i) {
+			ownCards.add(tempCards.get(i));
+		}
+		// Sortuje karty
+		sort(ownCards);
+	}
+	
+	// Przeraża mnie ta ilość metod na dole !
 
-	public void sort(List<Card> list) {
+	public void sort(ArrayList<Card> cardsToSort) {
 		// Collections.sort(cardsToSort);
-		Collections.sort(list, new cardsSuitComparator());
-		Collections.sort(list, new cardsCourtComparator());
+		Collections.sort(cardsToSort, new cardsSuitComparator());
+		Collections.sort(cardsToSort, new cardsCourtComparator());
 
 	}
 
@@ -30,13 +54,14 @@ public abstract class Player {
 		}
 	}
 
+	// Ja w ogóle bym zrobił nową klasę COMPARATOR jakiś i CHECKER JAKIŚ 
 	class cardsSuitComparator implements Comparator<Card> {
 		public int compare(Card card1, Card card2) {
 			return card1.getSuit().ordinal() - card2.getSuit().ordinal();
 		}
 	}
 
-	public List<Card> getOwnCards() {
+	public ArrayList<Card> getOwnCards() {
 		return ownCards;
 	}
 
