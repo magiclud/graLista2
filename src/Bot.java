@@ -1,13 +1,13 @@
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Bot extends Player {
 
-	public Bot(ArrayList<Card> givenCards, Table currentTable) {
+	public Bot(List<Card> givenCards, Table currentTable) {
 		super(givenCards, currentTable);
 	}
 
-	ArrayList<Card> joinGame() {
+	List<Card> joinGame() {
 		// TODO Auto-generated method stub
 		return null;
 	}

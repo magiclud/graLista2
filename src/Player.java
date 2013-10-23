@@ -1,14 +1,15 @@
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
 
 public abstract class Player {
 
-	ArrayList<Card> ownCards;
+	List<Card> ownCards;
 	Table currentTable;
 
-	public Player(ArrayList<Card> givenCards, Table currentTable) { // Player ma przecież dostawać
+	public Player(List<Card> givenCards, Table currentTable) { // Player ma
+																// przecież
+																// dostawać
 												// karty od stołu !
 		if (givenCards.size() != 5) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
@@ -20,15 +21,15 @@ public abstract class Player {
 		// W sensie, że sortowanie to układanie kart na ręku "po kolei" ????????//
 	}
 	
-	abstract ArrayList<Card> joinGame(); // Jak human albo bot będzie sobie grał
+	abstract List<Card> joinGame(); // Jak human albo bot będzie sobie grał
 	
 	// żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist itemków i numbOfCards żądanych !
 	// i w ogóle tylko od 1 do 4 wymieniamy !
-	public void requestCards(int numbOfCards, ArrayList<Card> abandonedCards) {
+	public void requestCards(int numbOfCards, List cardsToReturn) {
 		
 		// Usuwa stare karty
-		for(int i = 0; i < abandonedCards.size(); ++i) { 
-			ownCards.remove(abandonedCards.get(i));
+		for (int i = 0; i < cardsToReturn.size(); ++i) {
+			ownCards.remove(cardsToReturn.get(i));
 		}
 		// Pobiera nowe karty
 		List<Card> tempCards = currentTable.giveCards(numbOfCards);
@@ -41,10 +42,10 @@ public abstract class Player {
 	
 	// Przeraża mnie ta ilość metod na dole !
 
-	public void sort(ArrayList<Card> cardsToSort) {
+	public void sort(List<Card> ownCards2) {
 		// Collections.sort(cardsToSort);
-		Collections.sort(cardsToSort, new cardsSuitComparator());
-		Collections.sort(cardsToSort, new cardsCourtComparator());
+		Collections.sort(ownCards2, new cardsSuitComparator());
+		Collections.sort(ownCards2, new cardsCourtComparator());
 
 	}
 
@@ -61,7 +62,7 @@ public abstract class Player {
 		}
 	}
 
-	public ArrayList<Card> getOwnCards() {
+	public List<Card> getOwnCards() {
 		return ownCards;
 	}
 

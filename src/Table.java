@@ -1,9 +1,9 @@
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Table {
-	ArrayList<Player> players;
-	ArrayList<ArrayList<Card>> endOfGame;
+	List<Player> players;
+	List<List<Card>> endOfGame;
 
 	int numHumans, numBots;
 	Deck actualDeck;
@@ -21,11 +21,13 @@ public class Table {
 	// Metoda, która rozpoczyna grę
 
 	public void startGame() {
-		for(int i = 0; i < players.size(); ++i) {endOfGame.add(players.get(i).joinGame());}
+		for (int i = 0; i < players.size(); ++i) {
+			endOfGame.add((List<Card>) players.get(i).joinGame());
+		}
 	}
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany
 
-	ArrayList<Card> giveCards(int numbOfCards) {
+	List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
 	}	
 	

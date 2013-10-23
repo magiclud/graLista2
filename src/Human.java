@@ -1,13 +1,14 @@
 import java.util.ArrayList;
+import java.util.List;
 
 
 public class Human extends Player {
 
-	ArrayList cardsToReturn = new ArrayList();
+	List cardsToReturn = new ArrayList();
 
 
-	public Human(ArrayList<Card> givenCards, Table currentTable) {
-		super(givenCards, currentTable);
+	public Human(List someCards, Table currentTable) {
+		super(someCards, currentTable);
 	}
 
 	ArrayList<Card> joinGame() {
@@ -16,11 +17,11 @@ public class Human extends Player {
 		return null;
 	}
 
-	public ArrayList getCardsToReturn() {
+	public List getCardsToReturn() {
 		return cardsToReturn;
 	}
 
-	public void setCardsToReturn(ArrayList cardsToReturn) {
+	public void setCardsToReturn(List someCards) {
 		this.cardsToReturn.add(ownCards.get(1));
 		this.cardsToReturn.add(ownCards.get(2));
 		this.cardsToReturn.add(ownCards.get(4));

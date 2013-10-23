@@ -1,13 +1,14 @@
 import static org.junit.Assert.assertEquals;
 
 import java.util.ArrayList;
+import java.util.List;
 
 import org.junit.Test;
 
 
 public class HumanTest {
 
-	ArrayList someCards;
+	List someCards;
 	Table someTable;
 	@Test
 	public void sprawdzamCzyHumanWybralKartyDoWymiany() {
@@ -21,7 +22,7 @@ public class HumanTest {
 
 		cardsToExchange.setCardsToReturn(someCards);
 
-		ArrayList selectedCards = new ArrayList();
+		List selectedCards = new ArrayList();
 		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
 		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		selectedCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
