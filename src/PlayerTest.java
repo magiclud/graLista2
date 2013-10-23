@@ -22,10 +22,10 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 		firstPlayer = new Human(someCards, someTable);
 
-		List selectedCards = new ArrayList();
-		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
-		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		selectedCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		List<Card> selectedCards = new ArrayList<Card>();
+		selectedCards.add(someCards.get(1));
+		selectedCards.add(someCards.get(2));
+		selectedCards.add(someCards.get(4));
 
 		firstPlayer.changeCards(selectedCards);
 
