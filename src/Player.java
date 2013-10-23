@@ -47,13 +47,14 @@ public abstract class Player {
 	 * metoda powyzej triche zmieniona
 	 **/
 	public void changeCards(List indexesOfAbandonedCards) {
+		int numberCardsToReturn = indexesOfAbandonedCards.size();
 		/** usuwam karty po indeksie **/
-		for (int i = 0; i < indexesOfAbandonedCards.size(); ++i) {
+		for (int i = 0; i < numberCardsToReturn; ++i) {
 			ownCards.remove(indexesOfAbandonedCards.get(i));
 		}
 		/** to ponizej bez zmian **/
 		// Pobiera nowe karty
-		List<Card> tempCards = currentTable.giveCards(indexesOfAbandonedCards.size());
+		List<Card> tempCards = currentTable.giveCards(numberCardsToReturn);
 		for (int i = 0; i < tempCards.size(); ++i) {
 			ownCards.add(tempCards.get(i));
 		}
