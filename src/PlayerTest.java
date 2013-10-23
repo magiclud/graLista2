@@ -12,6 +12,26 @@ public class PlayerTest {
 	List<Card> someCards;
 	Table someTable;
 
+	@Test
+	public void testPoprawnosciWYmianyKart() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		firstPlayer = new Human(someCards, someTable);
+
+		List selectedCards = new ArrayList();
+		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		selectedCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+
+		firstPlayer.changeCards(selectedCards);
+
+		assertEquals(5, firstPlayer.ownCards.size());
+	}
+
 	@Test(expected = IllegalStateException.class)
 	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() {
 		someCards = new ArrayList<>();

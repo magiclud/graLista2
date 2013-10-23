@@ -23,23 +23,44 @@ public abstract class Player {
 	
 	abstract List<Card> joinGame(); // Jak human albo bot będzie sobie grał
 	
-	// żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist itemków i numbOfCards żądanych !
-	// i w ogóle tylko od 1 do 4 wymieniamy !
-	public void requestCards(int numbOfCards, List cardsToReturn) {
-		
-		// Usuwa stare karty
-		for (int i = 0; i < cardsToReturn.size(); ++i) {
-			ownCards.remove(cardsToReturn.get(i));
+	// // żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist
+	// itemków i numbOfCards żądanych !
+	// // i w ogóle tylko od 1 do 4 wymieniamy !
+	// public void requestCards(int numbOfCards, List cardsToReturn) {
+	// /**
+	// * numbOfCards jest nie potrzebny bo usuwam tyle kart ile jest na liscie
+	// **/
+	// // Usuwa stare karty
+	// for (int i = 0; i < cardsToReturn.size(); ++i) {
+	// ownCards.remove(cardsToReturn.get(i));
+	// }
+	// // Pobiera nowe karty
+	// List<Card> tempCards = currentTable.giveCards(numbOfCards);
+	// for(int i = 0; i < tempCards.size(); ++i) {
+	// ownCards.add(tempCards.get(i));
+	// }
+	// // Sortuje karty
+	// sort(ownCards);
+	// }
+	
+	/**
+	 * metoda powyzej triche zmieniona
+	 **/
+	public void changeCards(List indexesOfAbandonedCards) {
+		/** usuwam karty po indeksie **/
+		for (int i = 0; i < indexesOfAbandonedCards.size(); ++i) {
+			ownCards.remove(indexesOfAbandonedCards.get(i));
 		}
+		/** to ponizej bez zmian **/
 		// Pobiera nowe karty
-		List<Card> tempCards = currentTable.giveCards(numbOfCards);
-		for(int i = 0; i < tempCards.size(); ++i) {
+		List<Card> tempCards = currentTable.giveCards(indexesOfAbandonedCards.size());
+		for (int i = 0; i < tempCards.size(); ++i) {
 			ownCards.add(tempCards.get(i));
 		}
 		// Sortuje karty
 		sort(ownCards);
 	}
-	
+
 	// Przeraża mnie ta ilość metod na dole !
 
 	public void sort(List<Card> ownCards2) {

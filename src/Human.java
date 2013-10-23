@@ -13,7 +13,7 @@ public class Human extends Player {
 
 	ArrayList<Card> joinGame() {
 		Player cardsToGiveBack = new Human(cardsToReturn, currentTable);
-		cardsToGiveBack.requestCards(3, cardsToReturn);
+		cardsToGiveBack.changeCards(cardsToReturn);
 		return null;
 	}
 
