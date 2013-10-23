@@ -29,11 +29,6 @@ public abstract class Player {
 	}
 	// // żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist
 	// itemków i numbOfCards żądanych !
-
-	
-	/**
-	 * metoda powyzej triche zmieniona
-	 **/
 	public void requestCards(List<Integer> abandonedIndexes) {
 
 		int numberCardsToReturn = abandonedIndexes.size();
@@ -43,7 +38,6 @@ public abstract class Player {
 		}
 
 		/** usuwam karty po indeksie **/
-
 		for (int i = 0; i < numberCardsToReturn; ++i) {
 			ownCards.remove(abandonedIndexes.get(i));
 		}
