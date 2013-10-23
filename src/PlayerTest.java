@@ -11,6 +11,8 @@ public class PlayerTest {
 	List<Card> someCards;
 	Table someTable;
 
+/*	@Test
+=======
 	@Test(expected = IllegalStateException.class)
 	public void testPoprawnosciWyjatkuGdyGraczWymieniaWiecejNiz4Elementow() {
 		someCards = new ArrayList<>();
@@ -29,6 +31,7 @@ public class PlayerTest {
 		firstPlayer.changeCards(selectedCards);
 	}
 	@Test
+>>>>>>> .r25
 	public void testPoprawnosciWYmianyKart() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
@@ -43,10 +46,10 @@ public class PlayerTest {
 		selectedCards.add(someCards.get(2));
 		selectedCards.add(someCards.get(4));
 
-		firstPlayer.changeCards(selectedCards);
+		firstPlayer.requestCards(selectedCards);
 
 		assertEquals(5, firstPlayer.ownCards.size());
-	}
+	}*/
 
 	@Test(expected = IllegalStateException.class)
 	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() {

@@ -34,20 +34,21 @@ public abstract class Player {
 	/**
 	 * metoda powyzej triche zmieniona
 	 **/
-	public void changeCards(List cardsToReturn) {
+	public void requestCards(List<Integer> abandonedIndexes) {
 
-		int numberCardsToReturn = cardsToReturn.size();
+		int numberCardsToReturn = abandonedIndexes.size();
 
 		if (numberCardsToReturn > 4) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
 
 		/** usuwam karty po indeksie **/
+
 		for (int i = 0; i < numberCardsToReturn; ++i) {
-			ownCards.remove(cardsToReturn.get(i));
+			ownCards.remove(abandonedIndexes.get(i));
 		}
 		// Pobiera nowe karty
-		List<Card> tempCards = currentTable.giveCards(numberCardsToReturn);
+		List<Card> tempCards = currentTable.giveCards(abandonedIndexes.size());
 		for (int i = 0; i < tempCards.size(); ++i) {
 			ownCards.add(tempCards.get(i));
 		}
