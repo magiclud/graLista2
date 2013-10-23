@@ -1,26 +1,32 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
+import java.util.ArrayList;
+
 import org.junit.Test;
 
 
 public class HumanTest {
 
-	public HumanTest() {
-	}
-
-	@Before
-	public void setUp() throws Exception {
-	}
-
-	@After
-	public void tearDown() throws Exception {
-	}
-
+	ArrayList someCards;
+	Table someTable;
 	@Test
-	public final void test() {
-		fail("Not yet implemented"); // TODO
+	public void sprawdzamCzyHumanWybralKartyDoWymiany() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		Human cardsToExchange = new Human(someCards, someTable);
+
+		cardsToExchange.setCardsToReturn(someCards);
+
+		ArrayList selectedCards = new ArrayList();
+		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		selectedCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		selectedCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+
+		assertEquals(cardsToExchange.getCardsToReturn(), selectedCards);
 	}
 
 }

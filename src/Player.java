@@ -24,7 +24,7 @@ public abstract class Player {
 	
 	// żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist itemków i numbOfCards żądanych !
 	// i w ogóle tylko od 1 do 4 wymieniamy !
-	void requestCards(int numbOfCards, ArrayList<Card> abandonedCards ) {
+	public void requestCards(int numbOfCards, ArrayList<Card> abandonedCards) {
 		
 		// Usuwa stare karty
 		for(int i = 0; i < abandonedCards.size(); ++i) { 
@@ -213,8 +213,8 @@ public abstract class Player {
 		return SequenceEnum.HIGH_CARD;
 	}
 
-	public void chooseCardsToExchange() {
+	// public void chooseCardsToExchange() {
 		// TODO
 
-	}
+	// }
 }
