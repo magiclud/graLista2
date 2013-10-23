@@ -1,132 +1,132 @@
-import java.util.ArrayList;
+import java.util.List;
 
 
 public class Checker {
 
-	private boolean checkIfStraightFlash(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
+	private boolean checkIfStraightFlash(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
 
-		if (pierwszaKarta.getCourt().ordinal() + 1 == drugaKarta.getCourt().ordinal()
-				&& pierwszaKarta.getCourt().ordinal() + 2 == trzeciaKarta.getCourt().ordinal()
-				&& pierwszaKarta.getCourt().ordinal() + 3 == czwartaKarta.getCourt().ordinal()
-				&& pierwszaKarta.getCourt().ordinal() + 4 == piataKarta.getCourt().ordinal()) {
-			if (pierwszaKarta.getSuit().equals(drugaKarta.getSuit()) && drugaKarta.getSuit().equals(trzeciaKarta.getSuit())
-					&& trzeciaKarta.getSuit().equals(czwartaKarta.getSuit()) && czwartaKarta.getSuit().equals(piataKarta.getSuit())) {
+		if (firstCard.getCourt().ordinal() + 1 == secondCard.getCourt().ordinal()
+				&& firstCard.getCourt().ordinal() + 2 == thirdCard.getCourt().ordinal()
+				&& firstCard.getCourt().ordinal() + 3 == fourthCard.getCourt().ordinal()
+				&& firstCard.getCourt().ordinal() + 4 == fifthCard.getCourt().ordinal()) {
+			if (firstCard.getSuit().equals(secondCard.getSuit()) && secondCard.getSuit().equals(thirdCard.getSuit())
+					&& thirdCard.getSuit().equals(fourthCard.getSuit()) && fourthCard.getSuit().equals(fifthCard.getSuit())) {
 				return true;
 			}
 		}
 		return false;
 	}
 
-	private boolean checkIfFourOfAKing(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
-		if (pierwszaKarta.getCourt().ordinal() == drugaKarta.getCourt().ordinal()
-				&& drugaKarta.getCourt().ordinal() == trzeciaKarta.getCourt().ordinal()
-				&& trzeciaKarta.getCourt().ordinal() == czwartaKarta.getCourt().ordinal()) {
+	private boolean checkIfFourOfAKing(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
+		if (firstCard.getCourt().ordinal() == secondCard.getCourt().ordinal()
+				&& secondCard.getCourt().ordinal() == thirdCard.getCourt().ordinal()
+				&& thirdCard.getCourt().ordinal() == fourthCard.getCourt().ordinal()) {
 			return true;
 		}
-		if (drugaKarta.getCourt().ordinal() == trzeciaKarta.getCourt().ordinal()
-				&& trzeciaKarta.getCourt().ordinal() == czwartaKarta.getCourt().ordinal()
-				&& czwartaKarta.getCourt().ordinal() == piataKarta.getCourt().ordinal()) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean checkIfFullHouse(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
-		if (pierwszaKarta.getCourt().ordinal() == drugaKarta.getCourt().ordinal()
-				&& drugaKarta.getCourt().ordinal() == trzeciaKarta.getCourt().ordinal()
-				&& czwartaKarta.getCourt().ordinal() == piataKarta.getCourt().ordinal()) {
-			return true;
-		}
-		if (pierwszaKarta.getCourt().ordinal() == drugaKarta.getCourt().ordinal()
-				&& trzeciaKarta.getCourt().ordinal() == czwartaKarta.getCourt().ordinal()
-				&& czwartaKarta.getCourt().ordinal() == piataKarta.getCourt().ordinal()) {
+		if (secondCard.getCourt().ordinal() == thirdCard.getCourt().ordinal()
+				&& thirdCard.getCourt().ordinal() == fourthCard.getCourt().ordinal()
+				&& fourthCard.getCourt().ordinal() == fifthCard.getCourt().ordinal()) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean checkIfFlush(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
-		if (pierwszaKarta.getSuit().ordinal() == drugaKarta.getSuit().ordinal()
-				&& drugaKarta.getSuit().ordinal() == trzeciaKarta.getSuit().ordinal()
-				&& trzeciaKarta.getSuit().ordinal() == czwartaKarta.getSuit().ordinal()
-				&& czwartaKarta.getSuit().ordinal() == piataKarta.getSuit().ordinal()) {
+	private boolean checkIfFullHouse(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
+		if (firstCard.getCourt().ordinal() == secondCard.getCourt().ordinal()
+				&& secondCard.getCourt().ordinal() == thirdCard.getCourt().ordinal()
+				&& fourthCard.getCourt().ordinal() == fifthCard.getCourt().ordinal()) {
+			return true;
+		}
+		if (firstCard.getCourt().ordinal() == secondCard.getCourt().ordinal()
+				&& thirdCard.getCourt().ordinal() == fourthCard.getCourt().ordinal()
+				&& fourthCard.getCourt().ordinal() == fifthCard.getCourt().ordinal()) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean checkIfStrit(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
-		if (pierwszaKarta.getCourt().ordinal() + 1 == drugaKarta.getCourt().ordinal()
-				&& pierwszaKarta.getCourt().ordinal() + 2 == trzeciaKarta.getCourt().ordinal()
-				&& pierwszaKarta.getCourt().ordinal() + 3 == czwartaKarta.getCourt().ordinal()
-				&& pierwszaKarta.getCourt().ordinal() + 4 == piataKarta.getCourt().ordinal()) {
-			return true;
-		}
-		if (pierwszaKarta.getCourt() == CourtEnum.TWO && drugaKarta.getCourt() == CourtEnum.THREE
-				&& trzeciaKarta.getCourt() == CourtEnum.FOUR && czwartaKarta.getCourt() == CourtEnum.FIVE
-				&& piataKarta.getCourt() == CourtEnum.ACE) {
+	private boolean checkIfFlush(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
+		if (firstCard.getSuit().ordinal() == secondCard.getSuit().ordinal()
+				&& secondCard.getSuit().ordinal() == thirdCard.getSuit().ordinal()
+				&& thirdCard.getSuit().ordinal() == fourthCard.getSuit().ordinal()
+				&& fourthCard.getSuit().ordinal() == fifthCard.getSuit().ordinal()) {
 			return true;
 		}
 		return false;
 	}
 
-	private boolean checkIfThreeOfAKind(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
-		if (pierwszaKarta.getCourt().equals(drugaKarta.getCourt()) && drugaKarta.getCourt().equals(trzeciaKarta.getCourt())) {
+	private boolean checkIfStrit(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
+		if (firstCard.getCourt().ordinal() + 1 == secondCard.getCourt().ordinal()
+				&& firstCard.getCourt().ordinal() + 2 == thirdCard.getCourt().ordinal()
+				&& firstCard.getCourt().ordinal() + 3 == fourthCard.getCourt().ordinal()
+				&& firstCard.getCourt().ordinal() + 4 == fifthCard.getCourt().ordinal()) {
 			return true;
 		}
-		if (drugaKarta.getCourt().equals(trzeciaKarta.getCourt()) && trzeciaKarta.getCourt().equals(czwartaKarta.getCourt())) {
-			return true;
-		}
-		if (trzeciaKarta.getCourt().equals(czwartaKarta.getCourt()) && czwartaKarta.getCourt().equals(piataKarta.getCourt())) {
-			return true;
-		}
-		return false;
-	}
-
-	private boolean checkIfTwoPair(ArrayList<Card> cardsToTest) {
-		Card pierwszaKarta = cardsToTest.get(0);
-		Card drugaKarta = cardsToTest.get(1);
-		Card trzeciaKarta = cardsToTest.get(2);
-		Card czwartaKarta = cardsToTest.get(3);
-		Card piataKarta = cardsToTest.get(4);
-		if (pierwszaKarta.getCourt().equals(drugaKarta.getCourt()) || drugaKarta.getCourt().equals(trzeciaKarta.getCourt())
-				|| trzeciaKarta.getCourt().equals(czwartaKarta.getCourt()) || czwartaKarta.getCourt().equals(piataKarta.getCourt())) {
+		if (firstCard.getCourt() == CourtEnum.TWO && secondCard.getCourt() == CourtEnum.THREE
+				&& thirdCard.getCourt() == CourtEnum.FOUR && fourthCard.getCourt() == CourtEnum.FIVE
+				&& fifthCard.getCourt() == CourtEnum.ACE) {
 			return true;
 		}
 		return false;
 	}
 
-	public SequenceEnum checkScore(ArrayList<Card> cardsToTest) {
+	private boolean checkIfThreeOfAKind(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
+		if (firstCard.getCourt().equals(secondCard.getCourt()) && secondCard.getCourt().equals(thirdCard.getCourt())) {
+			return true;
+		}
+		if (secondCard.getCourt().equals(thirdCard.getCourt()) && thirdCard.getCourt().equals(fourthCard.getCourt())) {
+			return true;
+		}
+		if (thirdCard.getCourt().equals(fourthCard.getCourt()) && fourthCard.getCourt().equals(fifthCard.getCourt())) {
+			return true;
+		}
+		return false;
+	}
+
+	private boolean checkIfTwoPair(List<Card> cardsToTest) {
+		Card firstCard = cardsToTest.get(0);
+		Card secondCard = cardsToTest.get(1);
+		Card thirdCard = cardsToTest.get(2);
+		Card fourthCard = cardsToTest.get(3);
+		Card fifthCard = cardsToTest.get(4);
+		if (firstCard.getCourt().equals(secondCard.getCourt()) || secondCard.getCourt().equals(thirdCard.getCourt())
+				|| thirdCard.getCourt().equals(fourthCard.getCourt()) || fourthCard.getCourt().equals(fifthCard.getCourt())) {
+			return true;
+		}
+		return false;
+	}
+
+	public SequenceEnum checkScore(List<Card> cardsToTest) {
 		if (checkIfStraightFlash(cardsToTest)) {
 			return SequenceEnum.STRAIGHT_TFLUSH;
 		}

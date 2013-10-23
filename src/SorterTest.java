@@ -1,23 +1,35 @@
-import static org.junit.Assert.*;
+import static org.junit.Assert.assertEquals;
 
-import org.junit.After;
-import org.junit.Before;
+import java.util.ArrayList;
+import java.util.List;
+
 import org.junit.Test;
 
 
 public class SorterTest {
 
-	@Before
-	public void setUp() throws Exception {
-	}
 
-	@After
-	public void tearDown() throws Exception {
-	}
+	List<Card> someCards;
+	Table someTable;
 
 	@Test
-	public void test() {
-		fail("Not yet implemented");
-	}
+	public void testSpawdzaCzyKartySaPosortowane() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 
+		Player checkSort = new Human(someCards, someTable);
+
+		ArrayList<Card> cardsInOrder = new ArrayList<>();
+		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		cardsInOrder.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
+		cardsInOrder.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
+		cardsInOrder.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
+
+		assertEquals(cardsInOrder, checkSort.ownCards);
+	}
 }

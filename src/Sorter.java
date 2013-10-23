@@ -1,4 +1,3 @@
-import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
@@ -7,7 +6,7 @@ import java.util.List;
 public class Sorter {
 	
 	public void sort(List<Card> cardsToSort) {
-		// Collections.sort(cardsToSort);
+
 		Collections.sort(cardsToSort, new cardsSuitComparator());
 		Collections.sort(cardsToSort, new cardsCourtComparator());
 
