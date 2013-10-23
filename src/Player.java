@@ -6,6 +6,7 @@ public abstract class Player {
 
 	List<Card> ownCards;
 	Table currentTable;
+	Sorter ownSorter = new Sorter();
 
 	public Player(List<Card> givenCards, Table currentTable) { // Player ma
 																// przecież
@@ -17,7 +18,7 @@ public abstract class Player {
 		this.ownCards = givenCards;
 		this.currentTable = currentTable;
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
-		sort(ownCards); // było sort(givenCards) 
+		ownSorter.sort(ownCards); // było sort(givenCards) 
 		// W sensie, że sortowanie to układanie kart na ręku "po kolei" ????????//
 	}
 	
@@ -47,23 +48,31 @@ public abstract class Player {
 	 * metoda powyzej triche zmieniona
 	 **/
 	public void changeCards(List indexesOfAbandonedCards) {
+
 		int numberCardsToReturn = indexesOfAbandonedCards.size();
+
+		if (numberCardsToReturn > 4) {
+			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
+		}
+
 		/** usuwam karty po indeksie **/
 		for (int i = 0; i < numberCardsToReturn; ++i) {
 			ownCards.remove(indexesOfAbandonedCards.get(i));
 		}
-		/** to ponizej bez zmian **/
 		// Pobiera nowe karty
 		List<Card> tempCards = currentTable.giveCards(numberCardsToReturn);
 		for (int i = 0; i < tempCards.size(); ++i) {
 			ownCards.add(tempCards.get(i));
 		}
 		// Sortuje karty
-		sort(ownCards);
+		ownSorter.sort(ownCards);
 	}
 
 	// Przeraża mnie ta ilość metod na dole !
-
+/*
+<<<<<<< .mine
+	
+=======
 	public void sort(List<Card> ownCards2) {
 		// Collections.sort(cardsToSort);
 		Collections.sort(ownCards2, new cardsSuitComparator());
@@ -76,18 +85,26 @@ public abstract class Player {
 			return card1.getCourt().ordinal() - card2.getCourt().ordinal();
 		}
 	}
+>>>>>>> .r21
 
-	// Ja w ogóle bym zrobił nową klasę COMPARATOR jakiś i CHECKER JAKIŚ 
-	class cardsSuitComparator implements Comparator<Card> {
-		public int compare(Card card1, Card card2) {
-			return card1.getSuit().ordinal() - card2.getSuit().ordinal();
-		}
-	}
+	// Zrobiłem nową klasę checker
+	// Zrobiłem nową klasę sorter
+	
 
+<<<<<<< .mine
+	
+	public ArrayList<Card> getOwnCards() {
+=======
 	public List<Card> getOwnCards() {
+>>>>>>> .r21
 		return ownCards;
 	}
 
+<<<<<<< .mine
+	
+// depriciated :D zamieniłem to z metodą requestCards :D
+//	public void chooseCardsToExchange() {
+=======
 	private boolean checkIfStraightFlash() {
 		Card pierwszaKarta = ownCards.get(0);
 		Card drugaKarta = ownCards.get(1);
@@ -237,7 +254,12 @@ public abstract class Player {
 	}
 
 	// public void chooseCardsToExchange() {
+>>>>>>> .r21
 		// TODO
 
+<<<<<<< .mine
+//	}
+=======
 	// }
+>>>>>>> .r21*/
 }
