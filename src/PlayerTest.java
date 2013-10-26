@@ -123,6 +123,20 @@ public class PlayerTest {
 	}
 
 	@Test
+	public void checkSelectionSecondHighestFromTwo() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.slectSecondFromTwoPair(someCards).equals(CourtEnum.FIVE));
+	}
+
+	@Test
 	public void checkSelectionHighestFromOne() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));

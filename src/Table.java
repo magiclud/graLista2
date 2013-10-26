@@ -37,4 +37,12 @@ public class Table {
 	
 	
 
+	// dla Judge
+	public List<Card> getPlayersCards(int nrPlayer) {
+		if (nrPlayer > 4 || nrPlayer < 0) {
+			throw new IllegalStateException("Niepoprawna ilosc graczy");
+		}
+		return players.get(nrPlayer).getOwnCards();
+	}
+
 }

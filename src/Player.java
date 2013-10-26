@@ -50,6 +50,10 @@ public abstract class Player {
 		ownSorter.sort(ownCards);
 	}
 
+	public List<Card> getOwnCards() {
+		return ownCards;
+	}
+
 	public CourtEnum selectFirstFromFlushOrStraight(List<Card> flush) {
 		// najwyzsza karta to piata karta
 		return flush.get(4).getCourt();
@@ -88,6 +92,17 @@ public abstract class Player {
 			return two.get(4).getCourt();
 		}// dwojke tworzy 2.3. i 4.5
 		return two.get(4).getCourt();
+	}
+
+	public CourtEnum slectSecondFromTwoPair(List<Card> two) {
+		// dwojke tworzy 1.2. karta i 3.4.
+		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(2).getCourt().equals(two.get(3).getCourt())) {
+			return two.get(0).getCourt();
+		}// 1.2. i 4.5.
+		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(3).getCourt().equals(two.get(4).getCourt())) {
+			return two.get(0).getCourt();
+		}// dwojke tworzy 2.3. i 4.5
+		return two.get(1).getCourt();
 	}
 
 	public CourtEnum selectFirstFromOnePair(List<Card> one) {
