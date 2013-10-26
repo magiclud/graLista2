@@ -30,8 +30,10 @@ public class Human extends Player {
 															// pokręcił :)
 		if (abandonedIndexes == null)
 			return true;
+
 		if (abandonedIndexes.size() > 4)
 			return false;
+
 		for (int i = 0; i < abandonedIndexes.size(); ++i) {
 			if (abandonedIndexes.get(i) < 0 || abandonedIndexes.get(i) > 4)
 				return false;

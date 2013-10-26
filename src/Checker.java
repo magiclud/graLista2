@@ -9,7 +9,7 @@ public class Checker {
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
-
+		// piec kolejnych kart w jednym kolorze
 		if (firstCard.getCourt().ordinal() + 1 == secondCard.getCourt().ordinal()
 				&& firstCard.getCourt().ordinal() + 2 == thirdCard.getCourt().ordinal()
 				&& firstCard.getCourt().ordinal() + 3 == fourthCard.getCourt().ordinal()
@@ -28,6 +28,7 @@ public class Checker {
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
+		// cztery karty o jednakowej wartosci
 		if (firstCard.getCourt().ordinal() == secondCard.getCourt().ordinal()
 				&& secondCard.getCourt().ordinal() == thirdCard.getCourt().ordinal()
 				&& thirdCard.getCourt().ordinal() == fourthCard.getCourt().ordinal()) {
@@ -47,6 +48,7 @@ public class Checker {
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
+		// trzy karty o jednakowej wartosci i para
 		if (firstCard.getCourt().ordinal() == secondCard.getCourt().ordinal()
 				&& secondCard.getCourt().ordinal() == thirdCard.getCourt().ordinal()
 				&& fourthCard.getCourt().ordinal() == fifthCard.getCourt().ordinal()) {
@@ -66,6 +68,7 @@ public class Checker {
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
+		// piec kart w jednym kolorze
 		if (firstCard.getSuit().ordinal() == secondCard.getSuit().ordinal()
 				&& secondCard.getSuit().ordinal() == thirdCard.getSuit().ordinal()
 				&& thirdCard.getSuit().ordinal() == fourthCard.getSuit().ordinal()
@@ -75,12 +78,13 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfStrit(List<Card> cardsToTest) {
+	private boolean checkIfStraight(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
+		// piec kolejnych kart
 		if (firstCard.getCourt().ordinal() + 1 == secondCard.getCourt().ordinal()
 				&& firstCard.getCourt().ordinal() + 2 == thirdCard.getCourt().ordinal()
 				&& firstCard.getCourt().ordinal() + 3 == fourthCard.getCourt().ordinal()
@@ -101,6 +105,7 @@ public class Checker {
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
+		// trzy karty o jednakowej wartosci
 		if (firstCard.getCourt().equals(secondCard.getCourt()) && secondCard.getCourt().equals(thirdCard.getCourt())) {
 			return true;
 		}
@@ -114,11 +119,17 @@ public class Checker {
 	}
 
 	private boolean checkIfTwoPair(List<Card> cardsToTest) {
+		return false;
+		// TODO
+	}
+
+	private boolean checkIfOnePair(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
+		// dwie karty o jednakowej wartosci
 		if (firstCard.getCourt().equals(secondCard.getCourt()) || secondCard.getCourt().equals(thirdCard.getCourt())
 				|| thirdCard.getCourt().equals(fourthCard.getCourt()) || fourthCard.getCourt().equals(fifthCard.getCourt())) {
 			return true;
@@ -139,14 +150,15 @@ public class Checker {
 		if (checkIfFlush(cardsToTest)) {
 			return SequenceEnum.FLUSH;
 		}
-		if (checkIfStrit(cardsToTest)) {
+		if (checkIfStraight(cardsToTest)) {
 			return SequenceEnum.STRAIGHT;
 		}
 		if (checkIfThreeOfAKind(cardsToTest)) {
 			return SequenceEnum.TREE_OF_A_KIND;
 		}
-		if (checkIfTwoPair(cardsToTest)) {
-			return SequenceEnum.TWO_PAIR;
+		// TODO Two_pair
+		if (checkIfOnePair(cardsToTest)) {
+			return SequenceEnum.ONE_PAIR;
 		}
 		return SequenceEnum.HIGH_CARD;
 	}

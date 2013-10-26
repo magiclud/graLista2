@@ -12,6 +12,8 @@ public class CheckerTest {
 	Checker checkCards = new Checker();
 	List<Card> someCards;
 
+	// TODO brakuje testow
+
 	@Test
 	public void checkIfPlayerHaveTwoPair() {
 		someCards = new ArrayList<>();
@@ -21,7 +23,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 
-		assertTrue(checkCards.checkScore(someCards).equals(SequenceEnum.TWO_PAIR));
+		assertTrue(checkCards.checkScore(someCards).equals(SequenceEnum.ONE_PAIR));
 	}
 
 	@Test

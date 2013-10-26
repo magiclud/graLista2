@@ -1,4 +1,5 @@
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -50,6 +51,90 @@ public class PlayerTest {
 
 		assertEquals(5, firstPlayer.ownCards.size());
 	}*/
+
+	@Test
+	public void testPoprawnosciWylosowaniaNajwyzszejKartyZFlushaOrStraight() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.selectFirstFromFlushOrStraight(someCards).equals(CourtEnum.SIX));
+	}
+
+	@Test
+	public void testPoprawnosciWylosowaniaNajwyzszejKartyZCzworki() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.selectFirstFromKind(someCards).equals(CourtEnum.SIX));
+	}
+
+	@Test
+	public void testPoprawnosciWylosowaniaNajwyzszejKartyZCzworkiFromBeggining() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.selectFirstFromKind(someCards).equals(CourtEnum.TWO));
+	}
+
+	@Test
+	public void checkSelectionHighestFromThree() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.selectFirstFromThree(someCards).equals(CourtEnum.FIVE));
+	}
+
+	@Test
+	public void checkSelectionHighestFromTwo() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.selectFirstFromTwoPair(someCards).equals(CourtEnum.SIX));
+	}
+
+	@Test
+	public void checkSelectionHighestFromOne() {
+		someCards = new ArrayList<>();
+		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.SEVEN, SuitEnum.SPADE));
+
+		firstPlayer = new Human(someCards, someTable);
+
+		assertTrue(firstPlayer.selectFirstFromOnePair(someCards).equals(CourtEnum.FIVE));
+	}
 
 	@Test(expected = IllegalStateException.class)
 	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() {

@@ -50,5 +50,57 @@ public abstract class Player {
 		ownSorter.sort(ownCards);
 	}
 
+	public CourtEnum selectFirstFromFlushOrStraight(List<Card> flush) {
+		// najwyzsza karta to piata karta
+		return flush.get(4).getCourt();
+	}
+
+	public CourtEnum selectFirstFromKind(List<Card> kind) {
+		// pierwsze cztery karty tworza czworke, wiec 4-ta karta ma najwyzsza
+		// wartosc
+		if (kind.get(0).getCourt().ordinal() == kind.get(1).getCourt().ordinal()) {
+			return kind.get(3).getCourt();
+		}// jesli nie, to pierwsza karta nie tworzy czorki
+		// najwyzsza karta to piata karta
+		return kind.get(4).getCourt();
+	}
+
+	public CourtEnum selectFirstFromThree(List<Card> three) {
+		// pierwsze trzy karty tworza 'trojke'
+		if (three.get(0).getCourt().equals(three.get(1).getCourt()) && three.get(1).getCourt().equals(three.get(2).getCourt())) {
+			// 3-cia karta to najwyzsza wsrod tych 'trojek'
+			return three.get(2).getCourt();
+		}
+		// 'trojke' tworzy 2-ga, 3-cia, 4-ta karta', najwyzsza wsrod nich to
+		// 4-ta
+		if (three.get(1).getCourt().equals(three.get(2).getCourt()) && three.get(2).getCourt().equals(three.get(3).getCourt())) {
+			return three.get(3).getCourt();
+		}// jesli nie to trojke tworza ostatnie 3 karty
+		return three.get(4).getCourt();
+	}
+
+	public CourtEnum selectFirstFromTwoPair(List<Card> two) {
+		// dwojke tworzy 1.2. karta i 3.4.
+		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(2).getCourt().equals(two.get(3).getCourt())) {
+			return two.get(3).getCourt();
+		}// 1.2. i 4.5.
+		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(3).getCourt().equals(two.get(4).getCourt())) {
+			return two.get(4).getCourt();
+		}// dwojke tworzy 2.3. i 4.5
+		return two.get(4).getCourt();
+	}
+
+	public CourtEnum selectFirstFromOnePair(List<Card> one) {
+		if (one.get(0).getCourt().equals(one.get(1).getCourt())) {
+			return one.get(1).getCourt();
+		}
+		if (one.get(1).getCourt().equals(one.get(2).getCourt())) {
+			return one.get(2).getCourt();
+		}
+		if (one.get(2).getCourt().equals(one.get(3).getCourt())) {
+			return one.get(3).getCourt();
+		}
+		return one.get(4).getCourt();
+	}
 
 }
