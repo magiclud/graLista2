@@ -23,16 +23,62 @@ public class JudgeTest {
 
 		List<Player> players = new ArrayList<>();
 
-		players.add(playerWithStraightFlush);
-		players.add(playerWithFullHouse);
-		players.add(playerWithFourOfAKind);
+		// players.add(playerWithStraightFlush);
+		// players.add(playerWithFullHouse);
+		// players.add(playerWithFourOfAKind);
+		// players.add(playerWithTwoPair);
+
 		players.add(playerWithTwoPair);
+		players.add(playerWithFourOfAKind);
+		players.add(playerWithFullHouse);
+		players.add(playerWithStraightFlush);
+		List<Integer> expectedIdexes = new ArrayList<>();
+		// index 1 gracza
+		expectedIdexes.add(3);
+
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfTwoPlayersHaveTwoCardsTwoPlayersHaveFlush() {
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithTwoPair);
+		players.add(playerWithFlush);
+
+		/***** drugi gracz z para ***/
+		List<Card> twoPair = new ArrayList<>();
+		twoPair.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
+		twoPair.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
+		twoPair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		twoPair.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+		twoPair.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
+		Player twoPair2 = new Human(twoPair, currentTable);
+
+		players.add(twoPair2);
+
+		/**** drugi gracz z flush ******/
+		List<Card> flush = new ArrayList<>();
+		flush.add(new Card(CourtEnum.ACE, SuitEnum.SPADE));
+		flush.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
+		flush.add(new Card(CourtEnum.NINE, SuitEnum.SPADE));
+		flush.add(new Card(CourtEnum.JACK, SuitEnum.SPADE));
+		flush.add(new Card(CourtEnum.TEN, SuitEnum.SPADE));
+		Player flush2 = new Human(twoPair, currentTable);
+
+		players.add(flush2);
 
 		List<Integer> expectedIdexes = new ArrayList<>();
 		// index 1 gracza
-		expectedIdexes.add(0);
+		expectedIdexes.add(1);
+		expectedIdexes.add(3);
 
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
+
+	}
+
+	@Test
+	public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
+
 	}
 
 	// @Test
