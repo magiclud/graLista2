@@ -48,7 +48,7 @@ public class JudgeTest {
 
 		Player playerWithFullHouse = pleyerWithFullHouse();
 		Player playerWithPoker = null;
-		// itd dorobi metody i doda
+		// itd dorobi metody tworzoce playerow i dodac do listy
 		players.add(playerWithPoker);
 		players.add(playerWithFullHouse);
 
