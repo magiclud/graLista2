@@ -59,7 +59,7 @@ public abstract class Player {
 		return ownCards.get(4);
 	}
 
-	public Card selectHighestFromKind() {
+	public Card selectHighestFromFourOfAKind() {
 		// pierwsze cztery karty tworza czworke, wiec 4-ta karta ma najwyzsza
 		// wartosc
 		if (ownCards.get(0).getCourt().ordinal() == ownCards.get(1).getCourt().ordinal()) {

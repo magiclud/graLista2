@@ -77,7 +77,7 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectHighestFromKind().equals(new Card(CourtEnum.SIX, SuitEnum.HEART)));
+		assertTrue(firstPlayer.selectHighestFromFourOfAKind().equals(new Card(CourtEnum.SIX, SuitEnum.HEART)));
 	}
 
 	@Test
@@ -91,7 +91,7 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectHighestFromKind().equals(new Card(CourtEnum.TWO, SuitEnum.HEART)));
+		assertTrue(firstPlayer.selectHighestFromFourOfAKind().equals(new Card(CourtEnum.TWO, SuitEnum.HEART)));
 	}
 
 	@Test
