@@ -15,7 +15,7 @@ public class CheckerTest {
 	// TODO brakuje testow
 
 	@Test
-	public void checkIfPlayerHaveTwoPair() {
+	public void checkIfPlayerHaveTwoPair() {// TODO zle
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));

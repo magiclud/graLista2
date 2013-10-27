@@ -5,58 +5,120 @@ import java.util.List;
 
 import org.junit.Test;
 
-
 public class JudgeTest {
 
 	private Table currentTable = new Table(3, 2);
 
+	Player playerWithStraightFlush = playerWithStraightFlush();
+	Player playerWithFourOfAKind = playerWithFourOfAKind();
+	Player playerWithFullHouse = pleyerWithFullHouse();
+	Player playerWithFlush = playerWithFlush();
+	Player playerWithStraight = playerWithStraight();
+	Player playerWithThreeOfAKind = playerWithThreeOfAKind();
+	Player playerWithTwoPair = playerWithTwoPair();
+	Player playerWithOnePair = playerWithOnePair();
+
+	List<Player> players = new ArrayList<>();
+
 	@Test
 	public final void testSelectWinnersIfFirtFirstPlayerWithStraigthFlush() {
-		// firstCards = new ArrayList<>();
-		// firstCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		// firstCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
-		// firstCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
-		// firstCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		// firstCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		//
-		// secondCards = new ArrayList<>();
-		// secondCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		// secondCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
-		// secondCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
-		// secondCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		// secondCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		//
-		// thirdCards = new ArrayList<>();
-		// thirdCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		// thirdCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
-		// thirdCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		// thirdCards.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
-		// thirdCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		//
-		//
-		//
-		// // players.add(new Human(firstCards, someTable));
-		// // players.add(new Human(secondCards, someTable));
-		// // players.add(new Human(thirdCards, someTable));
-		// // players.add(new Human(fourthCards, someTable));
-		//
-		// playersCards.add(firstCards);
-		// playersCards.add(secondCards);
-		// playersCards.add(thirdCards);
 
-		List<Player> players = new ArrayList<>();
-
-		Player playerWithFullHouse = pleyerWithFullHouse();
-		Player playerWithPoker = null;
-		// itd dorobi metody tworzoce playerow i dodac do listy
-		players.add(playerWithPoker);
+		players.add(playerWithStraightFlush);
 		players.add(playerWithFullHouse);
+		players.add(playerWithFourOfAKind);
+		players.add(playerWithTwoPair);
 
 		List<Integer> expectedIdexes = new ArrayList<>();
 		// index 1 gracza
 		expectedIdexes.add(0);
 
 		assertEquals(Judge.selectWinners(players), expectedIdexes);
+	}
+
+	@Test
+	public final void testSortListOfPlayers() {
+		players.add(playerWithFourOfAKind);
+		players.add(playerWithStraightFlush);
+		players.add(playerWithTwoPair);
+		players.add(playerWithFullHouse);
+
+		List<Player> expectedOrder = new ArrayList<>();
+		expectedOrder.add(playerWithTwoPair);
+		expectedOrder.add(playerWithFullHouse);
+		expectedOrder.add(playerWithFourOfAKind);
+		expectedOrder.add(playerWithStraightFlush);
+
+		assertEquals(Judge.sortListOfPlayers(players), expectedOrder);
+	}
+
+	private Player playerWithOnePair() {
+		List<Card> onePair = new ArrayList<>();
+		onePair.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
+		onePair.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		return new Human(onePair, currentTable);
+	}
+
+	private Player playerWithTwoPair() {
+		List<Card> twoPair = new ArrayList<>();
+		twoPair.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		twoPair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		twoPair.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		twoPair.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		twoPair.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		return new Human(twoPair, currentTable);
+	}
+
+	private Player playerWithThreeOfAKind() {
+		List<Card> threeOfAKind = new ArrayList<>();
+		threeOfAKind.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		threeOfAKind.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		threeOfAKind.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		threeOfAKind.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
+		threeOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		return new Human(threeOfAKind, currentTable);
+	}
+
+	private Player playerWithStraight() {
+		List<Card> straight = new ArrayList<>();
+		straight.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		straight.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
+		straight.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
+		straight.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
+		straight.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		return new Human(straight, currentTable);
+	}
+
+	private Player playerWithFlush() {
+		List<Card> flush = new ArrayList<>();
+		flush.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		flush.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
+		flush.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
+		flush.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		flush.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+		return new Human(flush, currentTable);
+	}
+
+	private Player playerWithFourOfAKind() {
+		List<Card> fourOfAKind = new ArrayList<>();
+		fourOfAKind.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
+		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+		return new Human(fourOfAKind, currentTable);
+	}
+
+	private Player playerWithStraightFlush() {
+		List<Card> straightFlush = new ArrayList<>();
+		straightFlush.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
+		straightFlush.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
+		straightFlush.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
+		straightFlush.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+		straightFlush.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
+		return new Human(straightFlush, currentTable);
 	}
 
 	private Player pleyerWithFullHouse() {
