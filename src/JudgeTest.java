@@ -77,6 +77,27 @@ public class JudgeTest {
 	}
 
 	@Test
+	public final void testSelectWinnersIfThirdPlayerWithStraight() {
+
+		List<Player> players = new ArrayList<>();
+
+		// players.add(playerWithStraightFlush);
+		// players.add(playerWithFullHouse);
+		// players.add(playerWithFourOfAKind);
+		// players.add(playerWithTwoPair);
+
+		players.add(playerWithTwoPair);
+		players.add(playerWithThreeOfAKind);
+		players.add(playerWithStraight);
+		players.add(playerWithOnePair);
+		List<Integer> expectedIdexes = new ArrayList<>();
+		// index 1 gracza
+		expectedIdexes.add(2);
+
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
 	public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
 
 	}
