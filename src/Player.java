@@ -54,68 +54,68 @@ public abstract class Player {
 		return ownCards;
 	}
 
-	public CourtEnum selectFirstFromFlushOrStraight(List<Card> flush) {
+	public Card selectHighestFromFlushOrStraight() {
 		// najwyzsza karta to piata karta
-		return flush.get(4).getCourt();
+		return ownCards.get(4);
 	}
 
-	public CourtEnum selectFirstFromKind(List<Card> kind) {
+	public Card selectHighestFromKind() {
 		// pierwsze cztery karty tworza czworke, wiec 4-ta karta ma najwyzsza
 		// wartosc
-		if (kind.get(0).getCourt().ordinal() == kind.get(1).getCourt().ordinal()) {
-			return kind.get(3).getCourt();
+		if (ownCards.get(0).getCourt().ordinal() == ownCards.get(1).getCourt().ordinal()) {
+			return ownCards.get(3);
 		}// jesli nie, to pierwsza karta nie tworzy czorki
 		// najwyzsza karta to piata karta
-		return kind.get(4).getCourt();
+		return ownCards.get(4);
 	}
 
-	public CourtEnum selectFirstFromThree(List<Card> three) {
+	public Card selectHighestFromThree() {
 		// pierwsze trzy karty tworza 'trojke'
-		if (three.get(0).getCourt().equals(three.get(1).getCourt()) && three.get(1).getCourt().equals(three.get(2).getCourt())) {
+		if (ownCards.get(0).getCourt().equals(ownCards.get(1).getCourt()) && ownCards.get(1).getCourt().equals(ownCards.get(2).getCourt())) {
 			// 3-cia karta to najwyzsza wsrod tych 'trojek'
-			return three.get(2).getCourt();
+			return ownCards.get(2);
 		}
 		// 'trojke' tworzy 2-ga, 3-cia, 4-ta karta', najwyzsza wsrod nich to
 		// 4-ta
-		if (three.get(1).getCourt().equals(three.get(2).getCourt()) && three.get(2).getCourt().equals(three.get(3).getCourt())) {
-			return three.get(3).getCourt();
+		if (ownCards.get(1).getCourt().equals(ownCards.get(2).getCourt()) && ownCards.get(2).getCourt().equals(ownCards.get(3).getCourt())) {
+			return ownCards.get(3);
 		}// jesli nie to trojke tworza ostatnie 3 karty
-		return three.get(4).getCourt();
+		return ownCards.get(4);
 	}
 
-	public CourtEnum selectFirstFromTwoPair(List<Card> two) {
+	public Card selectHighestFromTwoPair() {
 		// dwojke tworzy 1.2. karta i 3.4.
-		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(2).getCourt().equals(two.get(3).getCourt())) {
-			return two.get(3).getCourt();
+		if (ownCards.get(0).getCourt().equals(ownCards.get(1).getCourt()) && ownCards.get(2).getCourt().equals(ownCards.get(3).getCourt())) {
+			return ownCards.get(3);
 		}// 1.2. i 4.5.
-		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(3).getCourt().equals(two.get(4).getCourt())) {
-			return two.get(4).getCourt();
+		if (ownCards.get(0).getCourt().equals(ownCards.get(1).getCourt()) && ownCards.get(3).getCourt().equals(ownCards.get(4).getCourt())) {
+			return ownCards.get(4);
 		}// dwojke tworzy 2.3. i 4.5
-		return two.get(4).getCourt();
+		return ownCards.get(4);
 	}
 
-	public CourtEnum slectSecondFromTwoPair(List<Card> two) {
+	public Card slectSecondHighestFromTwoPair() {
 		// dwojke tworzy 1.2. karta i 3.4.
-		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(2).getCourt().equals(two.get(3).getCourt())) {
-			return two.get(0).getCourt();
+		if (ownCards.get(0).getCourt().equals(ownCards.get(1).getCourt()) && ownCards.get(2).getCourt().equals(ownCards.get(3).getCourt())) {
+			return ownCards.get(3);
 		}// 1.2. i 4.5.
-		if (two.get(0).getCourt().equals(two.get(1).getCourt()) && two.get(3).getCourt().equals(two.get(4).getCourt())) {
-			return two.get(0).getCourt();
+		if (ownCards.get(0).getCourt().equals(ownCards.get(1).getCourt()) && ownCards.get(3).getCourt().equals(ownCards.get(4).getCourt())) {
+			return ownCards.get(4);
 		}// dwojke tworzy 2.3. i 4.5
-		return two.get(1).getCourt();
+		return ownCards.get(4);
 	}
 
-	public CourtEnum selectFirstFromOnePair(List<Card> one) {
-		if (one.get(0).getCourt().equals(one.get(1).getCourt())) {
-			return one.get(1).getCourt();
+	public Card selectHighestFromOnePair() {
+		if (ownCards.get(0).getCourt().equals(ownCards.get(1).getCourt())) {
+			return ownCards.get(1);
 		}
-		if (one.get(1).getCourt().equals(one.get(2).getCourt())) {
-			return one.get(2).getCourt();
+		if (ownCards.get(1).getCourt().equals(ownCards.get(2).getCourt())) {
+			return ownCards.get(2);
 		}
-		if (one.get(2).getCourt().equals(one.get(3).getCourt())) {
-			return one.get(3).getCourt();
+		if (ownCards.get(2).getCourt().equals(ownCards.get(3).getCourt())) {
+			return ownCards.get(3);
 		}
-		return one.get(4).getCourt();
+		return ownCards.get(4);
 	}
 
 }

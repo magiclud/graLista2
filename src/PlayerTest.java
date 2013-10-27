@@ -53,7 +53,7 @@ public class PlayerTest {
 	}*/
 
 	@Test
-	public void testPoprawnosciWylosowaniaNajwyzszejKartyZFlushaOrStraight() {
+	public void testPoprawnosciWybraniaNajwyzszejKartyZFlushaOrStraight() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
@@ -63,11 +63,11 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectFirstFromFlushOrStraight(someCards).equals(CourtEnum.SIX));
+		assertTrue(firstPlayer.selectHighestFromFlushOrStraight().equals(new Card(CourtEnum.SIX, SuitEnum.CLUB)));
 	}
 
 	@Test
-	public void testPoprawnosciWylosowaniaNajwyzszejKartyZCzworki() {
+	public void testPoprawnosciWybranaiNajwyzszejKartyZCzworki() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
@@ -77,11 +77,11 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectFirstFromKind(someCards).equals(CourtEnum.SIX));
+		assertTrue(firstPlayer.selectHighestFromKind().equals(new Card(CourtEnum.SIX, SuitEnum.HEART)));
 	}
 
 	@Test
-	public void testPoprawnosciWylosowaniaNajwyzszejKartyZCzworkiFromBeggining() {
+	public void testPoprawnosciWybraniaNajwyzszejKartyZCzworkiFromBeggining() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -91,11 +91,11 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectFirstFromKind(someCards).equals(CourtEnum.TWO));
+		assertTrue(firstPlayer.selectHighestFromKind().equals(new Card(CourtEnum.TWO, SuitEnum.HEART)));
 	}
 
 	@Test
-	public void checkSelectionHighestFromThree() {
+	public void checkPickHighestFromThree() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -105,11 +105,11 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectFirstFromThree(someCards).equals(CourtEnum.FIVE));
+		assertTrue(firstPlayer.selectHighestFromThree().equals(new Card(CourtEnum.FIVE, SuitEnum.HEART)));
 	}
 
 	@Test
-	public void checkSelectionHighestFromTwo() {
+	public void checkPickHighestFromTwo() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -119,11 +119,11 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectFirstFromTwoPair(someCards).equals(CourtEnum.SIX));
+		assertTrue(firstPlayer.selectHighestFromTwoPair().equals(new Card(CourtEnum.SIX, SuitEnum.DIAMOND)));
 	}
 
 	@Test
-	public void checkSelectionSecondHighestFromTwo() {
+	public void checkPickSecondHighestFromTwo() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -133,11 +133,11 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.slectSecondFromTwoPair(someCards).equals(CourtEnum.FIVE));
+		assertTrue(firstPlayer.slectSecondHighestFromTwoPair().equals(new Card(CourtEnum.SIX, SuitEnum.DIAMOND)));
 	}
 
 	@Test
-	public void checkSelectionHighestFromOne() {
+	public void checkPickHighestFromOne() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -147,7 +147,7 @@ public class PlayerTest {
 
 		firstPlayer = new Human(someCards, someTable);
 
-		assertTrue(firstPlayer.selectFirstFromOnePair(someCards).equals(CourtEnum.FIVE));
+		assertTrue(firstPlayer.selectHighestFromOnePair().equals(new Card(CourtEnum.FIVE, SuitEnum.HEART)));
 	}
 
 	@Test(expected = IllegalStateException.class)

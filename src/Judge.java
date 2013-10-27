@@ -3,10 +3,8 @@ import java.util.List;
 
 public class Judge {
 
-	List<Card> firstPlayersCards;
-	List<Card> secondPlayersCards;
-	List<Card> thirdPlayersCards;
-	List<Card> fourthPlayersCards;
+	List<List<Card>> playersCards;
+
 	boolean scoreFirst;
 	boolean scoreSecond;
 	boolean scoreThird;
@@ -20,11 +18,10 @@ public class Judge {
 
 	// public Judge(List<List<Card> players) { or
 	public Judge(List<Player> players) {
-		firstPlayersCards = collectCards.getPlayersCards(0);
-		secondPlayersCards = collectCards.getPlayersCards(1);
-		thirdPlayersCards = collectCards.getPlayersCards(2);
-		fourthPlayersCards = collectCards.getPlayersCards(3);
+		for (int i = 0; i < players.size(); i++) {
+			playersCards.add(collectCards.getPlayersCards(i));
 		compareResult();
+		}
 	}
 
 	public void compareResult() {
