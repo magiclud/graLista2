@@ -28,6 +28,9 @@ public class Judge {
 			}
 
 		}
+		if (indexesWinners.size() > 1) {
+
+		}
 
 		return indexesWinners;
 	}
