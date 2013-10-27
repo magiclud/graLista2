@@ -21,7 +21,8 @@ public class Judge {
 		// sprawdzam jeszcze raz czy ktos ma ten sam uklad
 		for (int i = 0; i < listOfPlayers.size() - 1; i++) {
 
-			if (listOfPlayers.get(winnerPlayerIndex).checkScore().ordinal() == listOfPlayers.get(i + 1).checkScore().ordinal()) {
+			if (listOfPlayers.get(winnerPlayerIndex).checkScore().ordinal() == listOfPlayers.get(i + 1).checkScore().ordinal()
+					&& winnerPlayerIndex != i + 1) {
 				winnerPlayerIndex = i + 1;
 				indexesWinners.add(winnerPlayerIndex);
 			}
