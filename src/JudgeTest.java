@@ -18,10 +18,10 @@ public class JudgeTest {
 	Player playerWithTwoPair = playerWithTwoPair();
 	Player playerWithOnePair = playerWithOnePair();
 
-	List<Player> players = new ArrayList<>();
-
 	@Test
 	public final void testSelectWinnersIfFirtFirstPlayerWithStraigthFlush() {
+
+		List<Player> players = new ArrayList<>();
 
 		players.add(playerWithStraightFlush);
 		players.add(playerWithFullHouse);
@@ -32,24 +32,27 @@ public class JudgeTest {
 		// index 1 gracza
 		expectedIdexes.add(0);
 
-		assertEquals(Judge.selectWinners(players), expectedIdexes);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 
-	@Test
-	public final void testSortListOfPlayers() {
-		players.add(playerWithFourOfAKind);
-		players.add(playerWithStraightFlush);
-		players.add(playerWithTwoPair);
-		players.add(playerWithFullHouse);
-
-		List<Player> expectedOrder = new ArrayList<>();
-		expectedOrder.add(playerWithTwoPair);
-		expectedOrder.add(playerWithFullHouse);
-		expectedOrder.add(playerWithFourOfAKind);
-		expectedOrder.add(playerWithStraightFlush);
-
-		assertEquals(Judge.sortListOfPlayers(players), expectedOrder);
-	}
+	// @Test
+	// public final void testSortListOfPlayers() {
+	//
+	// List<Player> players = new ArrayList<>();
+	//
+	// players.add(playerWithFourOfAKind);
+	// players.add(playerWithStraightFlush);
+	// players.add(playerWithTwoPair);
+	// players.add(playerWithFullHouse);
+	//
+	// List<Player> expectedOrder = new ArrayList<>();
+	// expectedOrder.add(playerWithTwoPair);
+	// expectedOrder.add(playerWithFullHouse);
+	// expectedOrder.add(playerWithFourOfAKind);
+	// expectedOrder.add(playerWithStraightFlush);
+	//
+	// assertEquals(Judge.sortListOfPlayers(players), expectedOrder);
+	// }
 
 	private Player playerWithOnePair() {
 		List<Card> onePair = new ArrayList<>();

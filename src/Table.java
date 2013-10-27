@@ -1,8 +1,10 @@
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class Table {
-	List<Player> players;
+
+	List<Player> players = new ArrayList<>();
 	List<List<Card>> endOfGame;
 
 	int numHumans, numBots;
@@ -22,7 +24,7 @@ public class Table {
 
 	public void startGame() {
 		for (int i = 0; i < players.size(); ++i) {
-			endOfGame.add((List<Card>) players.get(i).joinGame());
+			endOfGame.add(players.get(i).joinGame());
 		}
 	}
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany

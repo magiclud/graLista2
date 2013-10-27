@@ -3,24 +3,21 @@ import java.util.List;
 
 public class Judge {
 
-	static List<Player> players;
-	static List<Integer> indexesWinners = new ArrayList<>();
+	public static List<Integer> selectWinners(List<Player> listOfPlayers) {
 
-	public static List<Integer> selectWinners(List<Player> listOfPlayers) {// czy
-																			// moga
-																		// byc 4
-																		// remisy?
+		int winnerPlayerIndex = 0;
 
-		players = sortListOfPlayers(listOfPlayers);
-		if (players.get(players.size() - 1).checkScore().ordinal() > players.get(players.size() - 2).checkScore().ordinal()) {
-			indexesWinners.add(players.get(players.size() - 1).hashCode());
+		for (int i = 0; i < listOfPlayers.size() - 1; i++) {
+
+			if (listOfPlayers.get(winnerPlayerIndex).checkScore().ordinal() > listOfPlayers.get(i + 1).checkScore().ordinal()) {
+				winnerPlayerIndex = i + 1;
+			}
 		}
-		if (players.get(players.size() - 1).checkScore().ordinal() == players.get(players.size() - 2).checkScore().ordinal()) {
-			indexesWinners.add(players.get(players.size() - 1).hashCode());
-			indexesWinners.add(players.get(players.size() - 2).hashCode());
-		}
+
+		List<Integer> indexesWinners = new ArrayList<>();
+		indexesWinners.add(winnerPlayerIndex);
+
 		return indexesWinners;
-
 	}
 
 	static List<Player> sortListOfPlayers(List<Player> players) {
