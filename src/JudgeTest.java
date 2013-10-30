@@ -85,6 +85,37 @@ public class JudgeTest {
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 	@Test
+	public final void testSelectWinnersIfThreePlayersHaveStraightFlushEndDraw() {// remis
+		// dwoch graczy ma pokera - remis
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing());
+		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlush());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(1);
+		expectedIdexes.add(2);
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfFourPlayersHaveStraightFlushEndDraw() {// remis
+		// dwoch graczy ma pokera - remis
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlush());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(0);
+		expectedIdexes.add(1);
+		expectedIdexes.add(2);
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
 	public final void testSelectWinnersIfFirtFirstPlayerWithStraigthFlush() {
 
 		List<Player> players = new ArrayList<>();
