@@ -9,9 +9,9 @@ public class JudgeTest {
 
 	private Table currentTable = new Table(3, 1);
 
-	Player playerWithStraightFlush = playerWithStraightFlush();
+	Player playerWithStraightFlush = playerWithStraightFlushStartingWithTwoClub();
 	Player playerWithStraightFlush2 = playerWithStraightFlushStartingWith10();
-	Player playerWithStarightFlush3 = playerWithStarightFlush3();
+	Player playerWithStarightFlush3 = playerWithStarightFlushStartingWithTwoSpade();
 	Player playerWithFourOfAKind = playerWithFourOfAKind();
 	Player playerWithFourOfAKind2 = playerWithFourOfAKind2();
 	Player playerWithFullHouse = pleyerWithFullHouse();
@@ -62,7 +62,7 @@ public class JudgeTest {
 		// dwoch graczy ma pokera - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing());
-		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlushStartingWithTwoClub());
 		players.add(playerWithNothing2());
 		players.add(playerWithNothing3());
 		players.add(playerWithStraightFlushStartingWith10());
@@ -89,9 +89,9 @@ public class JudgeTest {
 		// dwoch graczy ma pokera - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing());
-		players.add(playerWithStraightFlush());
-		players.add(playerWithStraightFlush());
-		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlushStartingWithTwoClub());
+		players.add(playerWithStarightFlushStartingWithTwoDiamond());
+		players.add(playerWithStarightFlushStartingWithTwoHeart());
 		List<Integer> expectedIdexes = new ArrayList<>();
 		expectedIdexes.add(1);
 		expectedIdexes.add(2);
@@ -103,10 +103,10 @@ public class JudgeTest {
 	public final void testSelectWinnersIfFourPlayersHaveStraightFlushEndDraw() {// remis
 		// dwoch graczy ma pokera - remis
 		List<Player> players = new ArrayList<>();
-		players.add(playerWithStraightFlush());
-		players.add(playerWithStraightFlush());
-		players.add(playerWithStraightFlush());
-		players.add(playerWithStraightFlush());
+		players.add(playerWithStraightFlushStartingWithTwoClub());
+		players.add(playerWithStarightFlushStartingWithTwoSpade());
+		players.add(playerWithStarightFlushStartingWithTwoDiamond());
+		players.add(playerWithStarightFlushStartingWithTwoHeart());
 		List<Integer> expectedIdexes = new ArrayList<>();
 		expectedIdexes.add(0);
 		expectedIdexes.add(1);
@@ -662,7 +662,7 @@ public class JudgeTest {
 		return new Human(fourOfAKind, currentTable);
 	}
 
-	private Player playerWithStraightFlush() {
+	private Player playerWithStraightFlushStartingWithTwoClub() {
 		List<Card> straightFlush = new ArrayList<>();
 		straightFlush.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		straightFlush.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
@@ -681,13 +681,33 @@ public class JudgeTest {
 		straightFlush.add(new Card(CourtEnum.ACE, SuitEnum.HEART));
 		return new Human(straightFlush, currentTable);
 	}
-	private Player playerWithStarightFlush3() {
+	private Player playerWithStarightFlushStartingWithTwoSpade() {
 		List<Card> straightFlush3 = new ArrayList<>();
 		straightFlush3.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.THREE, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.FOUR, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.FIVE, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		return new Human(straightFlush3, currentTable);
+	}
+
+	private Player playerWithStarightFlushStartingWithTwoDiamond() {
+		List<Card> straightFlush3 = new ArrayList<>();
+		straightFlush3.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		straightFlush3.add(new Card(CourtEnum.THREE, SuitEnum.DIAMOND));
+		straightFlush3.add(new Card(CourtEnum.FOUR, SuitEnum.DIAMOND));
+		straightFlush3.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
+		straightFlush3.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		return new Human(straightFlush3, currentTable);
+	}
+
+	private Player playerWithStarightFlushStartingWithTwoHeart() {
+		List<Card> straightFlush3 = new ArrayList<>();
+		straightFlush3.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
+		straightFlush3.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
+		straightFlush3.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
+		straightFlush3.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		straightFlush3.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		return new Human(straightFlush3, currentTable);
 	}
 }
