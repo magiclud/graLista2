@@ -104,7 +104,6 @@ public class JudgeTest {
 
 		List<Integer> expectedIdexes = new ArrayList<>();
 		expectedIdexes.add(2);
-		expectedIdexes.add(3);
 
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}

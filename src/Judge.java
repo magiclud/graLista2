@@ -35,15 +35,29 @@ public class Judge {
 		if (indexesWinners.size() > 1) {
 			SequenceEnum layout = listOfPlayers.get(indexesWinners.get(0)).checkScore();
 			int highest = indexesWinners.get(0);
+			int playersGoodHand = indexesWinners.size();
 			if (layout.equals(SequenceEnum.STRAIGHT_TFLUSH) || layout.equals(SequenceEnum.FLUSH) || layout.equals(SequenceEnum.STRAIGHT)) {
-				for (int i = 0; i < indexesWinners.size() - 1; i++) {
+				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
+				for (int i = 0; i < playersGoodHand - 1; i++) {
+
+					if (listOfPlayers.get(highest).selectHighestFromFlushOrStraight().getCourt().ordinal() == listOfPlayers
+							.get(indexesWinners.get(i + 1)).selectHighestFromFlushOrStraight().getCourt().ordinal()
+) {
+						int highest2 = indexesWinners.get(i + 1);
+						indexesWinners.clear();
+						indexesWinners.add(highest);
+						indexesWinners.add(highest2);
+						break;
+					}
+					// gdy nie ma remisu i karta rozstrzyga gre
 					if (listOfPlayers.get(highest).selectHighestFromFlushOrStraight().getCourt().ordinal() < listOfPlayers
 							.get(indexesWinners.get(i + 1)).selectHighestFromFlushOrStraight().getCourt().ordinal()) {
 						highest = highest + 1;
 					}
+					indexesWinners.clear();
+					indexesWinners.add(highest);
 				}
-				indexesWinners.clear();
-				indexesWinners.add(highest);
+
 
 				// sortHighest.sort(highestCards);
 			}
