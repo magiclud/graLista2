@@ -10,7 +10,7 @@ public class JudgeTest {
 	private Table currentTable = new Table(3, 1);
 
 	Player playerWithStraightFlush = playerWithStraightFlush();
-	Player playerWithStraightFlush2 = playerWithStraightFlush2();
+	Player playerWithStraightFlush2 = playerWithStraightFlushStartingWith10();
 	Player playerWithStarightFlush3 = playerWithStarightFlush3();
 	Player playerWithFourOfAKind = playerWithFourOfAKind();
 	Player playerWithFourOfAKind2 = playerWithFourOfAKind2();
@@ -54,6 +54,21 @@ public class JudgeTest {
 		List<Integer> expectedIdexes = new ArrayList<>();
 		// expectedIdexes.add(1);
 		expectedIdexes.add(2);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushOneOnTheEnd() {
+		// dwoch graczy ma pokera - jeden wygrywa
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing());
+		players.add(playerWithStraightFlush());
+		players.add(playerWithNothing2());
+		players.add(playerWithNothing3());
+		players.add(playerWithStraightFlushStartingWith10());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		// expectedIdexes.add(1);
+		expectedIdexes.add(4);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 	@Test
@@ -625,7 +640,8 @@ public class JudgeTest {
 		straightFlush.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		return new Human(straightFlush, currentTable);
 	}
-	private Player playerWithStraightFlush2() {
+
+	private Player playerWithStraightFlushStartingWith10() {
 		List<Card> straightFlush = new ArrayList<>();
 		straightFlush.add(new Card(CourtEnum.TEN, SuitEnum.HEART));
 		straightFlush.add(new Card(CourtEnum.JACK, SuitEnum.HEART));
