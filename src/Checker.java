@@ -3,7 +3,77 @@ import java.util.List;
 
 public class Checker {
 
-	private boolean checkIfStraightFlash(List<Card> cardsToTest) {
+	public static Card selectHighestFromFlushOrStraight(List<Card> cardsToTest) {
+		// najwyzsza karta to piata karta
+		return cardsToTest.get(4);
+	}
+
+	public static Card selectHighestFromFourOfAKind(List<Card> cardsToTest) {
+		// pierwsze cztery karty tworza czworke, wiec 4-ta karta ma najwyzsza
+		// wartosc
+		if (cardsToTest.get(0).getCourt().ordinal() == cardsToTest.get(1).getCourt().ordinal()) {
+			return cardsToTest.get(3);
+		}// jesli nie, to pierwsza karta nie tworzy czorki
+			// najwyzsza karta to piata karta
+		return cardsToTest.get(4);
+	}
+
+	public static Card selectHighestFromThree(List<Card> cardsToTest) {
+		// pierwsze trzy karty tworza 'trojke'
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(1).getCourt().equals(cardsToTest.get(2).getCourt())) {
+			// 3-cia karta to najwyzsza wsrod tych 'trojek'
+			return cardsToTest.get(2);
+		}
+		// 'trojke' tworzy 2-ga, 3-cia, 4-ta karta', najwyzsza wsrod nich to
+		// 4-ta
+		if (cardsToTest.get(1).getCourt().equals(cardsToTest.get(2).getCourt())
+				&& cardsToTest.get(2).getCourt().equals(cardsToTest.get(3).getCourt())) {
+			return cardsToTest.get(3);
+		}// jesli nie to trojke tworza ostatnie 3 karty
+		return cardsToTest.get(4);
+	}
+
+	public static Card selectHighestFromTwoPair(List<Card> cardsToTest) {
+		// dwojke tworzy 1.2. karta i 3.4.
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(2).getCourt().equals(cardsToTest.get(3).getCourt())) {
+			return cardsToTest.get(3);
+		}// 1.2. i 4.5.
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(3).getCourt().equals(cardsToTest.get(4).getCourt())) {
+			return cardsToTest.get(4);
+		}// dwojke tworzy 2.3. i 4.5
+		return cardsToTest.get(4);
+	}
+
+	public static Card slectSecondHighestFromTwoPair(List<Card> cardsToTest) {
+		// dwojke tworzy 1.2. karta i 3.4.
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(2).getCourt().equals(cardsToTest.get(3).getCourt())) {
+			return cardsToTest.get(3);
+		}// 1.2. i 4.5.
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(3).getCourt().equals(cardsToTest.get(4).getCourt())) {
+			return cardsToTest.get(4);
+		}// dwojke tworzy 2.3. i 4.5
+		return cardsToTest.get(4);
+	}
+
+	public static Card selectHighestFromOnePair(List<Card> cardsToTest) {
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())) {
+			return cardsToTest.get(1);
+		}
+		if (cardsToTest.get(1).getCourt().equals(cardsToTest.get(2).getCourt())) {
+			return cardsToTest.get(2);
+		}
+		if (cardsToTest.get(2).getCourt().equals(cardsToTest.get(3).getCourt())) {
+			return cardsToTest.get(3);
+		}
+		return cardsToTest.get(4);
+	}
+
+	private static boolean checkIfStraightFlash(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -22,7 +92,7 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfFourOfAKing(List<Card> cardsToTest) {
+	private static boolean checkIfFourOfAKing(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -42,7 +112,7 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfFullHouse(List<Card> cardsToTest) {
+	private static boolean checkIfFullHouse(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -62,7 +132,7 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfFlush(List<Card> cardsToTest) {
+	private static boolean checkIfFlush(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -78,7 +148,7 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfStraight(List<Card> cardsToTest) {
+	private static boolean checkIfStraight(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -99,7 +169,7 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfThreeOfAKind(List<Card> cardsToTest) {
+	private static boolean checkIfThreeOfAKind(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -118,12 +188,12 @@ public class Checker {
 		return false;
 	}
 
-	private boolean checkIfTwoPair(List<Card> cardsToTest) {
+	private static boolean checkIfTwoPair(List<Card> cardsToTest) {
 		return false;
 		// TODO
 	}
 
-	private boolean checkIfOnePair(List<Card> cardsToTest) {
+	private static boolean checkIfOnePair(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
 		Card thirdCard = cardsToTest.get(2);
@@ -137,9 +207,9 @@ public class Checker {
 		return false;
 	}
 
-	public SequenceEnum checkScore(List<Card> cardsToTest) {
+	public static SequenceEnum checkScore(List<Card> cardsToTest) {
 		if (checkIfStraightFlash(cardsToTest)) {
-			return SequenceEnum.STRAIGHT_TFLUSH;
+			return SequenceEnum.STRAIGHT_FLUSH;
 		}
 		if (checkIfFourOfAKing(cardsToTest)) {
 			return SequenceEnum.FOUR_OF_A_KIND;
