@@ -3,9 +3,31 @@ import java.util.List;
 
 public class Checker {
 
+
 	public static Card selectHighestFromFlushOrStraight(List<Card> cardsToTest) {
 		// najwyzsza karta to piata karta
-		return cardsToTest.get(4);
+		return cardsToTest.get(4);// TODO a moze 4 zamienic na cardTotest.size-1
+									// ?
+	}
+
+	public static Card selectSecondHighestFromFlushOrStraight(List<Card> cardsToTest) {
+		// najwyzsza druga karta to czwarta karta
+		return cardsToTest.get(3);
+	}
+
+	public static Card selectThirdHighestFromFlushOrStraight(List<Card> cardsToTest) {
+		// najwyzsza trzecia karta
+		return cardsToTest.get(2);
+	}
+
+	public static Card selectFourthHighestFromFlushOrStraight(List<Card> cardsToTest) {
+		// najwyzsza czwarta karta
+		return cardsToTest.get(1);
+	}
+
+	public static Card selectFifthHighestFromFlushOrStraight(List<Card> cardsToTest) {
+		// najwyzsza piata karta
+		return cardsToTest.get(0);
 	}
 
 	public static Card selectHighestFromFourOfAKind(List<Card> cardsToTest) {
@@ -80,6 +102,7 @@ public class Checker {
 		Card fourthCard = cardsToTest.get(3);
 		Card fifthCard = cardsToTest.get(4);
 		// piec kolejnych kart w jednym kolorze
+		// Tu jest uwzględniony przypadek, że as może zamienić się na 2-kę ?
 		if (firstCard.getCourt().ordinal() + 1 == secondCard.getCourt().ordinal()
 				&& firstCard.getCourt().ordinal() + 2 == thirdCard.getCourt().ordinal()
 				&& firstCard.getCourt().ordinal() + 3 == fourthCard.getCourt().ordinal()
@@ -91,6 +114,7 @@ public class Checker {
 		}
 		return false;
 	}
+
 
 	private static boolean checkIfFourOfAKing(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);

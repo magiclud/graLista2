@@ -187,7 +187,7 @@ public class JudgeTest {
 		players.add(playerWithStraightStartWith2());
 		players.add(playerWithStraightStartWith4());
 		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(2);
+		expectedIdexes.add(3);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 

@@ -1,17 +1,13 @@
 public class Card {
 
-	private CourtEnum court;
-	private SuitEnum suit;
+	private CourtEnum court; // cyfra
+	private SuitEnum suit; // kolor
 
 	public Card(CourtEnum court, SuitEnum suit) {
 
 		this.court = court;
 		this.suit = suit;
 	}
-
-	// String getKarta() {
-	// return court + "" + suit;
-	// }
 
 	CourtEnum getCourt() {
 		return court;
@@ -21,7 +17,7 @@ public class Card {
 		return suit;
 	}
 
-	@Override
+	@Override 
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;

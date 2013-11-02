@@ -1,5 +1,6 @@
 import static org.junit.Assert.*;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -38,6 +39,23 @@ public class BotTest {
 		Bot exampleBot = new Bot(exampleDeck.giveCards(5), exampleTable);
 		exampleBot.wybierzLosowo();
 		exampleBot.wybierzLosowo();
+	}
+	@Test
+	public void testOrderCourtDowolneRozstawienie() {
+		List<Card> someCards = new ArrayList<Card>();
+		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
+		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
+		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
+
+		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.KING, SuitEnum.DIAMOND));
+		
+		
+		
+		MakeOrder example = new MakeOrder(someCards);
+		example.doTheJob();
+		assertTrue(example.orderByCourtQuality.get(0).getCourt().equals(CourtEnum.KING));
+		assertTrue(example.orderBySuitQuality.get(0).getSuit().equals(SuitEnum.DIAMOND));
 	}
 	
 
