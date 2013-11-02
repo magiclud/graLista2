@@ -12,6 +12,8 @@ public class JudgeTest {
 	Player playerWithStraightFlushStartingWith2Club = playerWithStraightFlush();
 	Player playerWithStraightFlushStartingWith10 = playerWithStraightFlush2();
 	Player playerWithStarightFlushStartingWith2Spade = playerWithStraightFlush3();
+	Player playerWithStraightFlushStartingWith2Heart = playerWithStraightFlushStartingWith2Heart();
+	Player playerWithStraightFlushStartingWith2Diamond = playerWithStraightFlushStartingWith2Diamond();
 	Player playerWithFourOfAKindWith6 = playerWithFourOfAKind();
 	Player playerWithFourOfAKindWith8 = playerWithFourOfAKind2();
 	Player playerWithFullHouseWith6i2 = pleyerWithFullHouse();
@@ -43,19 +45,67 @@ public class JudgeTest {
 	Player playerWithNothing4 = playerWithNothing4();
 	Player palyerWithNothing5 = plyerWithNothing5();
 
+	/************** test nie przechodzi **************/
+	// //////////
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveStraightFlush() {
+	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushOneOnTheEnd() {
 		// dwoch graczy ma pokera - jeden wygrywa
 		List<Player> players = new ArrayList<>();
-		players.add(playerWithNothing1);
+		players.add(playerWithNothing);
 		players.add(playerWithStraightFlushStartingWith2Club);
+		players.add(playerWithNothing2);
+		players.add(playerWithNothing3);
 		players.add(playerWithStraightFlushStartingWith10);
-		players.add(playerWithOnePairWith5);
 		List<Integer> expectedIdexes = new ArrayList<>();
 		// expectedIdexes.add(1);
-		expectedIdexes.add(2);
+		expectedIdexes.add(4);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
+
+	@Test
+	public final void testSelectWinnersIfThreePlayersHaveStraightFlushEndDraw() {// remis
+		// dwoch graczy ma pokera - remis
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing);
+		players.add(playerWithStraightFlushStartingWith2Club);
+		players.add(playerWithStarightFlushStartingWith2Spade);
+		players.add(playerWithStraightFlushStartingWith2Heart);
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(1);
+		expectedIdexes.add(2);
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfFourPlayersHaveStraightFlushEndDraw() {// remis
+		// dwoch graczy ma pokera - remis
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithStraightFlushStartingWith2Club);
+		players.add(playerWithStarightFlushStartingWith2Spade);
+		players.add(playerWithStraightFlushStartingWith2Diamond);
+		players.add(playerWithStraightFlushStartingWith2Heart);
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(0);
+		expectedIdexes.add(1);
+		expectedIdexes.add(2);
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	// @Test
+	// public final void testSelectWinnersIfTwoPlayersHaveStraightFlush() {
+	// // dwoch graczy ma pokera - jeden wygrywa
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithNothing1);
+	// players.add(playerWithStraightFlushStartingWith2Club);
+	// players.add(playerWithStraightFlushStartingWith10);
+	// players.add(playerWithOnePairWith5);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// // expectedIdexes.add(1);
+	// expectedIdexes.add(2);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushEndDraw() {// remis
 		// dwoch graczy ma pokera - remis
@@ -86,56 +136,58 @@ public class JudgeTest {
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 
-	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveFourOfAKind() {
-		// dwoch graczy ma 'czworke' - jeden wygrywa//TODO
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithNothing1);
-		players.add(playerWithOnePairWith5);
-		players.add(playerWithFourOfAKindWith6);
-		players.add(playerWithFourOfAKindWith8);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(3);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
-	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveFullHouse() {
-		// dwoch graczy ma '3 i 2' - jeden wygrywa//TODO
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithFullHouseWith9i10);
-		players.add(playerWithFullHouseWith6i2);
-		players.add(playerWithOnePairWith5);
-		players.add(playerWithTwoPairWith65i2);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(0);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+	// @Test
+	// public final void testSelectWinnersIfTwoPlayersHaveFourOfAKind() {
+	// // dwoch graczy ma 'czworke' - jeden wygrywa//TODO
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithNothing1);
+	// players.add(playerWithOnePairWith5);
+	// players.add(playerWithFourOfAKindWith6);
+	// players.add(playerWithFourOfAKindWith8);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(3);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
+	// @Test
+	// public final void testSelectWinnersIfTwoPlayersHaveFullHouse() {
+	// // dwoch graczy ma '3 i 2' - jeden wygrywa//TODO
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithFullHouseWith9i10);
+	// players.add(playerWithFullHouseWith6i2);
+	// players.add(playerWithOnePairWith5);
+	// players.add(playerWithTwoPairWith65i2);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(0);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 
-	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveTwoCardsTwoPlayersHaveFlush() {
-		// dwoch graczy ma kolor - jeden wygrywa - z wyzsza karta
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithTwoPairWith65i2);
-		players.add(playerWithFlushWithClub);
-		players.add(playerWithTwoPairWith26i5);
-		players.add(playerWithFlushWithSpade);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(3);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
-	@Test
-	public final void testSelectWinnersIfThreePlayersHaveFlushAndFourIdenticalCards() {
-		// trzech graczy ma kolor - jeden wygrywa - ale nalezy sprawdzic cztery
-		// karty
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithFlushWithDiamond);
-		players.add(playerWithFlushWithClub);
-		players.add(playerWithNothing3);
-		players.add(playerWithFlushWithSpade);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(3);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+	// @Test
+	// public final void
+	// testSelectWinnersIfTwoPlayersHaveTwoCardsTwoPlayersHaveFlush() {
+	// // dwoch graczy ma kolor - jeden wygrywa - z wyzsza karta
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithTwoPairWith65i2);
+	// players.add(playerWithFlushWithClub);
+	// players.add(playerWithTwoPairWith26i5);
+	// players.add(playerWithFlushWithSpade);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(3);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
+	// @Test
+	// public final void
+	// testSelectWinnersIfThreePlayersHaveFlushAndFourIdenticalCards() {
+	// // trzech graczy ma kolor - jeden wygrywa - ale nalezy sprawdzic cztery
+	// // karty
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithFlushWithDiamond);
+	// players.add(playerWithFlushWithClub);
+	// players.add(playerWithNothing3);
+	// players.add(playerWithFlushWithSpade);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(3);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveFlushAndFiveIdenticalCardsEndDraw() {
 		// dwoch graczy ma kolor i piec kart o tych samych figurach - remis
@@ -162,18 +214,19 @@ public class JudgeTest {
 		expectedIdexes.add(2);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
-	@Test
-	public final void testSelectWinnersIfThreePlayersHaveStraight() {
-		// trzech graczy ma Strit - jeden wygrywa
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithTwoPairWith65i2);
-		players.add(playerWithStraightStartWith3);
-		players.add(playerWithStraightStartWith2);
-		players.add(playerWithStraightStartWith4);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(2);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+
+	// @Test
+	// public final void testSelectWinnersIfThreePlayersHaveStraight() {
+	// // trzech graczy ma Strit - jeden wygrywa
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithTwoPairWith65i2);
+	// players.add(playerWithStraightStartWith3);
+	// players.add(playerWithStraightStartWith2);
+	// players.add(playerWithStraightStartWith4);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(2);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveStraightEndDraw() {
 		// dwoch graczy ma Strit i karty o jednakowych figurach - remis
@@ -187,32 +240,32 @@ public class JudgeTest {
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 
-	@Test
-	public final void testSelectWinnersIfThreePlayersHaveThreeOfAKind() {
-		// trzech graczy ma 'trojke' - jeden wygrywa
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithThreeOfAKindWith6);
-		players.add(playerWithThreeOfAKindWith5);
-		players.add(playerWithNothing1);
-		players.add(playerWithThreeOfAKindWith7);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(3);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+	// @Test
+	// public final void testSelectWinnersIfThreePlayersHaveThreeOfAKind() {
+	// // trzech graczy ma 'trojke' - jeden wygrywa
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithThreeOfAKindWith6);
+	// players.add(playerWithThreeOfAKindWith5);
+	// players.add(playerWithNothing1);
+	// players.add(playerWithThreeOfAKindWith7);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(3);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 
-	@Test
-	public final void testSelectWinnersIfThreePlayersHaveTwoPair() {
-		// trzech graczy maja uklad dwoch par - wygrywa ten o najsilniejszym
-		// ukldzie
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithTwoPairWithA7iK);
-		players.add(playerWithNothing2);
-		players.add(playerWithTwoPairWith26i5);
-		players.add(playerWithTwoPairWith65i2);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(0);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+	// @Test
+	// public final void testSelectWinnersIfThreePlayersHaveTwoPair() {
+	// // trzech graczy maja uklad dwoch par - wygrywa ten o najsilniejszym
+	// // ukldzie
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithTwoPairWithA7iK);
+	// players.add(playerWithNothing2);
+	// players.add(playerWithTwoPairWith26i5);
+	// players.add(playerWithTwoPairWith65i2);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(0);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalFirstPair() {
 		// dwoch graczy maja 'dwojke' i jednakowa mocniejesza pare- wygrywa ten
@@ -264,45 +317,46 @@ public class JudgeTest {
 		expectedIdexes.add(3);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
-	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveOnePair() {
-		// dwoch graczy ma 'One Pair' - wygrywa gracz z najsilniejsza para
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithNothing3);
-		players.add(playerWithNothing2);
-		players.add(playerWithOnePair3WithQueen);
-		players.add(playerWithOnePairWith5);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(3);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
-	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() {
-		// dwoch graczy ma identyczna 'One Pair' - wygrywa gracz z najsilniejsza
-		// kolejna karta - w tym przypadku nalezy sprawdzic trzecia kolejna
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithNothing3);
-		players.add(playerWithNothing2);
-		players.add(playerWithOnePairWithQueen);
-		players.add(playerWithOnePair2WithQueen);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(3);
-		expectedIdexes.add(2);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
 
-	@Test
-	public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
-		// wygrywa jeden gracz
-		List<Player> players = new ArrayList<>();
-		players.add(playerWithNothing3);
-		players.add(playerWithNothing2);
-		players.add(playerWithNothing1);
-		players.add(playerWithNothing4);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(2);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+	// @Test
+	// public final void testSelectWinnersIfTwoPlayersHaveOnePair() {
+	// // dwoch graczy ma 'One Pair' - wygrywa gracz z najsilniejsza para
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithNothing3);
+	// players.add(playerWithNothing2);
+	// players.add(playerWithOnePair3WithQueen);
+	// players.add(playerWithOnePairWith5);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(3);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
+	// @Test
+	// public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() {
+	// // dwoch graczy ma identyczna 'One Pair' - wygrywa gracz z najsilniejsza
+	// // kolejna karta - w tym przypadku nalezy sprawdzic trzecia kolejna
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithNothing3);
+	// players.add(playerWithNothing2);
+	// players.add(playerWithOnePairWithQueen);
+	// players.add(playerWithOnePair2WithQueen);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(3);
+	// expectedIdexes.add(2);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
+
+	// @Test
+	// public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
+	// // wygrywa jeden gracz
+	// List<Player> players = new ArrayList<>();
+	// players.add(playerWithNothing3);
+	// players.add(playerWithNothing2);
+	// players.add(playerWithNothing1);
+	// players.add(playerWithNothing4);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(2);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 	@Test
 	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndCardsAreIdenticalEndDraw() {
 		// dwoch graczy ma identyczne karty bez ukladu - remis
@@ -314,16 +368,18 @@ public class JudgeTest {
 		expectedIdexes.add(1);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
-	@Test
-	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndSomeAreIdentical() {
-		// dwoch graczy maja podobne karty- jeden wygrywa
-		List<Player> players = new ArrayList<>();
-		players.add(palyerWithNothing5);
-		players.add(playerWithNothing4);
-		List<Integer> expectedIdexes = new ArrayList<>();
-		expectedIdexes.add(1);
-		assertEquals(expectedIdexes, Judge.selectWinners(players));
-	}
+
+	// @Test
+	// public final void
+	// testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndSomeAreIdentical() {
+	// // dwoch graczy maja podobne karty- jeden wygrywa
+	// List<Player> players = new ArrayList<>();
+	// players.add(palyerWithNothing5);
+	// players.add(playerWithNothing4);
+	// List<Integer> expectedIdexes = new ArrayList<>();
+	// expectedIdexes.add(1);
+	// assertEquals(expectedIdexes, Judge.selectWinners(players));
+	// }
 
 	// @Test
 	// public final void testSortListOfPlayers() {
@@ -642,5 +698,25 @@ public class JudgeTest {
 		straightFlush3.add(new Card(CourtEnum.FIVE, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 		return new Human(straightFlush3, currentTable);
+	}
+
+	public Player playerWithStraightFlushStartingWith2Heart() {
+		List<Card> straightFlush4 = new ArrayList<>();
+		straightFlush4.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
+		straightFlush4.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
+		straightFlush4.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
+		straightFlush4.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
+		straightFlush4.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
+		return new Human(straightFlush4, currentTable);
+	}
+
+	public Player playerWithStraightFlushStartingWith2Diamond() {
+		List<Card> straightFlush5 = new ArrayList<>();
+		straightFlush5.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
+		straightFlush5.add(new Card(CourtEnum.THREE, SuitEnum.DIAMOND));
+		straightFlush5.add(new Card(CourtEnum.FOUR, SuitEnum.DIAMOND));
+		straightFlush5.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
+		straightFlush5.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
+		return new Human(straightFlush5, currentTable);
 	}
 }
