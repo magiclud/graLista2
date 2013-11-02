@@ -34,30 +34,34 @@ public class Judge {
 			// rowniez najlepsze karty
 			int highest = indexesWinners.get(0);
 
+			// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+			// najwyzszych kartach
+			List<Integer> indexesHighest = new ArrayList<>();
+
 			// okreslam wynik pomiedzy graczami gdy maja okreslony uklad -
 			// algorytm powtarza sie dla Staiht flush, flush, straight
 			if (layout.equals(SequenceEnum.STRAIGHT_FLUSH) || layout.equals(SequenceEnum.FLUSH) || layout.equals(SequenceEnum.STRAIGHT)) {
-				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
-				for (int i = 0; i < indexesWinners.size(); i++) {
-					if (Checker.selectHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Checker
-							.selectHighestFromFlushOrStraight(listOfPlayers.get(indexesWinners.get(i + 1)).getOwnCards()).getCourt()
-							.ordinal()) {
-						int highest2 = indexesWinners.get(i + 1);
-						indexesWinners.clear();
-						indexesWinners.add(highest);
-						indexesWinners.add(highest2);
-						break;
-					}
-					// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+
+				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+				for (int i = 0; i < indexesWinners.size() - 1; i++) {
 					if (Checker.selectHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Checker
 							.selectHighestFromFlushOrStraight(listOfPlayers.get(indexesWinners.get(i + 1)).getOwnCards()).getCourt()
 							.ordinal()) {
-						highest = highest + 1;
+						highest = indexesWinners.get(i + 1);
 					}
-					indexesWinners.clear();
-					indexesWinners.add(highest);
 				}
+				indexesHighest.add(highest);
 
+				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
+				for (int i = 0; i < indexesWinners.size(); i++) {
+					if (Checker.selectHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Checker
+							.selectHighestFromFlushOrStraight(listOfPlayers.get(indexesWinners.get(i)).getOwnCards()).getCourt()
+							.ordinal()
+							&& highest != indexesWinners.get(i)) {
+						//highest = i + 1;
+						indexesHighest.add(indexesWinners.get(i));
+					}
+				}
 				// sortHighest.sort(highestCards);
 			}
 			// if (layout.equals(SequenceEnum.FOUR_OF_A_KIND)) {
@@ -93,6 +97,8 @@ public class Judge {
 			// if (!highestCards.get(0).equals(highestCards.get(1))) {
 			// // wygral pierwszy index
 			//
+			indexesWinners.clear();
+			indexesWinners = indexesHighest;
 		}
 
 		return indexesWinners;
