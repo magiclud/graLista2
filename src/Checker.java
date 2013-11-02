@@ -9,7 +9,6 @@ public class Checker {
 		return cardsToTest.get(4);// TODO a moze 4 zamienic na cardTotest.size-1
 									// ?
 	}
-
 	public static Card selectSecondHighestFromFlushOrStraight(List<Card> cardsToTest) {
 		// najwyzsza druga karta to czwarta karta
 		return cardsToTest.get(3);
@@ -38,6 +37,11 @@ public class Checker {
 		}// jesli nie, to pierwsza karta nie tworzy czorki
 			// najwyzsza karta to piata karta
 		return cardsToTest.get(4);
+	}
+
+	public static Card selectHighestFromFullHouse(List<Card> cardsToTest) {
+		// jedna z kart tworzacych trojke zawsze bedzie na miejscu trzecim
+		return cardsToTest.get(2);
 	}
 
 	public static Card selectHighestFromThree(List<Card> cardsToTest) {
@@ -82,6 +86,19 @@ public class Checker {
 		return cardsToTest.get(4);
 	}
 
+	public static Card selectKickerFromTwoPair(List<Card> cardsToTest) {
+		// dwojke tworzy 1.2. karta i 3.4.
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(2).getCourt().equals(cardsToTest.get(3).getCourt())) {
+			return cardsToTest.get(4);
+		}// 1.2. i 4.5.
+		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
+				&& cardsToTest.get(3).getCourt().equals(cardsToTest.get(4).getCourt())) {
+			return cardsToTest.get(2);
+		}// dwojke tworzy 2.3. i 4.5
+		return cardsToTest.get(0);
+	}
+
 	public static Card selectHighestFromOnePair(List<Card> cardsToTest) {
 		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())) {
 			return cardsToTest.get(1);
@@ -94,6 +111,7 @@ public class Checker {
 		}
 		return cardsToTest.get(4);
 	}
+
 
 	private static boolean checkIfStraightFlash(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
