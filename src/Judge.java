@@ -543,11 +543,10 @@ public class Judge {
 		List<Integer> possibleIndexesWinners = new ArrayList<>();
 		possibleIndexesWinners.add(possibleWinnerIndex);
 		// sprawdzam jeszcze raz czy ktos ma ten sam uklad
+		SequenceEnum posiibleWinnerScore = listOfPlayers.get(possibleWinnerIndex).checkScore();
 		for (int i = 0; i < listOfPlayers.size(); i++) {
-			if (listOfPlayers.get(possibleWinnerIndex).checkScore().ordinal() == listOfPlayers.get(i).checkScore().ordinal()
-					&& possibleWinnerIndex != i) {
-				possibleWinnerIndex = i;
-				possibleIndexesWinners.add(possibleWinnerIndex);
+			if (posiibleWinnerScore == listOfPlayers.get(i).checkScore() && possibleWinnerIndex != i) {
+				possibleIndexesWinners.add(i);
 			}
 		}
 		return possibleIndexesWinners;
