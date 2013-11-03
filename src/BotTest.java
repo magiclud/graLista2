@@ -11,7 +11,7 @@ import org.junit.Test;
 
 public class BotTest {
 
-
+/*
 	@Test
 	public void testZwracamOdpowiedniaIloscKartPrzyLosowaniu () {
 		Deck exampleDeck = new Deck();
@@ -71,6 +71,23 @@ public class BotTest {
 		
 		Bot exampleBot1 = new Bot(exampleDeck1.giveCards(5), exampleTable1, 2);
 		exampleBot1.playGame();
+		
+	}*/
+	@Test 
+	public void testWymieńKarty() {
+		System.out.println("___");
+		Table exampleTable11 = new Table(2,2);
+		Player exampleBot11 = exampleTable11.players.get(3);
+		exampleBot11.getOwnCards();
+		List<Integer> abandonedIndexes = new ArrayList<Integer>();
+		System.out.println("___");
+
+		abandonedIndexes.add(3);
+		abandonedIndexes.add(2);
+		abandonedIndexes.add(1);
+		exampleBot11.requestCards(abandonedIndexes);
+		System.out.println("Sol");
+		exampleBot11.getOwnCards();
 		
 	}
 	

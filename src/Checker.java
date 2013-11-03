@@ -3,10 +3,6 @@ import java.util.List;
 
 public class Checker {
 
-
-
-
-
 	private static boolean checkIfStraightFlash(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
 		Card secondCard = cardsToTest.get(1);
@@ -173,7 +169,7 @@ public class Checker {
 			return SequenceEnum.STRAIGHT;
 		}
 		if (checkIfThreeOfAKind(cardsToTest)) {
-			return SequenceEnum.TREE_OF_A_KIND;
+			return SequenceEnum.THREE_OF_A_KIND;
 		}
 		if (checkIfTwoPair(cardsToTest)) {
 			return SequenceEnum.TWO_PAIR;

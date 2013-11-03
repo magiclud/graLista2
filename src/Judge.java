@@ -5,15 +5,12 @@ public class Judge {
 
 	public static List<Integer> selectWinners(List<Player> listOfPlayers) {
 
-		List<Player> listPlayers = new ArrayList<>();
-		listPlayers = listOfPlayers;
-
 		int possibleWinnerIndex = possibleWinnerIndex(listOfPlayers);
 
 		List<Integer> possibleWinnersIndexes = possibleWinnersIndexes(listOfPlayers, possibleWinnerIndex);
 
 		// tutaj rozstrzygam wynik gdy najlepszy uklad kart powtarza sie wsrod
-		// graczy
+		// innych graczy
 		if (possibleWinnersIndexes.size() > 1) {
 			// wyszukuje jaki ukladbjest najlepszy
 			SequenceEnum layout = listOfPlayers.get(possibleWinnersIndexes.get(0)).checkScore();
@@ -30,513 +27,39 @@ public class Judge {
 			// algorytm powtarza sie dla Staiht flush, straight
 			if (layout.equals(SequenceEnum.STRAIGHT_FLUSH) || layout.equals(SequenceEnum.STRAIGHT)) {
 
-				return findWinnerIfPlsyerHaveStraightFlushOrStraight(possibleWinnersIndexes, listOfPlayers);
+				return findWinnerIfPlayerHaveStraightFlushOrStraight(possibleWinnersIndexes, listOfPlayers);
 			}
 
 			if (layout.equals(SequenceEnum.FOUR_OF_A_KIND)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromFourOfAKind(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																		.selectHighestFromFourOfAKind(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																													.getOwnCards())
-																																		.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
-				// nie sprawdzam jeszcze raz gdyz czworka jest unikatowa
+				return findWinnerIfPlayerHaveFourOfAKind(possibleWinnersIndexes, listOfPlayers);
 			}
-			if (layout.equals(SequenceEnum.FULL_HOUSE)) {// TODO
+			if (layout.equals(SequenceEnum.FULL_HOUSE)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromFullHouse(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																		.selectHighestFromFullHouse(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																													.getOwnCards())
-																																		.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
-				// nie sprawdzam jeszcze raz gdyz 'trojka i para' jest unikatowa
+				return findWinnerIfPlayerHaveFullHouse(possibleWinnersIndexes, listOfPlayers);
 			}
-			if (layout.equals(SequenceEnum.FLUSH)) {// TODO
+			if (layout.equals(SequenceEnum.FLUSH)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																			.selectHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																															.getOwnCards())
-																																			.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
-
-				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																			.selectHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																															.getOwnCards())
-																																			.getCourt().ordinal()
-							&& highest != possibleWinnersIndexes.get(i)) {
-						// highest = i + 1;
-						indexesHighest.add(possibleWinnersIndexes.get(i));
-					}
-				}
-				if (indexesHighest.size() > 1) {// sprawdzam druga najwyzesza
-												// karte
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.selectSecondHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																						.selectSecondHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																				.getOwnCards())
-																																						.getCourt()
-								.ordinal()) {
-							highest = possibleWinnersIndexes.get(i);
-						}
-					}
-					indexesHighest.clear();
-					indexesHighest.add(highest);
-					// sprawdzam jeszcze raz czy ktos ma taka sama druga
-					// najwyzsza karte
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.selectSecondHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																						.selectSecondHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																				.getOwnCards())
-																																						.getCourt()
-								.ordinal()
-								&& highest != possibleWinnersIndexes.get(i)) {
-							// highest = i + 1;
-							indexesHighest.add(possibleWinnersIndexes.get(i));
-						}
-					}
-					if (indexesHighest.size() > 1) {// sprawdzam trzecia
-													// najwyzesza karte
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectThirdHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt()
-									.ordinal() < Selector
-																.selectThirdHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-									.getCourt().ordinal()) {
-								highest = possibleWinnersIndexes.get(i);
-							}
-						}
-						indexesHighest.clear();
-						indexesHighest.add(highest);
-						// sprawdzam jeszcze raz czy ktos ma taka sama trzecia
-						// najwyzsza karte
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectThirdHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt()
-									.ordinal() == Selector
-																.selectThirdHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-									.getCourt().ordinal()
-									&& highest != possibleWinnersIndexes.get(i)) {
-								// highest = i + 1;
-								indexesHighest.add(possibleWinnersIndexes.get(i));
-							}
-						}
-						if (indexesHighest.size() > 1) {// sprawdzam czwarta
-														// najwyzesza karte
-							for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-								if (Selector.selectFourthHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt()
-										.ordinal() < Selector
-																	.selectFourthHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-										.getCourt().ordinal()) {
-									highest = possibleWinnersIndexes.get(i);
-								}
-							}
-							indexesHighest.clear();
-							indexesHighest.add(highest);
-							// sprawdzam jeszcze raz czy ktos ma taka sama
-							// czwarta najwyzsza karte
-							for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-								if (Selector.selectFourthHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt()
-										.ordinal() == Selector
-																	.selectFourthHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-										.getCourt().ordinal()
-										&& highest != possibleWinnersIndexes.get(i)) {
-									// highest = i + 1;
-									indexesHighest.add(possibleWinnersIndexes.get(i));
-								}
-							}
-							if (indexesHighest.size() > 1) {// sprawdzam piata
-															// najwyzesza karte
-								for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-									if (Selector.selectFifthHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt()
-											.ordinal() < Selector
-																		.selectFifthHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-											.getCourt().ordinal()) {
-										highest = possibleWinnersIndexes.get(i);
-									}
-								}
-								indexesHighest.clear();
-								indexesHighest.add(highest);
-								// sprawdzam jeszcze raz czy ktos ma taka sama
-								// piata najwyzsza karte
-								for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-									if (Selector.selectFifthHighestFromFlushOrStraight(listOfPlayers.get(highest).getOwnCards()).getCourt()
-											.ordinal() == Selector
-																		.selectFifthHighestFromFlushOrStraight(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-											.getCourt().ordinal()
-											&& highest != possibleWinnersIndexes.get(i)) {
-										// highest = i + 1;
-										indexesHighest.add(possibleWinnersIndexes.get(i));
-									}
-								}
-							}
-						}
-					}
-				}
+				return findWinnerIfPlayerHaveFlush(possibleWinnersIndexes, listOfPlayers);
 			}
-			if (layout.equals(SequenceEnum.TREE_OF_A_KIND)) {
+			if (layout.equals(SequenceEnum.THREE_OF_A_KIND)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromThree(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																	.selectHighestFromThree(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																											.getOwnCards())
-																																	.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
+				return findWinnerIfPlayerHaveThreeOfAKind(possibleWinnersIndexes, listOfPlayers);
 			}
 			if (layout.equals(SequenceEnum.TWO_PAIR)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromTwoPair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																	.selectHighestFromTwoPair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																											.getOwnCards())
-																																	.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
-
-				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromTwoPair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																	.selectHighestFromTwoPair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																											.getOwnCards())
-																																	.getCourt().ordinal()
-							&& highest != possibleWinnersIndexes.get(i)) {
-						// highest = i + 1;
-						indexesHighest.add(possibleWinnersIndexes.get(i));
-					}
-				}
-				if (indexesHighest.size() > 0) {// sprawdzam najwyzsza karte w
-												// druiej parze
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.slectSecondHighestFromTwoPair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																			.slectSecondHighestFromTwoPair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																														.getOwnCards())
-																																			.getCourt().ordinal()) {
-							highest = possibleWinnersIndexes.get(i);
-						}
-					}
-					indexesHighest.clear();
-					indexesHighest.add(highest);
-					// sprawdzam jeszcze raz czy ktos ma taka sama druga
-					// najwyzsza karte
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.slectSecondHighestFromTwoPair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																				.slectSecondHighestFromTwoPair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																															.getOwnCards())
-																																				.getCourt().ordinal()
-								&& highest != possibleWinnersIndexes.get(i)) {
-							// highest = i + 1;
-							indexesHighest.add(possibleWinnersIndexes.get(i));
-						}
-					}
-					if (indexesHighest.size() > 1) {// sprawdzam najwyzszego
-													// 'kickera'
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectKickerFromTwoPair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																			.selectKickerFromTwoPair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																													.getOwnCards())
-																																			.getCourt().ordinal()) {
-								highest = possibleWinnersIndexes.get(i);
-							}
-						}
-						indexesHighest.clear();
-						indexesHighest.add(highest);
-						// sprawdzam jeszcze raz czy ktos ma takiego samego
-						// 'kickera'
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectKickerFromTwoPair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																			.selectKickerFromTwoPair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																													.getOwnCards())
-																																			.getCourt().ordinal()
-									&& highest != possibleWinnersIndexes.get(i)) {
-								// highest = i + 1;
-								indexesHighest.add(possibleWinnersIndexes.get(i));
-							}
-						}
-					}
-				}
+				return findWinnerIfPlayerHaveTwoPair(possibleWinnersIndexes, listOfPlayers);
 			}
 			if (layout.equals(SequenceEnum.ONE_PAIR)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																	.selectHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																											.getOwnCards())
-																																	.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
-
-				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																	.selectHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																											.getOwnCards())
-																																	.getCourt().ordinal()
-							&& highest != possibleWinnersIndexes.get(i)) {
-						// highest = i + 1;
-						indexesHighest.add(possibleWinnersIndexes.get(i));
-					}
-				}
-				if (indexesHighest.size() > 1) {// sprawdzam pierwsza najwyzsza
-												// karte po parze
-
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.selectSecondHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																				.selectSecondHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																.getOwnCards())
-																																				.getCourt()
-								.ordinal()) {
-							highest = possibleWinnersIndexes.get(i);
-						}
-					}
-					indexesHighest.clear();
-					indexesHighest.add(highest);
-					// sprawdzam jeszcze raz czy ktos jeszcze ma pierwsza
-					// najwyzsza karte po parze
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.selectSecondHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																				.selectSecondHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																.getOwnCards())
-																																				.getCourt()
-								.ordinal()
-								&& highest != possibleWinnersIndexes.get(i)) {
-							// highest = i + 1;
-							indexesHighest.add(possibleWinnersIndexes.get(i));
-						}
-					}
-					if (indexesHighest.size() > 1) {// sprawdzam druga najwyzsza
-													// karte po parze
-
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectThirdHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																				.selectThirdHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																															.getOwnCards())
-																																				.getCourt()
-									.ordinal()) {
-								highest = possibleWinnersIndexes.get(i);
-							}
-						}
-						indexesHighest.clear();
-						indexesHighest.add(highest);
-						// sprawdzam jeszcze raz czy ktos jeszcze ma druga
-						// najwyzsza karte po parze
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectThirdHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																					.selectThirdHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																.getOwnCards())
-																																					.getCourt()
-									.ordinal()
-									&& highest != possibleWinnersIndexes.get(i)) {
-								// highest = i + 1;
-								indexesHighest.add(possibleWinnersIndexes.get(i));
-							}
-						}
-						if (indexesHighest.size() > 1) {// sprawdzam trzecia
-														// najwyzsza karte po
-														// parze
-
-							for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-								if (Selector.selectFourthHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																						.selectFourthHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																		.getOwnCards())
-																																						.getCourt()
-										.ordinal()) {
-									highest = possibleWinnersIndexes.get(i);
-								}
-							}
-							indexesHighest.clear();
-							indexesHighest.add(highest);
-							// sprawdzam jeszcze raz czy ktos jeszcze ma trzecia
-							// najwyzsza karte po parze
-							for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-								if (Selector.selectFourthHighestFromOnePair(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																						.selectFourthHighestFromOnePair(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																		.getOwnCards())
-																																						.getCourt()
-										.ordinal()
-										&& highest != possibleWinnersIndexes.get(i)) {
-									// highest = i + 1;
-									indexesHighest.add(possibleWinnersIndexes.get(i));
-								}
-							}
-						}
-					}
-
-				}
+				return findWinnerIfPlayerHaveOnePair(possibleWinnersIndexes, listOfPlayers);
 			}
 			if (layout.equals(SequenceEnum.HIGH_CARD)) {
 
-				// gdy nie ma remisu to najwyzsza karta rozstrzyga gre
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																	.selectHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																											.getOwnCards())
-																																	.getCourt().ordinal()) {
-						highest = possibleWinnersIndexes.get(i);
-					}
-				}
-				indexesHighest.add(highest);
-
-				// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
-				for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-					if (Selector.selectHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																		.selectHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																												.getOwnCards())
-																																		.getCourt().ordinal()
-							&& highest != possibleWinnersIndexes.get(i)) {
-						// highest = i + 1;
-						indexesHighest.add(possibleWinnersIndexes.get(i));
-					}
-				}
-				if (indexesHighest.size() > 1) {
-
-					// sprawdzam druga najwyzsza karte
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.selectSecondHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																				.selectSecondHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																.getOwnCards())
-																																				.getCourt()
-								.ordinal()) {
-							highest = possibleWinnersIndexes.get(i);
-						}
-					}
-					indexesHighest.clear();
-					indexesHighest.add(highest);
-
-					// sprawdzam jeszcze raz czy ktos jeszcze ma taka sama druga
-					// najwyzsza karte
-					for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-						if (Selector.selectSecondHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																				.selectSecondHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																.getOwnCards())
-																																				.getCourt()
-								.ordinal()
-								&& highest != possibleWinnersIndexes.get(i)) {
-							// highest = i + 1;
-							indexesHighest.add(possibleWinnersIndexes.get(i));
-						}
-					}
-					if (indexesHighest.size() > 1) {
-
-						// sprawdzam trzecia najwyzsza karte
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectThirdHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																					.selectThirdHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																	.getOwnCards())
-																																					.getCourt()
-									.ordinal()) {
-								highest = possibleWinnersIndexes.get(i);
-							}
-						}
-						indexesHighest.clear();
-						indexesHighest.add(highest);
-
-						// sprawdzam jeszcze raz czy ktos jeszcze ma taka sama
-						// trzecia najwyzsza karte
-						for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-							if (Selector.selectThirdHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																					.selectThirdHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																	.getOwnCards())
-																																					.getCourt()
-									.ordinal()
-									&& highest != possibleWinnersIndexes.get(i)) {
-								// highest = i + 1;
-								indexesHighest.add(possibleWinnersIndexes.get(i));
-							}
-						}
-						if (indexesHighest.size() > 1) {
-
-							// sprawdzam czwarta najwyzsza karte
-							for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-								if (Selector.selectFourthHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() < Selector
-																																						.selectFourthHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																		.getOwnCards())
-																																						.getCourt()
-										.ordinal()) {
-									highest = possibleWinnersIndexes.get(i);
-								}
-							}
-							indexesHighest.clear();
-							indexesHighest.add(highest);
-
-							// sprawdzam jeszcze raz czy ktos jeszcze ma taka
-							// sama czwarta najwyzsza karte
-							for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-								if (Selector.selectFourthHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt().ordinal() == Selector
-																																						.selectFourthHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i))
-																																																		.getOwnCards())
-																																						.getCourt()
-										.ordinal()
-										&& highest != possibleWinnersIndexes.get(i)) {
-									// highest = i + 1;
-									indexesHighest.add(possibleWinnersIndexes.get(i));
-								}
-							}
-							if (indexesHighest.size() > 1) {
-
-								// sprawdzam piata karte
-								for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-									if (Selector.selectFifthHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt()
-											.ordinal() < Selector
-																		.selectFifthHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-											.getCourt().ordinal()) {
-										highest = possibleWinnersIndexes.get(i);
-									}
-								}
-								indexesHighest.clear();
-								indexesHighest.add(highest);
-
-								// sprawdzam jeszcze raz czy ktos jeszcze ma
-								// taka sama piata karte
-								for (int i = 0; i < possibleWinnersIndexes.size(); i++) {
-									if (Selector.selectFifthHighestFromHighCard(listOfPlayers.get(highest).getOwnCards()).getCourt()
-											.ordinal() == Selector
-																		.selectFifthHighestFromHighCard(listOfPlayers.get(possibleWinnersIndexes.get(i)).getOwnCards())
-											.getCourt().ordinal()
-											&& highest != possibleWinnersIndexes.get(i)) {
-										// highest = i + 1;
-										indexesHighest.add(possibleWinnersIndexes.get(i));
-									}
-								}
-							}
-						}
-					}
-				}
+				return findWinnerIfPlayerHaveHighCard(possibleWinnersIndexes, listOfPlayers);
 			}
-			// sortHighest.sort(highestCards);
-			// }
-			// if (!highestCards.get(0).equals(highestCards.get(1))) {
-			// // wygral pierwszy index
-			//
-			possibleWinnersIndexes.clear();
-			possibleWinnersIndexes = indexesHighest;
 		}
-
 		return possibleWinnersIndexes;
-
 	}
 
 	private static List<Integer> possibleWinnersIndexes(List<Player> listOfPlayers, int possibleWinnerIndex) {
@@ -544,7 +67,8 @@ public class Judge {
 		possibleIndexesWinners.add(possibleWinnerIndex);
 		// sprawdzam jeszcze raz czy ktos ma ten sam uklad
 		SequenceEnum posiibleWinnerScore = listOfPlayers.get(possibleWinnerIndex).checkScore();
-		for (int i = 0; i < listOfPlayers.size(); i++) {
+		for (int i = 0; i < listOfPlayers.size(); i++) {// dla enumow == to to
+														// samo co equals
 			if (posiibleWinnerScore == listOfPlayers.get(i).checkScore() && possibleWinnerIndex != i) {
 				possibleIndexesWinners.add(i);
 			}
@@ -554,7 +78,7 @@ public class Judge {
 
 	private static int possibleWinnerIndex(List<Player> listOfPlayers) {
 		int possibleWinnerPlayerIndex = 0;
-		// Najpierw wybieram gracza z najelpszy układem
+		// Najpierw wybieram gracza z najelpszym układem
 		for (int i = 0; i < listOfPlayers.size() - 1; i++) {
 			if (listOfPlayers.get(possibleWinnerPlayerIndex).checkScore().ordinal() < listOfPlayers.get(i + 1).checkScore().ordinal()) {
 				possibleWinnerPlayerIndex = i + 1;
@@ -563,7 +87,7 @@ public class Judge {
 		return possibleWinnerPlayerIndex;
 	}
 
-	private static List<Integer> findWinnerIfPlsyerHaveStraightFlushOrStraight(List<Integer> indexesWinners, List<Player> listPlayers) {
+	private static List<Integer> findWinnerIfPlayerHaveStraightFlushOrStraight(List<Integer> indexesWinners, List<Player> listPlayers) {
 
 		int highest = indexesWinners.get(0);
 		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
@@ -596,36 +120,576 @@ public class Judge {
 
 	}
 
-	// static List<Player> sortListOfPlayers(List<Player> players) {
-	// // na zasadzie sortowania przez wybor
-	// /*
-	// * public static int[] sotowaniePrzezWybor(int tablica[]) { for (int i =
-	// * 0; i < tablica.length - 1; i++) { int najmniejsza = i; for (int j = i
-	// * + 1; j < tablica.length; j++) { if (tablica[j] <
-	// * tablica[najmniejsza]) { najmniejsza = j; } } int pomocnicza =
-	// * tablica[najmniejsza]; tablica[najmniejsza] = tablica[i]; tablica[i] =
-	// * pomocnicza; } return tablica; }
-	// */
-	// for (Player player : players) {
-	// int najmniejsza = player.hashCode();
-	// for (int j = player.hashCode() + 1; j < players.size(); j++) {// Szukanie
-	// // indeksu
-	// // min. elementu
-	// if (players.get(j).checkScore().ordinal() <
-	// players.get(najmniejsza).checkScore().ordinal()) {// porownanie
-	// // dwoch
-	// // elementow listy
-	// najmniejsza = j;
-	// }
-	// int pomocnicza = players.get(najmniejsza).hashCode();
-	// players.remove(players.get(najmniejsza).hashCode());
-	// players.add(pomocnicza, players.get(player.hashCode()));
-	// players.remove(players.get(player.hashCode()));
-	// players.add(player.hashCode(), players.get(najmniejsza));
-	//
-	// }
-	// }
-	// return players;
-	// }
+	private static List<Integer> findWinnerIfPlayerHaveFourOfAKind(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromFourOfAKind(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromFourOfAKind(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		// nie sprawdzam kart innych graczy gdyz czworka jest unikatowa
+		indexesHighest.add(highest);
+		return indexesHighest;
+	}
+
+	private static List<Integer> findWinnerIfPlayerHaveFullHouse(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromFullHouse(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromFullHouse(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		indexesHighest.add(highest);
+
+		// nie sprawdzam jeszcze raz gdyz 'trojka i para' jest unikatowa
+		return indexesHighest;
+	}
+
+	private static List<Integer> findWinnerIfPlayerHaveFlush(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromFlushOrStraight(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		indexesHighest.add(highest);
+
+		// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+			if (Selector.selectHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector.selectHighestFromFlushOrStraight(
+					currentPlayerCards).getCourt()
+					&& highest != index) {
+				indexesHighest.add(index);
+			}
+		}
+		if (indexesHighest.size() > 1) {
+			// sprawdzam druga najwyzsza karte
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+				if (Selector.selectSecondHighestFromFlushOrStraight(highestPlayerCards).getCourt()
+						.isLess(Selector.selectSecondHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
+					highest = index;
+				}
+			}
+			indexesHighest.clear();
+			indexesHighest.add(highest);
+
+			// sprawdzam jeszcze raz czy ktos ma taka sama druga karte
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+				if (Selector.selectSecondHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector
+						.selectSecondHighestFromFlushOrStraight(currentPlayerCards).getCourt() && highest != index) {
+					indexesHighest.add(index);
+				}
+			}
+			// w przypadku nie rozstrzygniecia remisu
+			if (indexesHighest.size() > 1) {
+				// sprawdzam trzecia najwyzsza karte
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+					if (Selector.selectThirdHighestFromFlushOrStraight(highestPlayerCards).getCourt()
+							.isLess(Selector.selectThirdHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
+						highest = index;
+					}
+				}
+				indexesHighest.clear();
+				indexesHighest.add(highest);
+
+				// sprawdzam jeszcze raz czy ktos ma taka sama trzecia z kolei
+				// karte
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+					if (Selector.selectThirdHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector
+							.selectThirdHighestFromFlushOrStraight(currentPlayerCards).getCourt() && highest != index) {
+						indexesHighest.add(index);
+					}
+				}
+				if (indexesHighest.size() > 1) {
+					// sprawdzam czwarta najwyzsza karte
+					for (Integer index : indexesWinners) {
+
+						List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+						List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+						if (Selector.selectFourthHighestFromFlushOrStraight(highestPlayerCards).getCourt()
+								.isLess(Selector.selectFourthHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
+							highest = index;
+						}
+					}
+					indexesHighest.clear();
+					indexesHighest.add(highest);
+
+					// sprawdzam jeszcze raz czy ktos ma taka sama czwarta z
+					// kolei karte
+					for (Integer index : indexesWinners) {
+
+						List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+						List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+						if (Selector.selectFourthHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector
+								.selectFourthHighestFromFlushOrStraight(currentPlayerCards).getCourt() && highest != index) {
+							indexesHighest.add(index);
+						}
+					}
+					if (indexesHighest.size() > 1) {
+						// sprawdzam piata z kolei karte
+						for (Integer index : indexesWinners) {
+
+							List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+							List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+							if (Selector.selectFifthHighestFromFlushOrStraight(highestPlayerCards).getCourt()
+									.isLess(Selector.selectFifthHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
+								highest = index;
+							}
+						}
+						indexesHighest.clear();
+						indexesHighest.add(highest);
+
+						// sprawdzam jeszcze raz czy ktos ma taka sama piata z
+						// kolei karte
+						for (Integer index : indexesWinners) {
+
+							List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+							List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+							if (Selector.selectFifthHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector
+									.selectFifthHighestFromFlushOrStraight(currentPlayerCards).getCourt() && highest != index) {
+								indexesHighest.add(index);
+							}
+						}
+					}
+				}
+			}
+		}
+
+		return indexesHighest;
+
+	}
+
+	private static List<Integer> findWinnerIfPlayerHaveThreeOfAKind(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromThree(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromThree(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		indexesHighest.add(highest);
+
+		// nie sprawdzam jeszcze raz gdyz 'trojka i para' jest unikatowa
+		return indexesHighest;
+	}
+
+	private static List<Integer> findWinnerIfPlayerHaveTwoPair(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromTwoPair(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromTwoPair(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		indexesHighest.add(highest);
+
+		// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+			if (Selector.selectHighestFromTwoPair(highestPlayerCards).getCourt() == Selector.selectHighestFromTwoPair(
+					currentPlayerCards).getCourt()
+					&& highest != index) {
+				indexesHighest.add(index);
+			}
+		}
+
+		if (indexesHighest.size() > 1) {
+			// sprawdzam najwyzsza karte w druiej parze
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+				if (Selector.selectSecondHighestFromTwoPair(highestPlayerCards).getCourt()
+						.isLess(Selector.selectSecondHighestFromTwoPair(currentPlayerCards).getCourt())) {
+					highest = index;
+				}
+			}
+			indexesHighest.clear();
+			indexesHighest.add(highest);
+
+			// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte w
+			// drugiej parze
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+				if (Selector.selectSecondHighestFromTwoPair(highestPlayerCards).getCourt() == Selector.selectSecondHighestFromTwoPair(
+						currentPlayerCards).getCourt()
+						&& highest != index) {
+					indexesHighest.add(index);
+				}
+			}
+			if (indexesHighest.size() > 1) {
+				// sprawdzam najwyzszego 'kickera'
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+					if (Selector.selectKickerFromTwoPair(highestPlayerCards).getCourt()
+							.isLess(Selector.selectKickerFromTwoPair(currentPlayerCards).getCourt())) {
+						highest = index;
+					}
+				}
+				indexesHighest.clear();
+				indexesHighest.add(highest);
+
+				// sprawdzam jeszcze raz czy ktos ma takiego samego 'kickera'
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+					if (Selector.selectKickerFromTwoPair(highestPlayerCards).getCourt() == Selector.selectKickerFromTwoPair(
+							currentPlayerCards).getCourt()
+							&& highest != index) {
+						indexesHighest.add(index);
+					}
+				}
+
+			}
+
+		}
+
+		return indexesHighest;
+	}
+
+	private static List<Integer> findWinnerIfPlayerHaveOnePair(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromOnePair(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromOnePair(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		indexesHighest.add(highest);
+
+		// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+			if (Selector.selectHighestFromOnePair(highestPlayerCards).getCourt() == Selector.selectHighestFromOnePair(currentPlayerCards)
+					.getCourt() && highest != index) {
+				indexesHighest.add(index);
+			}
+		}
+
+		if (indexesHighest.size() > 1) {
+			// sprawdzam pierwsza najwyzsza karte po parze
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+				if (Selector.selectSecondHighestFromOnePair(highestPlayerCards).getCourt()
+						.isLess(Selector.selectSecondHighestFromOnePair(currentPlayerCards).getCourt())) {
+					highest = index;
+				}
+			}
+			indexesHighest.clear();
+			indexesHighest.add(highest);
+
+			// sprawdzam jeszcze raz czy ktos jeszcze ma pierwsza najwyzsza
+			// karte po parze
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+				if (Selector.selectSecondHighestFromOnePair(highestPlayerCards).getCourt() == Selector.selectSecondHighestFromOnePair(
+						currentPlayerCards).getCourt()
+						&& highest != index) {
+					indexesHighest.add(index);
+				}
+			}
+			if (indexesHighest.size() > 1) {
+				// sprawdzam druga najwyzsza karte po parze
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+					if (Selector.selectThirdHighestFromOnePair(highestPlayerCards).getCourt()
+							.isLess(Selector.selectThirdHighestFromOnePair(currentPlayerCards).getCourt())) {
+						highest = index;
+					}
+				}
+				indexesHighest.clear();
+				indexesHighest.add(highest);
+
+				// sprawdzam jeszcze raz czy ktos jeszcze ma taka sama druga
+				// najwyzsza
+				// karte po parze
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+					if (Selector.selectThirdHighestFromOnePair(highestPlayerCards).getCourt() == Selector.selectThirdHighestFromOnePair(
+							currentPlayerCards).getCourt()
+							&& highest != index) {
+						indexesHighest.add(index);
+					}
+				}
+				if (indexesHighest.size() > 1) {
+					// sprawdzam trzecia najwyzsza karte po parze
+					for (Integer index : indexesWinners) {
+
+						List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+						List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+						if (Selector.selectFourthHighestFromOnePair(highestPlayerCards).getCourt()
+								.isLess(Selector.selectFourthHighestFromOnePair(currentPlayerCards).getCourt())) {
+							highest = index;
+						}
+					}
+					indexesHighest.clear();
+					indexesHighest.add(highest);
+
+					// sprawdzam jeszcze raz czy ktos jeszcze ma taka sama
+					// trzecia najwyzsza
+					// karte po parze
+					for (Integer index : indexesWinners) {
+
+						List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+						List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+						if (Selector.selectFourthHighestFromOnePair(highestPlayerCards).getCourt() == Selector
+								.selectFourthHighestFromOnePair(currentPlayerCards).getCourt() && highest != index) {
+							indexesHighest.add(index);
+						}
+					}
+				}
+			}
+		}
+
+		return indexesHighest;
+	}
+
+	private static List<Integer> findWinnerIfPlayerHaveHighCard(List<Integer> indexesWinners, List<Player> listPlayers) {
+
+		int highest = indexesWinners.get(0);
+		// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
+		// najwyzszych kartach
+		List<Integer> indexesHighest = new ArrayList<>();
+
+		// // gdy nie ma remisu to najwyzsza karta rozstrzyga gre
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+			if (Selector.selectHighestFromHighCard(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromHighCard(currentPlayerCards).getCourt())) {
+				highest = index;
+			}
+		}
+		indexesHighest.add(highest);
+
+		// sprawdzam jeszcze raz czy ktos ma taka sama najwyzsza karte
+		for (Integer index : indexesWinners) {
+
+			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+			if (Selector.selectHighestFromHighCard(highestPlayerCards).getCourt() == Selector.selectHighestFromHighCard(currentPlayerCards)
+					.getCourt() && highest != index) {
+				indexesHighest.add(index);
+			}
+		}
+
+		if (indexesHighest.size() > 1) {
+			// sprawdzam druga najwyzsza karte
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+				if (Selector.selectSecondHighestFromHighCard(highestPlayerCards).getCourt()
+						.isLess(Selector.selectSecondHighestFromHighCard(currentPlayerCards).getCourt())) {
+					highest = index;
+				}
+			}
+			indexesHighest.clear();
+			indexesHighest.add(highest);
+
+			// sprawdzam jeszcze raz czy ktos ma taka sama druga najwyzsza karte
+			for (Integer index : indexesWinners) {
+
+				List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+				List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+				if (Selector.selectSecondHighestFromHighCard(highestPlayerCards).getCourt() == Selector.selectSecondHighestFromHighCard(
+						currentPlayerCards).getCourt()
+						&& highest != index) {
+					indexesHighest.add(index);
+				}
+			}
+			if (indexesHighest.size() > 1) {
+				// sprawdzam trzecia najwyzsza karte
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+					if (Selector.selectThirdHighestFromHighCard(highestPlayerCards).getCourt()
+							.isLess(Selector.selectThirdHighestFromHighCard(currentPlayerCards).getCourt())) {
+						highest = index;
+					}
+				}
+				indexesHighest.clear();
+				indexesHighest.add(highest);
+
+				// sprawdzam jeszcze raz czy ktos ma taka sama trzecia najwyzsza
+				// karte
+				for (Integer index : indexesWinners) {
+
+					List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+					List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+					if (Selector.selectThirdHighestFromHighCard(highestPlayerCards).getCourt() == Selector.selectThirdHighestFromHighCard(
+							currentPlayerCards).getCourt()
+							&& highest != index) {
+						indexesHighest.add(index);
+					}
+				}
+				if (indexesHighest.size() > 1) {
+					// sprawdzam czwarta najwyzsza karte
+					for (Integer index : indexesWinners) {
+
+						List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+						List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+						if (Selector.selectFourthHighestFromHighCard(highestPlayerCards).getCourt()
+								.isLess(Selector.selectFourthHighestFromHighCard(currentPlayerCards).getCourt())) {
+							highest = index;
+						}
+					}
+					indexesHighest.clear();
+					indexesHighest.add(highest);
+
+					// sprawdzam jeszcze raz czy ktos ma taka sama czwarta
+					// najwyzsza karte
+					for (Integer index : indexesWinners) {
+
+						List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+						List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+						if (Selector.selectFourthHighestFromHighCard(highestPlayerCards).getCourt() == Selector
+								.selectFourthHighestFromHighCard(currentPlayerCards).getCourt() && highest != index) {
+							indexesHighest.add(index);
+						}
+					}
+					if (indexesHighest.size() > 1) {
+						// sprawdzam piata najwyzsza karte
+						for (Integer index : indexesWinners) {
+
+							List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+							List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+
+							if (Selector.selectFifthHighestFromHighCard(highestPlayerCards).getCourt()
+									.isLess(Selector.selectFifthHighestFromHighCard(currentPlayerCards).getCourt())) {
+								highest = index;
+							}
+						}
+						indexesHighest.clear();
+						indexesHighest.add(highest);
+
+						// sprawdzam jeszcze raz czy ktos ma taka sama piata
+						// najwyzsza karte
+						for (Integer index : indexesWinners) {
+
+							List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
+							List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
+							if (Selector.selectFifthHighestFromHighCard(highestPlayerCards).getCourt() == Selector
+									.selectFifthHighestFromHighCard(currentPlayerCards).getCourt() && highest != index) {
+								indexesHighest.add(index);
+							}
+						}
+					}
+				}
+			}
+		}
+		return indexesHighest;
+	}
+
 }
 

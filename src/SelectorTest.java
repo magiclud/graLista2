@@ -93,7 +93,7 @@ public class SelectorTest {
 
 		firstPlayer = new Human(someCards, someTable, 2);
 
-		assertTrue(Selector.slectSecondHighestFromTwoPair(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.FIVE, SuitEnum.HEART)));
+		assertTrue(Selector.selectSecondHighestFromTwoPair(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.FIVE, SuitEnum.HEART)));
 	}
 
 	@Test

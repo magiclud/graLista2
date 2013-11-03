@@ -73,7 +73,7 @@ public class Selector {
 		return cardsToTest.get(4);
 	}
 
-	public static Card slectSecondHighestFromTwoPair(List<Card> cardsToTest) {// TODO
+	public static Card selectSecondHighestFromTwoPair(List<Card> cardsToTest) {// TODO
 																				// sprawdz
 																				// czy
 																				// dziala

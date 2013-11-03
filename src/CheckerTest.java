@@ -153,7 +153,7 @@ public class CheckerTest {
 
 		firstPlayer = new Human(someCards, someTable, 2);
 
-		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.TREE_OF_A_KIND));
+		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.THREE_OF_A_KIND));
 	}
 
 

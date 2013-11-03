@@ -18,6 +18,7 @@ public class Table {
 		if (numHumans + numBots < 2 || numHumans + numBots > 4)
 			throw new IllegalStateException("Niepoprawna ilość graczy.");
 		for(int i = 0; i < numHumans + numBots; ++i) {
+			
 			playersCards.add(actualDeck.giveCards(5));
 			alreadyChangedCards.add(false);
 		}
@@ -30,17 +31,18 @@ public class Table {
 
 	// Metoda, która rozpoczyna grę
 
-	public void startGame() {
+	/*public void startGame() {
 		for (int i = 0; i < players.size(); ++i) {
 			endOfGame.add(players.get(i).joinGame());
 		}
-	}
+	}*/
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany
 
 	List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
 	}
 	List<Card> safeChangeCards(List<Integer> abandonedIndexes, Player player) {
+	
 		int numberCardsToReturn = abandonedIndexes.size();
 		if (alreadyChangedCards.get(player.getPlayerID()))
 			throw new IllegalStateException("Już wymieniałeś karty !");
@@ -49,19 +51,31 @@ public class Table {
 		if (numberCardsToReturn > 4) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
-
+		Player tempPlayer = players.get(player.getPlayerID());
+		List<Card> tempPlayerCards = playersCards.get(player.getPlayerID());
+		Sorter s = new Sorter();
+		s.sort(tempPlayerCards);
 		/** usuwam karty po indeksie **/
 		for (int i = 0; i < numberCardsToReturn; ++i) {
-			playersCards.get(player.getPlayerID()).remove(abandonedIndexes.get(i));
+			System.out.println("Usuwam: " + abandonedIndexes.get(i));
+			tempPlayerCards.remove((int)abandonedIndexes.get(i));
+		}
+		for(int i = 0; i < tempPlayerCards.size(); ++i) {
+			System.out.println("Po usunieciu: " + tempPlayerCards.get(i).getCourt() + "" +  tempPlayerCards.get(i).getSuit() + " " + i);
 		}
 		// Pobiera nowe karty
 		List<Card> tempCards = giveCards(abandonedIndexes.size());
 		for (int i = 0; i < tempCards.size(); ++i) {
-			playersCards.get(player.getPlayerID()).add(tempCards.get(i));
+			tempPlayerCards.add(tempCards.get(i));
+			System.out.println("Pobrano: " + tempCards.get(i).getCourt() + "" +  tempCards.get(i).getSuit() + " " + i);
 		}
-		return tempCards;
+		playersCards.set(player.getPlayerID(), tempPlayerCards);
+		return tempPlayerCards;
 	}
 
+	
+	
+	
 	// Metoda, która sprawdza kto wygrywa
 
 
