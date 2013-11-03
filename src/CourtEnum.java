@@ -1,5 +1,6 @@
 public enum CourtEnum {
 	TWO, THREE, FOUR, FIVE, SIX, SEVEN, EIGHT, NINE, TEN, JACK, QUEEN, KING, ACE;
+	@Override
 	public String toString() {
 
 		switch (this) {
@@ -38,6 +39,10 @@ public enum CourtEnum {
 			return true;
 		}
 		return false;
+	}
+
+	public boolean isLess(CourtEnum court) {
+		return this.ordinal() < court.ordinal();
 	}
 
 }
