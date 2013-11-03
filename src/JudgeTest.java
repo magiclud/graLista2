@@ -14,11 +14,11 @@ public class JudgeTest {
 	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushOneOnTheEnd() {
 		// dwoch graczy ma pokera - jeden wygrywa
 		List<Player> players = new ArrayList<>();
-		players.add(playerWithNothing());
-		players.add(playerWithStraightFlushStartingWith2Club());
-		players.add(playerWithNothing2());
-		players.add(playerWithNothing3());
-		players.add(playerWithStraightFlushStartingWith10());
+		players.add(playerWithNothing(1));
+		players.add(playerWithStraightFlushStartingWith2Club(2));
+		players.add(playerWithNothing2(3));
+		players.add(playerWithNothing3(4));
+		players.add(playerWithStraightFlushStartingWith10(5));
 		List<Integer> expectedIdexes = new ArrayList<>();
 		// expectedIdexes.add(1);
 		expectedIdexes.add(4);
@@ -368,14 +368,14 @@ public class JudgeTest {
 	// assertEquals(Judge.sortListOfPlayers(players), expectedOrder);
 	// }
 
-	private Player playerWithNothing() {
+	private Player playerWithNothing(int playerId) {
 		List<Card> nothing2 = new ArrayList<>();
 		nothing2.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		nothing2.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		nothing2.add(new Card(CourtEnum.KING, SuitEnum.CLUB));
 		nothing2.add(new Card(CourtEnum.QUEEN, SuitEnum.SPADE));
 		nothing2.add(new Card(CourtEnum.EIGHT, SuitEnum.SPADE));
-		return new Human(nothing2, currentTable,2);
+		return new Human(nothing2, currentTable, playerId);
 	}
 
 	private Player playerWithNothing2() {
