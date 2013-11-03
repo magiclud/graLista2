@@ -12,7 +12,7 @@ public class Table {
 	int numHumans, numBots;
 	Deck actualDeck;
 	public Table(int numHumans, int numBots) {
-		
+
 		this.actualDeck = new Deck(); // Tutaj już mają być karty rozdane, znaczy się :-)
 		// Dodawanie graczy przy starcie, trzeba dodać wyjątki
 		if (numHumans + numBots < 2 || numHumans + numBots > 4)
@@ -27,7 +27,7 @@ public class Table {
 		this.numBots = numBots;
 	}
 
-	
+
 	// Metoda, która rozpoczyna grę
 
 	public void startGame() {
@@ -42,30 +42,28 @@ public class Table {
 	}
 	List<Card> safeChangeCards(List<Integer> abandonedIndexes, Player player) {
 		int numberCardsToReturn = abandonedIndexes.size();
-		if(alreadyChangedCards.get(player.playerID))
+		if (alreadyChangedCards.get(player.getPlayerID()))
 			throw new IllegalStateException("Już wymieniałeś karty !");
-		else alreadyChangedCards.set(player.playerID, true);
+		else
+			alreadyChangedCards.set(player.getPlayerID(), true);
 		if (numberCardsToReturn > 4) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
 
 		/** usuwam karty po indeksie **/
 		for (int i = 0; i < numberCardsToReturn; ++i) {
-			playersCards.get(player.playerID).remove(abandonedIndexes.get(i));
+			playersCards.get(player.getPlayerID()).remove(abandonedIndexes.get(i));
 		}
 		// Pobiera nowe karty
 		List<Card> tempCards = giveCards(abandonedIndexes.size());
 		for (int i = 0; i < tempCards.size(); ++i) {
-			playersCards.get(player.playerID).add(tempCards.get(i));
+			playersCards.get(player.getPlayerID()).add(tempCards.get(i));
 		}
 		return tempCards;
 	}
-	
-	
-	
+
 	// Metoda, która sprawdza kto wygrywa
-	
-	
+
 
 	// dla Judge
 	public List<Card> getPlayersCards(int nrPlayer) {

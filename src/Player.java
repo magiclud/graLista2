@@ -2,12 +2,12 @@ import java.util.List;
 
 public abstract class Player {
 
-	List<Card> ownCards;
-	Table currentTable;
-	Sorter ownSorter = new Sorter();
-	Boolean alreadyChangedCards = false;
-	
-	public int playerID;
+	protected List<Card> ownCards;
+	private Table currentTable;
+	private Sorter ownSorter = new Sorter();
+	private Boolean alreadyChangedCards = false;
+
+	private int playerID;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player ma
 																// przecież
@@ -20,10 +20,14 @@ public abstract class Player {
 		this.ownCards = givenCards;
 		this.currentTable = currentTable;
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
-		ownSorter.sort(ownCards); // było sort(givenCards) 
+		ownSorter.sort(ownCards); // było sort(givenCards)
 		// W sensie, że sortowanie to układanie kart na ręku "po kolei" ????????//
 	}
-	
+
+	public int getPlayerID() {
+		return playerID;
+	}
+
 	abstract List<Card> joinGame(); // Jak human albo bot będzie sobie grał
 
 	public SequenceEnum checkScore() {
@@ -34,7 +38,7 @@ public abstract class Player {
 	public void requestCards(List<Integer> abandonedIndexes) {
 
 		List<Card> tempCards = currentTable.safeChangeCards(abandonedIndexes, this);
-		
+
 		// Sortuje karty
 		this.ownCards = tempCards;
 		ownSorter.sort(ownCards);
