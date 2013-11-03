@@ -6,14 +6,17 @@ public abstract class Player {
 	Table currentTable;
 	Sorter ownSorter = new Sorter();
 	Boolean alreadyChangedCards = false;
+	
+	public int playerID;
 
-	public Player(List<Card> givenCards, Table currentTable) { // Player ma
+	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player ma
 																// przecież
 																// dostawać
 												// karty od stołu !
 		if (givenCards.size() != 5) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}
+		this.playerID = playerID;
 		this.ownCards = givenCards;
 		this.currentTable = currentTable;
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
@@ -30,25 +33,12 @@ public abstract class Player {
 	// itemków i numbOfCards żądanych !
 	public void requestCards(List<Integer> abandonedIndexes) {
 
-		int numberCardsToReturn = abandonedIndexes.size();
-		if(alreadyChangedCards) 
-			throw new IllegalStateException("Już wymieniałeś karty !");
-		else alreadyChangedCards = true;
-		if (numberCardsToReturn > 4) {
-			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
-		}
-
-		/** usuwam karty po indeksie **/
-		for (int i = 0; i < numberCardsToReturn; ++i) {
-			ownCards.remove(abandonedIndexes.get(i));
-		}
-		// Pobiera nowe karty
-		List<Card> tempCards = currentTable.giveCards(abandonedIndexes.size());
-		for (int i = 0; i < tempCards.size(); ++i) {
-			ownCards.add(tempCards.get(i));
-		}
+		List<Card> tempCards = currentTable.safeChangeCards(abandonedIndexes, this);
+		
 		// Sortuje karty
+		this.ownCards = tempCards;
 		ownSorter.sort(ownCards);
+
 	}
 
 	public List<Card> getOwnCards() {

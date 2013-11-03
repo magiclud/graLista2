@@ -4,9 +4,15 @@ import java.util.Random;
 
 public class Bot extends Player {
 	Random botCards = new Random();
+	MakeOrder order;
+	Sorter s;
 
-	public Bot(List<Card> givenCards, Table currentTable) {
-		super(givenCards, currentTable);
+	public Bot(List<Card> givenCards, Table currentTable, int playerID) {
+		super(givenCards, currentTable, playerID);
+		s = new Sorter();
+		s.sort(ownCards);
+		order = new MakeOrder(this.ownCards);
+		order.doTheJob();
 	}
 
 	List<Card> joinGame() {
@@ -44,8 +50,115 @@ public class Bot extends Player {
 		abandonedIndexes = randomDifferentNumbers(howMany);
 		requestCards(abandonedIndexes);
 	}
+	List<Card> playGame() {
+		/*for(int i = 0; i < 5; ++i) {
+			System.out.println(ownCards.get(i).getCourt() + " " + ownCards.get(i).getSuit() + i);
+		}*/
+		if(order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0)==5) 
+			return ownCards;
+		// Co się dzieje jak jest prawie poker ?
+		if(order.maxRowsSizes.get(0) ==4 && order.orderBySuitQuantity.get(0)==4) {
+			if(order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
+				List<Integer> abandonedIndexes = new ArrayList<Integer>();
+				for(int i = 0; i < 5; ++i) {
+					if(!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
+							abandonedIndexes.add(i);
+				}
+				requestCards(abandonedIndexes);
+				for(int i =0; i < abandonedIndexes.size(); ++i) {
+					System.out.println(abandonedIndexes.get(i));
+				}
+				return ownCards;
+			}
+		}
+		if(order.orderByCourtQuantity.get(0)==4)
+			return ownCards;
+		if(order.orderByCourtQuantity.get(0)==3 && order.orderByCourtQuantity.get(1)==2)
+			return ownCards;
+		// Co się dzieje jak jest prawie ful i prawie kareta ?
+		// Patrz jak są 3 takie same karty, wymien pozostale 2
+		if(order.orderBySuitQuantity.get(0)==5)
+			return ownCards;
+		if(order.orderBySuitQuantity.get(0)==4) {
+			List<Integer> abandonedIndexes = new ArrayList<Integer>();
+			for(int i = 0; i < 5; ++i) {
+				if(!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
+					abandonedIndexes.add(i);
+			}
+			requestCards(abandonedIndexes);
+			
+			return ownCards;
+		}
+		if(order.maxRowsSizes.get(0)==5)
+			return ownCards;
+		if(order.maxRowsSizes.get(0)==4) {
+			List<Integer> abandonedIndexes = new ArrayList<Integer>();
+			for(int i = 0; i < 5; ++i) {
+				if(ownCards.get(i).getCourt().ordinal()>(order.maxRowsEndCard.get(0).getCourt().ordinal())
+						|| ownCards.get(i).getCourt().ordinal() < (order.maxRowsEndCard.get(0).getCourt().ordinal() -4)
+						)
+					abandonedIndexes.add(i);
+			}
+			requestCards(abandonedIndexes);
+	
+			return ownCards;
+		}
+		// Jak są 3 takie same karty, wymień pozostałe 2
+		if(order.orderByCourtQuantity.get(0)==3 ) {
+			List<Integer> abandonedIndexes = new ArrayList<Integer>();
+			for(int i = 0; i < 5; ++i) {
+				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()))
+						abandonedIndexes.add(i);
+			}
+			requestCards(abandonedIndexes);
+			
+			return ownCards;
+		}
+		// Jak jest układ 2 pary, wymień 1 kartę
+		if(order.orderByCourtQuantity.get(0)==2 && order.orderByCourtQuantity.get(1)==2 ) {
+			List<Integer> abandonedIndexes = new ArrayList<Integer>();
+			for(int i = 0; i < 5; ++i) {
+				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()) &&
+						!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(1).getCourt()) 
+						)
+						abandonedIndexes.add(i); 
+			}
+			requestCards(abandonedIndexes);
+			
+		
+			return ownCards;
+		}
+		// Jak jest układ 1 para, wymień 3 karty
+		if(order.orderByCourtQuantity.get(0)==2) {
+			List<Integer> abandonedIndexes = new ArrayList<Integer>();
+			for(int i = 0; i < 5; ++i) {
+				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt())
+						)
+						abandonedIndexes.add(i); 
+			}
+			requestCards(abandonedIndexes);
+		
+			return ownCards;
+		}
+		// W przeciwnym razie wymień 4 karty :D
+		else {
+			List<Integer> abandonedIndexes = new ArrayList<Integer>();
+			for(int i = 1; i < 5; ++i) {
+				abandonedIndexes.add(i); 
+			}
+			requestCards(abandonedIndexes);
+		/*	
+			for(int i =0; i < abandonedIndexes.size(); ++i) {
+				System.out.println(abandonedIndexes.get(i));
+			} */
+			return ownCards;
+		}
+		
+	}
 
 }
+
+
 
 class MakeOrder {
 	List<Card> orderByCourtQuality;
@@ -167,7 +280,7 @@ class MakeOrder {
 						maxRowsSizes.add(j);
 					} else {
 						int k = 0;
-						while (k < orderByCourtQuantity.size()
+						while (k < maxRowsSizes.size()
 								&& j < maxRowsSizes.get(k)) {
 							++k;
 						}

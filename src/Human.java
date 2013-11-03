@@ -2,8 +2,8 @@ import java.util.List;
 
 public class Human extends Player {
 
-	public Human(List<Card> someCards, Table currentTable) {
-		super(someCards, currentTable);
+	public Human(List<Card> someCards, Table currentTable, int playerID) {
+		super(someCards, currentTable, playerID);
 	}
 
 	void showCards() {

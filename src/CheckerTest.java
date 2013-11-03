@@ -17,17 +17,17 @@ public class CheckerTest {
 	// posortowane w konstruktorze, dlatego ponizsze testy sprawdzaja poprawnosc
 	// metod dla kart otrzymanych od playera}
 	@Test
-	public void checkIfPlayerHaveTwoPair() {// TODO zle
+	public void checkIfPlayerHaveTwoPair() {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
+		someCards.add(new Card(CourtEnum.QUEEN, SuitEnum.SPADE));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
-		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.ONE_PAIR));
+		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.TWO_PAIR));
 	}
 
 	@Test
@@ -39,7 +39,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.STRAIGHT_FLUSH));
 	}
@@ -53,7 +53,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.FOUR_OF_A_KIND));
 	}
@@ -67,7 +67,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.FOUR_OF_A_KIND));
 	}
@@ -81,7 +81,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.FULL_HOUSE));
 	}
@@ -95,7 +95,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.FULL_HOUSE));
 	}
@@ -109,7 +109,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TEN, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.FLUSH));
 	}
@@ -123,7 +123,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.STRAIGHT));
 	}
@@ -137,7 +137,7 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.ACE, SuitEnum.SPADE));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.STRAIGHT));
 	}
@@ -151,108 +151,12 @@ public class CheckerTest {
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.TREE_OF_A_KIND));
 	}
 
-	@Test
-	public void testPoprawnosciWybraniaNajwyzszejKartyZFlushaOrStraight() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.selectHighestFromFlushOrStraight(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.SIX, SuitEnum.CLUB)));
-	}
-
-	@Test
-	public void testPoprawnosciWybranaiNajwyzszejKartyZCzworki() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.selectHighestFromFourOfAKind(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.SIX, SuitEnum.HEART)));
-	}
-
-	@Test
-	public void testPoprawnosciWybraniaNajwyzszejKartyZCzworkiFromBeggining() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.selectHighestFromFourOfAKind(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.TWO, SuitEnum.HEART)));
-	}
-
-	@Test
-	public void checkPickHighestFromThree() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.selectHighestFromThree(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.FIVE, SuitEnum.HEART)));
-	}
-
-	@Test
-	public void checkPickHighestFromTwo() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.selectHighestFromTwoPair(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.SIX, SuitEnum.DIAMOND)));
-	}
-
-	@Test
-	public void checkPickSecondHighestFromTwo() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.slectSecondHighestFromTwoPair(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.SIX, SuitEnum.DIAMOND)));
-	}
-
-	@Test
-	public void checkPickHighestFromOne() {
-		someCards = new ArrayList<>();
-		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
-		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
-		someCards.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
-		someCards.add(new Card(CourtEnum.SEVEN, SuitEnum.SPADE));
-
-		firstPlayer = new Human(someCards, someTable);
-
-		assertTrue(Checker.selectHighestFromOnePair(firstPlayer.getOwnCards()).equals(new Card(CourtEnum.FIVE, SuitEnum.HEART)));
-	}
 
 
 }

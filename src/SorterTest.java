@@ -21,7 +21,7 @@ public class SorterTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 
-		Player checkSort = new Human(someCards, someTable);
+		Player checkSort = new Human(someCards, someTable,2);
 
 		ArrayList<Card> cardsInOrder = new ArrayList<>();
 		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));

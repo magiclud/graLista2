@@ -5,7 +5,9 @@ import java.util.List;
 public class Table {
 
 	List<Player> players = new ArrayList<>();
+	List<List<Card>> playersCards = new ArrayList<>();
 	List<List<Card>> endOfGame;
+	List<Boolean> alreadyChangedCards = new ArrayList<>();
 
 	int numHumans, numBots;
 	Deck actualDeck;
@@ -15,8 +17,12 @@ public class Table {
 		// Dodawanie graczy przy starcie, trzeba dodać wyjątki
 		if (numHumans + numBots < 2 || numHumans + numBots > 4)
 			throw new IllegalStateException("Niepoprawna ilość graczy.");
-		for(int i = 0; i < numHumans; ++i) { players.add(new Human(actualDeck.giveCards(5), this)); }
-		for(int i = numHumans; i < numHumans + numBots; ++i) { players.add(new Bot(actualDeck.giveCards(5), this)); }
+		for(int i = 0; i < numHumans + numBots; ++i) {
+			playersCards.add(actualDeck.giveCards(5));
+			alreadyChangedCards.add(false);
+		}
+		for(int i = 0; i < numHumans; ++i) { players.add(new Human(playersCards.get(i), this, i)); }
+		for(int i = numHumans; i < numHumans + numBots; ++i) { players.add(new Bot(playersCards.get(i), this, i)); }
 		this.numHumans = numHumans;
 		this.numBots = numBots;
 	}
@@ -33,7 +39,27 @@ public class Table {
 
 	List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
-	}	
+	}
+	List<Card> safeChangeCards(List<Integer> abandonedIndexes, Player player) {
+		int numberCardsToReturn = abandonedIndexes.size();
+		if(alreadyChangedCards.get(player.playerID))
+			throw new IllegalStateException("Już wymieniałeś karty !");
+		else alreadyChangedCards.set(player.playerID, true);
+		if (numberCardsToReturn > 4) {
+			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
+		}
+
+		/** usuwam karty po indeksie **/
+		for (int i = 0; i < numberCardsToReturn; ++i) {
+			playersCards.get(player.playerID).remove(abandonedIndexes.get(i));
+		}
+		// Pobiera nowe karty
+		List<Card> tempCards = giveCards(abandonedIndexes.size());
+		for (int i = 0; i < tempCards.size(); ++i) {
+			playersCards.get(player.playerID).add(tempCards.get(i));
+		}
+		return tempCards;
+	}
 	
 	
 	

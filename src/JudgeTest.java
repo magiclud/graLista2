@@ -9,7 +9,6 @@ public class JudgeTest {
 
 	private Table currentTable = new Table(3, 1);
 
-	/************** test nie przechodzi **************/
 	// //////////
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushOneOnTheEnd() {
@@ -234,6 +233,7 @@ public class JudgeTest {
 	}
 
 	@Test
+	// TODO program zle wyznacza najwyzsza pare
 	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalFirstPair() {
 		// dwoch graczy maja 'dwojke' i jednakowa mocniejesza pare- wygrywa ten
 		// o najsilniejszej drugiej parze
@@ -246,127 +246,124 @@ public class JudgeTest {
 		expectedIdexes.add(3);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
-	// @Test
-	// public final void
-	// testSelectWinnersIfTwoPlayersHaveTwoPairIdenticalTwoPairs() {
-	// // dwoch graczy maja 'dwojke' i dwie jednakowe pary- wygrywa ten
-	// // o najsilniejszej piatej karcie
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing1);
-	// players.add(playerWithNothing3);
-	// players.add(playerWithTwoPairWithA7iK);
-	// players.add(playerWithTwoPair2WithA7iQ);
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(2);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
-	// @Test
-	// public final void
-	// testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalCardsEndDraw() {
-	// // dwoch graczy maja 'dwojke' i karty jednakowych figurach - remis
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing2());
-	// players.add(playerWithNothing3());
-	// players.add(playerWithTwoPairWithA7iQ());
-	// players.add(playerWithTwoPair2WithA7iQ());
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(2);
-	// expectedIdexes.add(3);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
 
-	// @Test
-	// public final void testSelectWinnersIfThirdPlayerWithOnePair() {
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing3());
-	// players.add(playerWithNothing());
-	// players.add(playerWithNothing2());
-	// players.add(playerWithOnePairWith5());
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(3);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
+	@Test
+	public final void testSelectWinnersIfTwoPlayersHaveTwoPairIdenticalTwoPairs() {
+		// dwoch graczy maja 'dwojke' i dwie jednakowe pary- wygrywa ten
+		// o najsilniejszej piatej karcie
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing());
+		players.add(playerWithNothing3());
+		players.add(playerWithTwoPairWithA7iK());
+		players.add(playerWithTwoPair2WithA7iQ());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(2);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
 
-	// @Test
-	// public final void testSelectWinnersIfTwoPlayersHaveOnePair() {
-	// // dwoch graczy ma 'One Pair' - wygrywa gracz z najsilniejsza para
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing3);
-	// players.add(playerWithNothing2);
-	// players.add(playerWithOnePair3WithQueen);
-	// players.add(playerWithOnePairWith5);
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(3);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
-	// @Test
-	// public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() {
-	// // dwoch graczy ma identyczna 'One Pair' - wygrywa gracz z najsilniejsza
-	// // kolejna karta - w tym przypadku nalezy sprawdzic trzecia kolejna
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing3);
-	// players.add(playerWithNothing2);
-	// players.add(playerWithOnePairWithQueen);
-	// players.add(playerWithOnePair2WithQueen);
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(3);
-	// expectedIdexes.add(2);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
+	@Test
+	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalCardsEndDraw() {
+		// dwoch graczy maja 'dwojke' i karty jednakowych figurach - remis
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing2());
+		players.add(playerWithNothing3());
+		players.add(playerWithTwoPairWithA7iQ());
+		players.add(playerWithTwoPair2WithA7iQ());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(2);
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
 
-	// @Test
-	// public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
-	// // wygrywa jeden gracz
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing3);
-	// players.add(playerWithNothing2);
-	// players.add(playerWithNothing1);
-	// players.add(playerWithNothing4);
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(2);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
-	// @Test
-	// public final void
-	// testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndCardsAreIdenticalEndDraw()
-	// {
-	// // dwoch graczy ma identyczne karty bez ukladu - remis
-	// List<Player> players = new ArrayList<>();
-	// players.add(playerWithNothing());
-	// players.add(playerWithNothing2());
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(0);
-	// expectedIdexes.add(1);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
+	@Test
+	public final void testSelectWinnersIfThirdPlayerWithOnePair() {
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing3());
+		players.add(playerWithNothing());
+		players.add(playerWithNothing2());
+		players.add(playerWithOnePairWith5());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
 
-	// @Test
-	// public final void
-	// testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndSomeAreIdentical() {
-	// // dwoch graczy maja podobne karty- jeden wygrywa
-	// List<Player> players = new ArrayList<>();
-	// players.add(palyerWithNothing5);
-	// players.add(playerWithNothing4);
-	// List<Integer> expectedIdexes = new ArrayList<>();
-	// expectedIdexes.add(1);
-	// assertEquals(expectedIdexes, Judge.selectWinners(players));
-	// }
+	@Test
+	public final void testSelectWinnersIfTwoPlayersHaveOnePair() {
+		// dwoch graczy ma 'One Pair' - wygrywa gracz z najsilniejsza para
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing3());
+		players.add(playerWithNothing2());
+		players.add(playerWithOnePair3WithQueen());
+		players.add(playerWithOnePairWith5());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(2);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	// @Test//TODO remis?
+	public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() {
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing3());
+		players.add(playerWithNothing2());
+		players.add(playerWithOnePairWithQueen());
+		players.add(playerWithOnePair2WithQueen());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(2);
+		expectedIdexes.add(3);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
+		// wygrywa jeden gracz
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing3());
+		players.add(playerWithNothing2());
+		players.add(playerWithNothing5());
+		players.add(playerWithNothing4());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(1);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndCardsAreIdenticalEndDraw() {
+		// dwoch graczy ma identyczne karty bez ukladu - remis
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing());
+		players.add(playerWithNothing2());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(0);
+		expectedIdexes.add(1);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
+
+	@Test
+	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndSomeAreIdentical() {
+		// dwoch graczy maja podobne karty- jeden wygrywa
+		List<Player> players = new ArrayList<>();
+		players.add(playerWithNothing5());
+		players.add(playerWithNothing4());
+		List<Integer> expectedIdexes = new ArrayList<>();
+		expectedIdexes.add(1);
+		assertEquals(expectedIdexes, Judge.selectWinners(players));
+	}
 
 	// @Test
 	// public final void testSortListOfPlayers() {
 	//
 	// List<Player> players = new ArrayList<>();
 	//
-	// players.add(playerWithFourOfAKind);
-	// players.add(playerWithStraightFlush);
-	// players.add(playerWithTwoPair);
-	// players.add(playerWithFullHouse);
+	// players.add(playerWithFourOfAKind());
+	// players.add(playerWithStraightFlush());
+	// players.add(playerWithTwoPair());
+	// players.add(playerWithFullHouse());
 	//
 	// List<Player> expectedOrder = new ArrayList<>();
-	// expectedOrder.add(playerWithTwoPair);
-	// expectedOrder.add(playerWithFullHouse);
-	// expectedOrder.add(playerWithFourOfAKind);
-	// expectedOrder.add(playerWithStraightFlush);
+	// expectedOrder.add(playerWithTwoPair());
+	// expectedOrder.add(playerWithFullHouse());
+	// expectedOrder.add(playerWithFourOfAKind());
+	// expectedOrder.add(playerWithStraightFlush());
 	//
 	// assertEquals(Judge.sortListOfPlayers(players), expectedOrder);
 	// }
@@ -378,7 +375,7 @@ public class JudgeTest {
 		nothing2.add(new Card(CourtEnum.KING, SuitEnum.CLUB));
 		nothing2.add(new Card(CourtEnum.QUEEN, SuitEnum.SPADE));
 		nothing2.add(new Card(CourtEnum.EIGHT, SuitEnum.SPADE));
-		return new Human(nothing2, currentTable);
+		return new Human(nothing2, currentTable,2);
 	}
 
 	private Player playerWithNothing2() {
@@ -388,7 +385,7 @@ public class JudgeTest {
 		nothing1.add(new Card(CourtEnum.KING, SuitEnum.CLUB));
 		nothing1.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
 		nothing1.add(new Card(CourtEnum.EIGHT, SuitEnum.SPADE));
-		return new Human(nothing1, currentTable);
+		return new Human(nothing1, currentTable, 2);
 	}
 
 	private Player playerWithNothing3() {
@@ -398,7 +395,7 @@ public class JudgeTest {
 		nothing1.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		nothing1.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
 		nothing1.add(new Card(CourtEnum.EIGHT, SuitEnum.CLUB));
-		return new Human(nothing1, currentTable);
+		return new Human(nothing1, currentTable, 2);
 	}
 
 	private Player playerWithNothing4() {
@@ -408,16 +405,17 @@ public class JudgeTest {
 		nothing1.add(new Card(CourtEnum.JACK, SuitEnum.CLUB));
 		nothing1.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		nothing1.add(new Card(CourtEnum.NINE, SuitEnum.CLUB));
-		return new Human(nothing1, currentTable);
+		return new Human(nothing1, currentTable, 2);
 	}
-	private Player plyerWithNothing5() {
+
+	private Player playerWithNothing5() {
 		List<Card> nothing1 = new ArrayList<>();
 		nothing1.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		nothing1.add(new Card(CourtEnum.FOUR, SuitEnum.SPADE));
 		nothing1.add(new Card(CourtEnum.JACK, SuitEnum.SPADE));
 		nothing1.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		nothing1.add(new Card(CourtEnum.NINE, SuitEnum.DIAMOND));
-		return new Human(nothing1, currentTable);
+		return new Human(nothing1, currentTable, 2);
 	}
 
 	private Player playerWithOnePairWith5 () {
@@ -427,7 +425,7 @@ public class JudgeTest {
 		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
 		onePair.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		return new Human(onePair, currentTable);
+		return new Human(onePair, currentTable, 2);
 	}
 	private Player playerWithOnePair3WithQueen() {
 		List<Card> onePair = new ArrayList<>();
@@ -436,7 +434,7 @@ public class JudgeTest {
 		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
 		onePair.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
-		return new Human(onePair, currentTable);
+		return new Human(onePair, currentTable, 2);
 	}
 	private Player playerWithOnePair2WithQueen() {
 		List<Card> onePair = new ArrayList<>();
@@ -445,7 +443,7 @@ public class JudgeTest {
 		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.SPADE));
 		onePair.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.CLUB));
-		return new Human(onePair, currentTable);
+		return new Human(onePair, currentTable, 2);
 	}
 
 	private Player playerWithOnePairWithQueen() {
@@ -455,7 +453,7 @@ public class JudgeTest {
 		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
 		onePair.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.DIAMOND));
-		return new Human(onePair, currentTable);
+		return new Human(onePair, currentTable, 2);
 	}
 
 	private Player playerWithTwoPairWith65i2() {
@@ -465,7 +463,7 @@ public class JudgeTest {
 		twoPair.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		twoPair.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
 		twoPair.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		return new Human(twoPair, currentTable);
+		return new Human(twoPair, currentTable, 2);
 	}
 	private Player playerWithTwoPairWith26i5() {
 		List<Card> twoPair2 = new ArrayList<>();
@@ -474,7 +472,7 @@ public class JudgeTest {
 		twoPair2.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
 		twoPair2.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		twoPair2.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
-		return new Human(twoPair2, currentTable);
+		return new Human(twoPair2, currentTable, 2);
 	}
 	private Player playerWithTwoPairWithA7iK() {
 		List<Card> twoPair = new ArrayList<>();
@@ -483,7 +481,7 @@ public class JudgeTest {
 		twoPair.add(new Card(CourtEnum.KING, SuitEnum.CLUB));
 		twoPair.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		twoPair.add(new Card(CourtEnum.SEVEN, SuitEnum.SPADE));
-		return new Human(twoPair, currentTable);
+		return new Human(twoPair, currentTable, 2);
 	}
 	private Player playerWithTwoPair2WithA7iQ() {
 		List<Card> twoPair = new ArrayList<>();
@@ -492,7 +490,7 @@ public class JudgeTest {
 		twoPair.add(new Card(CourtEnum.QUEEN, SuitEnum.CLUB));
 		twoPair.add(new Card(CourtEnum.SEVEN, SuitEnum.HEART));
 		twoPair.add(new Card(CourtEnum.SEVEN, SuitEnum.CLUB));
-		return new Human(twoPair, currentTable);
+		return new Human(twoPair, currentTable, 2);
 	}
 	private Player playerWithTwoPairWithA7iQ() {
 		List<Card> twoPair = new ArrayList<>();
@@ -501,7 +499,7 @@ public class JudgeTest {
 		twoPair.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
 		twoPair.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		twoPair.add(new Card(CourtEnum.SEVEN, SuitEnum.SPADE));
-		return new Human(twoPair, currentTable);
+		return new Human(twoPair, currentTable, 2);
 	}
 
 	private Player playerWithThreeOfAKindWith5() {
@@ -511,7 +509,7 @@ public class JudgeTest {
 		threeOfAKind.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		threeOfAKind.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		threeOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		return new Human(threeOfAKind, currentTable);
+		return new Human(threeOfAKind, currentTable, 2);
 	}
 	private Player playerWithThreeOfAKindWith6() {
 		List<Card> threeOfAKind2 = new ArrayList<>();
@@ -520,7 +518,7 @@ public class JudgeTest {
 		threeOfAKind2.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
 		threeOfAKind2.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
 		threeOfAKind2.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
-		return new Human(threeOfAKind2, currentTable);
+		return new Human(threeOfAKind2, currentTable, 2);
 	}
 	private Player playerWithThreeOfAKindWith7() {
 		List<Card> threeOfAKind3 = new ArrayList<>();
@@ -529,7 +527,7 @@ public class JudgeTest {
 		threeOfAKind3.add(new Card(CourtEnum.SEVEN, SuitEnum.CLUB));
 		threeOfAKind3.add(new Card(CourtEnum.NINE, SuitEnum.DIAMOND));
 		threeOfAKind3.add(new Card(CourtEnum.TEN, SuitEnum.HEART));
-		return new Human(threeOfAKind3, currentTable);
+		return new Human(threeOfAKind3, currentTable, 2);
 	}
 
 	private Player playerWithStraightStartWith2() {
@@ -539,7 +537,7 @@ public class JudgeTest {
 		straight.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
 		straight.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		return new Human(straight, currentTable);
+		return new Human(straight, currentTable, 2);
 	}
 
 	private Player playerWithStraightStartWith3() {
@@ -549,7 +547,7 @@ public class JudgeTest {
 		straight.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		straight.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.SEVEN, SuitEnum.SPADE));
-		return new Human(straight, currentTable);
+		return new Human(straight, currentTable, 2);
 	}
 	private Player playerWithStraightStartWith4() {
 		List<Card> straight = new ArrayList<>();
@@ -558,7 +556,7 @@ public class JudgeTest {
 		straight.add(new Card(CourtEnum.EIGHT, SuitEnum.CLUB));
 		straight.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		return new Human(straight, currentTable);
+		return new Human(straight, currentTable, 2);
 	}
 	private Player playerWithStraight2StartWith4() {
 		List<Card> straight = new ArrayList<>();
@@ -567,7 +565,7 @@ public class JudgeTest {
 		straight.add(new Card(CourtEnum.EIGHT, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.SEVEN, SuitEnum.SPADE));
 		straight.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		return new Human(straight, currentTable);
+		return new Human(straight, currentTable, 2);
 	}
 
 	private Player playerWithFlushWithClub() {
@@ -577,7 +575,7 @@ public class JudgeTest {
 		flush.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
 		flush.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		flush.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		return new Human(flush, currentTable);
+		return new Human(flush, currentTable, 2);
 	}
 	private Player playerWithFlushWithSpade() {
 		List<Card> flush2 = new ArrayList<>();
@@ -586,7 +584,7 @@ public class JudgeTest {
 		flush2.add(new Card(CourtEnum.NINE, SuitEnum.SPADE));
 		flush2.add(new Card(CourtEnum.JACK, SuitEnum.SPADE));
 		flush2.add(new Card(CourtEnum.TEN, SuitEnum.SPADE));
-		return new Human(flush2, currentTable);
+		return new Human(flush2, currentTable, 2);
 	}
 
 	private Player playerWithFlushWithDiamond() {
@@ -596,7 +594,7 @@ public class JudgeTest {
 		flush3.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		flush3.add(new Card(CourtEnum.JACK, SuitEnum.DIAMOND));
 		flush3.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
-		return new Human(flush3, currentTable);
+		return new Human(flush3, currentTable, 2);
 	}
 	private Player playerWithFlushWithHeart() {
 		List<Card> flush4 = new ArrayList<>();
@@ -605,7 +603,7 @@ public class JudgeTest {
 		flush4.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		flush4.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
 		flush4.add(new Card(CourtEnum.TEN, SuitEnum.HEART));
-		return new Human(flush4, currentTable);
+		return new Human(flush4, currentTable,2 );
 	}
 
 	private Player playerWithFullHouseWith6i2() {
@@ -615,7 +613,7 @@ public class JudgeTest {
 		fullHouseHand.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
 		fullHouseHand.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		fullHouseHand.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		return new Human(fullHouseHand, currentTable);
+		return new Human(fullHouseHand, currentTable,2);
 	}
 	private Player playerWithFullHouseWith9i10() {
 		List<Card> fullHouseHand = new ArrayList<>();
@@ -624,7 +622,7 @@ public class JudgeTest {
 		fullHouseHand.add(new Card(CourtEnum.NINE, SuitEnum.DIAMOND));
 		fullHouseHand.add(new Card(CourtEnum.TEN, SuitEnum.HEART));
 		fullHouseHand.add(new Card(CourtEnum.TEN, SuitEnum.CLUB));
-		return new Human(fullHouseHand, currentTable);
+		return new Human(fullHouseHand, currentTable,2);
 	}
 
 	private Player playerWithFourOfAKindWith6() {
@@ -634,7 +632,7 @@ public class JudgeTest {
 		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
 		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
 		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		return new Human(fourOfAKind, currentTable);
+		return new Human(fourOfAKind, currentTable,2);
 	}
 	private Player playerWithFourOfAKindWith8() {
 		List<Card> fourOfAKind = new ArrayList<>();
@@ -643,7 +641,7 @@ public class JudgeTest {
 		fourOfAKind.add(new Card(CourtEnum.EIGHT, SuitEnum.DIAMOND));
 		fourOfAKind.add(new Card(CourtEnum.EIGHT, SuitEnum.HEART));
 		fourOfAKind.add(new Card(CourtEnum.EIGHT, SuitEnum.CLUB));
-		return new Human(fourOfAKind, currentTable);
+		return new Human(fourOfAKind, currentTable,2);
 	}
 
 	private Player playerWithStraightFlushStartingWith2Club() {
@@ -653,7 +651,7 @@ public class JudgeTest {
 		straightFlush.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
 		straightFlush.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
 		straightFlush.add(new Card(CourtEnum.SIX, SuitEnum.CLUB));
-		return new Human(straightFlush, currentTable);
+		return new Human(straightFlush, currentTable,2);
 	}
 
 	private Player playerWithStraightFlushStartingWith10() {
@@ -663,7 +661,7 @@ public class JudgeTest {
 		straightFlush.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
 		straightFlush.add(new Card(CourtEnum.KING, SuitEnum.HEART));
 		straightFlush.add(new Card(CourtEnum.ACE, SuitEnum.HEART));
-		return new Human(straightFlush, currentTable);
+		return new Human(straightFlush, currentTable,2);
 	}
 	private Player playerWithStarightFlushStartingWith2Spade() {
 		List<Card> straightFlush3 = new ArrayList<>();
@@ -672,7 +670,7 @@ public class JudgeTest {
 		straightFlush3.add(new Card(CourtEnum.FOUR, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.FIVE, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		return new Human(straightFlush3, currentTable);
+		return new Human(straightFlush3, currentTable,2);
 	}
 
 	public Player playerWithStraightFlushStartingWith2Heart() {
@@ -682,7 +680,7 @@ public class JudgeTest {
 		straightFlush4.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		straightFlush4.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
 		straightFlush4.add(new Card(CourtEnum.SIX, SuitEnum.HEART));
-		return new Human(straightFlush4, currentTable);
+		return new Human(straightFlush4, currentTable,2);
 	}
 
 	public Player playerWithStraightFlushStartingWith2Diamond() {
@@ -692,6 +690,6 @@ public class JudgeTest {
 		straightFlush5.add(new Card(CourtEnum.FOUR, SuitEnum.DIAMOND));
 		straightFlush5.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
 		straightFlush5.add(new Card(CourtEnum.SIX, SuitEnum.DIAMOND));
-		return new Human(straightFlush5, currentTable);
+		return new Human(straightFlush5, currentTable,2);
 	}
 }

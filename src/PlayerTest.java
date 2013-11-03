@@ -166,7 +166,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 	}
 
 	@Test(expected = IllegalStateException.class)
@@ -175,7 +175,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
 		someCards.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 	}
 
 	@Test
@@ -186,7 +186,7 @@ public class PlayerTest {
 		someCards.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
-		firstPlayer = new Human(someCards, someTable);
+		firstPlayer = new Human(someCards, someTable, 2);
 		assertEquals(5, firstPlayer.ownCards.size());
 	}
 
