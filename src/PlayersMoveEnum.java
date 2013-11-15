@@ -1,4 +1,4 @@
 
 public enum PlayersMoveEnum {
-	Raise, Bet, Faul
+	BET, RAISE, FOLD
 }

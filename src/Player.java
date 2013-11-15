@@ -8,6 +8,7 @@ public abstract class Player {
 	private int ownChips;
 	// private Boolean alreadyChangedCards = false;
 
+	private int chipsForBidding;
 	public int playerID;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player
@@ -42,6 +43,10 @@ public abstract class Player {
 
 	public void setOwnChips(int ownChips) {
 		this.ownChips = ownChips;
+	}
+
+	public int chipsForBidding(){
+		return chipsForBidding;
 	}
 
 	abstract List<Card> joinGame(); // Jak human albo bot będzie sobie grał
