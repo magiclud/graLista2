@@ -114,7 +114,7 @@ public class JudgeTest {
 
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveFullHouse() {
-		// dwoch graczy ma '3 i 2' - jeden wygrywa//TODO
+		// dwoch graczy ma '3 i 2' - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithFullHouseWith9i10(1));
 		players.add(playerWithFullHouseWith6i2(2));
@@ -233,7 +233,6 @@ public class JudgeTest {
 	}
 
 	@Test
-	// TODO program zle wyznacza najwyzsza pare
 	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalFirstPair() {
 		// dwoch graczy maja 'dwojke' i jednakowa mocniejesza pare- wygrywa ten
 		// o najsilniejszej drugiej parze
@@ -300,7 +299,7 @@ public class JudgeTest {
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
 
-	// @Test//TODO remis?
+	// @Test
 	public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() {
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing3(1));

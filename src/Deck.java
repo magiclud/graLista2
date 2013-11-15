@@ -12,7 +12,7 @@ import java.util.List;
 public class Deck {
 
 	private List<Card> deck;
-	private ArrayList<Card> givenBack;
+
 
 	/**
 	 * tasowanie odbywa sie konstruktorze i nie jest dostepne jako public, czyli

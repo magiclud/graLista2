@@ -17,11 +17,11 @@ public class Judge {
 
 			// domyslnie ustalam ze pierwszy z graczy z wysokim ukladem ma
 			// rowniez najlepsze karty
-			Integer highest = possibleWinnersIndexes.get(0);
+			// Integer highest = possibleWinnersIndexes.get(0);
 
 			// teorze liste na wypadek gdyby bylo wiecej graczy o jednakowych
 			// najwyzszych kartach
-			List<Integer> indexesHighest = new ArrayList<>();
+			// List<Integer> indexesHighest = new ArrayList<>();
 
 			// okreslam wynik pomiedzy graczami gdy maja okreslony uklad -
 			// algorytm powtarza sie dla Staiht flush, straight

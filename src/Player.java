@@ -5,9 +5,9 @@ public abstract class Player {
 	protected List<Card> ownCards;
 	private Table currentTable;
 	private Sorter ownSorter = new Sorter();
-	private Boolean alreadyChangedCards = false;
+	// private Boolean alreadyChangedCards = false;
 
-	private int playerID;
+	public int playerID;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player ma
 																// przecież
@@ -26,6 +26,11 @@ public abstract class Player {
 
 	public int getPlayerID() {
 		return playerID;
+	}
+	void showCards() {
+		for (int i = 0; i < ownCards.size(); ++i) {
+			System.out.print("[" + i + "]" + ownCards.get(i).getCourt()  + ownCards.get(i).getSuit() + " " );
+		}
 	}
 
 	abstract List<Card> joinGame(); // Jak human albo bot będzie sobie grał

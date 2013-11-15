@@ -3,15 +3,12 @@ import static org.junit.Assert.*;
 import java.util.ArrayList;
 import java.util.List;
 
-
-import org.junit.After;
-import org.junit.Before;
 import org.junit.Test;
 
 
 public class BotTest {
 
-/*
+
 	@Test
 	public void testZwracamOdpowiedniaIloscKartPrzyLosowaniu () {
 		Deck exampleDeck = new Deck();
@@ -72,7 +69,7 @@ public class BotTest {
 		Bot exampleBot1 = new Bot(exampleDeck1.giveCards(5), exampleTable1, 2);
 		exampleBot1.playGame();
 		
-	}*/
+	}
 	@Test 
 	public void testWymieńKarty() {
 		System.out.println("___");

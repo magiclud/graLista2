@@ -5,8 +5,7 @@ public class Selector {
 
 	public static Card selectHighestFromFlushOrStraight(List<Card> cardsToTest) {
 		// najwyzsza karta to piata karta
-		return cardsToTest.get(4);// TODO a moze 4 zamienic na cardTotest.size-1
-									// ?
+		return cardsToTest.get(4);
 	}
 
 	public static Card selectSecondHighestFromFlushOrStraight(List<Card> cardsToTest) {
@@ -73,10 +72,7 @@ public class Selector {
 		return cardsToTest.get(4);
 	}
 
-	public static Card selectSecondHighestFromTwoPair(List<Card> cardsToTest) {// TODO
-																				// sprawdz
-																				// czy
-																				// dziala
+	public static Card selectSecondHighestFromTwoPair(List<Card> cardsToTest) {
 		// dwojke tworzy 1.2. karta i 3.4.
 		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())
 				&& cardsToTest.get(2).getCourt().equals(cardsToTest.get(3).getCourt())) {
@@ -115,7 +111,6 @@ public class Selector {
 		return cardsToTest.get(4);
 	}
 
-	// TODO test czy dziala
 	public static Card selectSecondHighestFromOnePair(List<Card> cardsToTest) {
 		if (cardsToTest.get(0).getCourt().equals(cardsToTest.get(1).getCourt())) {
 			return cardsToTest.get(4);

@@ -8,7 +8,7 @@ import org.junit.Test;
 
 public class CheckerTest {
 
-	// TODO brakuje testow
+
 	List<Card> someCards;
 	Table someTable;
 	Player firstPlayer;

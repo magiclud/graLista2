@@ -16,8 +16,7 @@ public class Bot extends Player {
 	}
 
 	List<Card> joinGame() {
-		wybierzLosowo();
-		return ownCards;
+		return playGame();
 	}
 
 	// Losowanie różnych liczb ze zbioru 0. .5
@@ -50,6 +49,8 @@ public class Bot extends Player {
 		abandonedIndexes = randomDifferentNumbers(howMany);
 		requestCards(abandonedIndexes);
 	}
+	
+	// Rozgrywka z prywatną strategią
 	List<Card> playGame() {
 		/*for(int i = 0; i < 5; ++i) {
 			System.out.println(ownCards.get(i).getCourt() + " " + ownCards.get(i).getSuit() + i);
@@ -133,8 +134,9 @@ public class Bot extends Player {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for(int i = 0; i < 5; ++i) {
 				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt())
-						)
+						) 
 						abandonedIndexes.add(i); 
+						
 			}
 			requestCards(abandonedIndexes);
 		
@@ -143,7 +145,7 @@ public class Bot extends Player {
 		// W przeciwnym razie wymień 4 karty :D
 		else {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 1; i < 5; ++i) {
+			for(int i = 0; i < 4; ++i) {
 				abandonedIndexes.add(i); 
 			}
 			requestCards(abandonedIndexes);
