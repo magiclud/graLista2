@@ -1,9 +1,9 @@
 public class Casino {
 
-	private int pool; // pula gry
+	private int extraPool; // pula gry
 
 	public Casino(Player chips) {
-		pool = pool + chips.getOwnChips();
+		// extraPool = extraPool + chips.getOwnChips();
 	}
 
 	public void bidding(Player player) {

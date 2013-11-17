@@ -8,6 +8,7 @@ public class Table {
 	List<List<Card>> playersCards = new ArrayList<>();
 	List<List<Card>> endOfGame;
 	List<Boolean> alreadyChangedCards = new ArrayList<>();
+	private int pool; // pula gry
 
 	int numHumans, numBots, numChips;
 	Deck actualDeck;
@@ -33,6 +34,10 @@ public class Table {
 		this.numHumans = numHumans;
 		this.numBots = numBots;
 		this.numChips = numChips;
+
+		// trzeba ustawaic cos co bedzie mowilo ile graczy faktycznie chce
+		// zagrac i zaplaciic
+		//
 	}
 
 	// Metoda, która rozpoczyna grę
