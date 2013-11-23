@@ -28,7 +28,7 @@ public abstract class Player {
 		this.currentTable = currentTable;
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
 		ownSorter.sort(ownCards);
-		this.ownChips = currentTable.getNumChips();
+		this.ownChips = currentTable.getInitialChipsForPlayers();
 	}
 
 	public int getPlayerID() {
@@ -74,5 +74,7 @@ public abstract class Player {
 	public List<Card> getOwnCards() {
 		return ownCards;
 	}
+
+	public abstract boolean isHuman();
 
 }

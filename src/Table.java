@@ -9,12 +9,12 @@ public class Table {
 	List<List<Card>> endOfGame;
 	List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private int pool; // pula gry
+	private int initialChipsForPlayers = 1000;
 
-	int numHumans, numBots, numChips;
+	int numHumans, numBots;
 // SZKIC
 	int startZetony, startWpisowe;
-	
-	
+
 	Deck actualDeck;
 	// Zwraca wskaźnik na playera jeżeli znaleziono takiego w naszej puli graczy
 	Player findPlayer(String szukanyPlayerID) {
@@ -25,7 +25,7 @@ public class Table {
 		return null;
 	}
 
-	public Table(int numHumans, int numBots, int numChips) {
+	public Table(int numHumans, int numBots) {
 
 		this.actualDeck = new Deck(); // Tutaj już mają być karty rozdane,
 										// znaczy się :-)
@@ -45,7 +45,6 @@ public class Table {
 		}
 		this.numHumans = numHumans;
 		this.numBots = numBots;
-		this.numChips = numChips;
 
 		// trzeba ustawaic cos co bedzie mowilo ile graczy faktycznie chce
 		// zagrac i zaplaciic
@@ -60,49 +59,51 @@ public class Table {
 	 */
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany
 
-/*	void startGame() {
-		
-		StatusEnum status = StatusEnum.CLEAN;
-		// int currentMax = minimum;
-		// ustaw każdemu graczowi pole newToBet na minimum ! ! ! 
-		void startRound() {
-			void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM PRZEZ SERVER ADAPTER
-		}
-		
-	} */
+	/* void startGame() {
+	 * 
+	 * StatusEnum status = StatusEnum.CLEAN;
+	 * // int currentMax = minimum;
+	 * // ustaw każdemu graczowi pole newToBet na minimum ! ! !
+	 * void startRound() {
+	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM PRZEZ SERVER ADAPTER
+	 * }
+	 * 
+	 * } */
 	void check() {
-		
+
 	}
 	// \/\/\/\/\/\/ bardzo WAŻNE ! ! ! !  ! przykłąd
-/*	void bet(String PlayerID, int howMuch) throws Exception {
-		Player player = findPlayer(PlayerID);
-		if(howMuch < currentMax)
-			throw new IllegalStateException("za mało obstawiasz !");
-		changeStatus
-		player.newToBet = howmuch;
-		currentMax = newToBet
-		
-	} */
+	/* void bet(String PlayerID, int howMuch) throws Exception {
+	 * Player player = findPlayer(PlayerID);
+	 * if(howMuch < currentMax)
+	 * throw new IllegalStateException("za mało obstawiasz !");
+	 * changeStatus
+	 * player.newToBet = howmuch;
+	 * currentMax = newToBet
+	 * 
+	 * } */
 	void raise() {
-		
+
 	}
 	void call() {
-		
+
 	}
 	void fold() {
-		
+
 	}
 	void allin() {
-		
+
 	}
-	public int getNumChips() {
-		return numChips;
+
+	public int getInitialChipsForPlayers() {
+		return initialChipsForPlayers;
 	}
+
 
 	List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
 	}
-	
+
 	List<Card> newSafeChangeCards(List<Integer> abandonedIndexes, String PlayerID) {
 		int numberCardsToReturn = abandonedIndexes.size();
 		Player player = findPlayer(PlayerID);
@@ -148,7 +149,7 @@ public class Table {
 				player.ownCards = tempPlayerCards;
 				return tempPlayerCards;
 	}
-	
+
 	List<Card> safeChangeCards(List<Integer> abandonedIndexes, Player player) {
 
 		int numberCardsToReturn = abandonedIndexes.size();
@@ -198,6 +199,6 @@ public class Table {
 
 	// Metoda, która sprawdza kto wygrywa
 
-	
+
 
 }

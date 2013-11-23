@@ -17,8 +17,7 @@ public class GameTest {
 			System.out.println("System: Wychodzę z gry");
 			scanIn.close();
 		} else {
-			int numHum = 0, numBot = 0, numChips = 100;
-			Table myTable = null;
+			int numHum = 0, numBot = 0;
 			System.out.println("System: Zaczynam grę");
 			System.out.println("System: Wpisz ilu ma grać ludzi << 2<=numHum+numBot<=4 >>:");
 			try {
@@ -36,27 +35,31 @@ public class GameTest {
 				scanIn.close();
 				System.exit(0);
 			}
-			System.out.println("System: Wpisz ile zetonow maja posiadac gracze <<min. 100>>: ");
-			try {
-				numChips = scanIn.nextInt();
-			} catch (Exception e) {
-				System.out.println("System:\nWprowadzono śmieciowe dane, kończę !");
-				scanIn.close();
-				System.exit(0);
-			}
-			if (numChips < 100) {// zakladam ze 50 zetonow to minimum
-				System.out.println("System:\n Podano za mala liczbe zetonow !");
-				scanIn.close();
-				System.exit(0);
-			}
+
 			inString = scanIn.nextLine();
 
-			myTable = new Table(numHum, numBot, numChips);
+			Table myTable = new Table(numHum, numBot);
+
+			//pytam wszystkihc playerow czy graja, jesli tak, to pobieram wpisowe
+			for (Player player : myTable.players) {
+				if (player.isHuman()){
+
+					// odpowiedz
+					// System.out.println("System: Czy human ID: " + player.getPlayerID() + " gra? <<T or N>>");
+					// String odpowiedz = scanIn.nextLine();
+					// if (odpowiedz.equals("T") || odpowiedz.equals("N")){
+					//
+					// }
+
+				}
+			}
+
+
 			for (int i = 0; i < numHum; ++i) {
 				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
 				while (inString.equals("N") || inString.endsWith("T")) {
 					if (inString.equals("T")) {
-						myTable.setPlayersInGame(myTable.players.get(i));
+						// myTable.setPlayersInGame(myTable.players.get(i));
 						System.out.println("System: Partię rozgrywa human, ID: " + (i + 1));
 						System.out.println("Human: Masz na ręce:");
 						myTable.players.get(i).showCards();

@@ -15,6 +15,12 @@ public class Bot extends Player {
 		order.doTheJob();
 	}
 
+	@Override
+	public boolean isHuman() {
+		return false;
+	};
+
+	@Override
 	List<Card> joinGame() {
 		return playGame();
 	}
@@ -49,13 +55,13 @@ public class Bot extends Player {
 		abandonedIndexes = randomDifferentNumbers(howMany);
 		requestCards(abandonedIndexes);
 	}
-	
+
 	// Rozgrywka z prywatną strategią
 	List<Card> playGame() {
 		/*for(int i = 0; i < 5; ++i) {
 			System.out.println(ownCards.get(i).getCourt() + " " + ownCards.get(i).getSuit() + i);
 		}*/
-		if(order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0)==5) 
+		if (order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0) == 5)
 			return ownCards;
 		// Co się dzieje jak jest prawie poker ?
 		if(order.maxRowsSizes.get(0) ==4 && order.orderBySuitQuantity.get(0)==4) {
@@ -87,7 +93,7 @@ public class Bot extends Player {
 					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
-			
+
 			return ownCards;
 		}
 		if(order.maxRowsSizes.get(0)==5)
@@ -101,7 +107,7 @@ public class Bot extends Player {
 					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
-	
+
 			return ownCards;
 		}
 		// Jak są 3 takie same karty, wymień pozostałe 2
@@ -112,7 +118,7 @@ public class Bot extends Player {
 						abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
-			
+
 			return ownCards;
 		}
 		// Jak jest układ 2 pary, wymień 1 kartę
@@ -120,13 +126,12 @@ public class Bot extends Player {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for(int i = 0; i < 5; ++i) {
 				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()) &&
-						!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(1).getCourt()) 
+						!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(1).getCourt())
 						)
-						abandonedIndexes.add(i); 
+					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
-			
-		
+
 			return ownCards;
 		}
 		// Jak jest układ 1 para, wymień 3 karty
@@ -134,28 +139,27 @@ public class Bot extends Player {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for(int i = 0; i < 5; ++i) {
 				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt())
-						) 
-						abandonedIndexes.add(i); 
-						
+)
+					abandonedIndexes.add(i);
+
 			}
 			requestCards(abandonedIndexes);
-		
+
 			return ownCards;
 		}
 		// W przeciwnym razie wymień 4 karty :D
 		else {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for(int i = 0; i < 4; ++i) {
-				abandonedIndexes.add(i); 
+				abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
-		/*	
-			for(int i =0; i < abandonedIndexes.size(); ++i) {
-				System.out.println(abandonedIndexes.get(i));
-			} */
+			/*for(int i =0; i < abandonedIndexes.size(); ++i) {
+			 * System.out.println(abandonedIndexes.get(i));
+			 * } */
 			return ownCards;
 		}
-		
+
 	}
 
 }
@@ -189,7 +193,7 @@ class MakeOrder {
 	}
 
 	void doTheJob() {
-		
+
 		// Posortuj według ilości karty tej samej figury
 		Sorter s = new Sorter();
 		s.sort(inspectedCards);
@@ -227,13 +231,13 @@ class MakeOrder {
 			++i;
 		}
 		// Posortuj według ilości kart tego samego koloru
-		
+
 		List<Card> colors = new ArrayList<Card>();
 		colors.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		colors.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		colors.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
 		colors.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
-		
+
 		orderBySuitQuality = new ArrayList<Card>();
 		orderBySuitQuantity = new ArrayList<Integer>();
 
@@ -263,7 +267,7 @@ class MakeOrder {
 				}
 			}
 		}
-		
+
 		// Posortuj według najdłuższego znalezionego streeta :D
 			maxRowsEndCard = new ArrayList<Card>();
 			maxRowsSizes = new ArrayList<Integer>();
@@ -275,7 +279,7 @@ class MakeOrder {
 									 == inspectedCards.get(i + 1).getCourt().ordinal())) {
 						++i;
 						++j;
-						
+
 					}
 					if (maxRowsEndCard.size() == 0) {
 						maxRowsEndCard.add(inspectedCards.get(i));
@@ -297,8 +301,7 @@ class MakeOrder {
 					}
 					++i;
 				}
-				
-		
+
 
 	}
 }
