@@ -11,6 +11,10 @@ public abstract class Player {
 	private int chipsForBidding;
 	public int playerID;
 
+	public String newPlayerID;
+	public int newToBet;
+	boolean newAlreadyChangedCards = false;
+
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player
 																				// ma
 		// przecież
