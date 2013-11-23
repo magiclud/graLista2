@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class JudgeTest {
 
-	private Table currentTable = new Table(3, 1, 50);
+	private Table currentTable = new Table(3, 1);
 
 	// //////////
 	@Test

@@ -12,13 +12,12 @@ public class GameTest {
 				+ "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry");
 		String inString;
 		Scanner scanIn = new Scanner(System.in);
-		inString = scanIn.nextLine();
+		inString = "START";
 		if (!inString.equals("START")) {
 			System.out.println("System: Wychodzę z gry");
 			scanIn.close();
 		} else {
-			int numHum = 0, numBot = 0, numChips = 100;
-			Table myTable = null;
+			int numHum = 0, numBot = 0;
 			System.out.println("System: Zaczynam grę");
 			System.out.println("System: Wpisz ilu ma grać ludzi << 2<=numHum+numBot<=4 >>:");
 			try {
@@ -36,27 +35,24 @@ public class GameTest {
 				scanIn.close();
 				System.exit(0);
 			}
-			System.out.println("System: Wpisz ile zetonow maja posiadac gracze <<min. 100>>: ");
-			try {
-				numChips = scanIn.nextInt();
-			} catch (Exception e) {
-				System.out.println("System:\nWprowadzono śmieciowe dane, kończę !");
-				scanIn.close();
-				System.exit(0);
-			}
-			if (numChips < 100) {// zakladam ze 50 zetonow to minimum
-				System.out.println("System:\n Podano za mala liczbe zetonow !");
-				scanIn.close();
-				System.exit(0);
-			}
+
 			inString = scanIn.nextLine();
 
-			myTable = new Table(numHum, numBot, numChips);
+			Table myTable = new Table(numHum, numBot);
+
+			//pytam wszystkihc playerow czy graja, jesli tak, to pobieram wpisowe
+			askEverybodyToJoinTheGame(scanIn, myTable);
+
+
+			// TU nie mam pojecia co sie dzieje, ale ja bym tego nie poprawia tylko napisal od nowa, bo bedzie latwiej,
+			// pokazalem Ci jak zrobic ladnie pierwsza petle z pytanie o wejscie do gry
+			// wzorujac sie na tym co napisalem (i ewnetualnie na tym nizej, ale lepiej nie za duzo),
+			// mozesz napisac kolejnac metoda ktora bedzie miala petle licytacji
 			for (int i = 0; i < numHum; ++i) {
 				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
 				while (inString.equals("N") || inString.endsWith("T")) {
 					if (inString.equals("T")) {
-						myTable.setPlayersInGame(myTable.players.get(i));
+						// myTable.setPlayersInGame(myTable.players.get(i));
 						System.out.println("System: Partię rozgrywa human, ID: " + (i + 1));
 						System.out.println("Human: Masz na ręce:");
 						myTable.players.get(i).showCards();
@@ -137,6 +133,33 @@ public class GameTest {
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
 
+	}
+
+	private static void askEverybodyToJoinTheGame(Scanner scanIn, Table myTable) {
+		for (Player player : myTable.players) {
+			if (player.isHuman()){
+				String answer = getAnswerFor(player, scanIn);
+				if (answer.equals("T")) {
+					player.joinGame();
+				}
+			}
+			else {
+				Bot bot = (Bot) player;
+				if (bot.randomIfJoinTogame()) {
+					bot.joinGame();
+				}
+			}
+		}
+	}
+
+	private static String getAnswerFor(Player player, Scanner scanIn) {
+
+		String odpowiedz = "";
+		while (!odpowiedz.equals("T") && !odpowiedz.equals("N")) {
+			System.out.println("System: Czy human ID: " + player.getPlayerID() + " gra? <<T or N>>");
+			odpowiedz = scanIn.nextLine();;
+		}
+		return odpowiedz;
 	}
 
 }

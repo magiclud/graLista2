@@ -3,7 +3,7 @@ import java.util.List;
 public abstract class Player {
 
 	protected List<Card> ownCards;
-	private Table currentTable;
+	protected Table currentTable;
 	private Sorter ownSorter = new Sorter();
 	private int ownChips;
 	// private Boolean alreadyChangedCards = false;
@@ -30,7 +30,7 @@ public abstract class Player {
 		this.currentTable = currentTable;
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
 		ownSorter.sort(ownCards);
-		this.ownChips = currentTable.getNumChips();
+		this.ownChips = currentTable.getInitialChipsForPlayers();
 	}
 
 	public int getPlayerID() {
@@ -55,7 +55,7 @@ public abstract class Player {
 		return chipsForBidding;
 	}
 
-	abstract List<Card> joinGame(); // Jak human albo bot będzie sobie grał
+	abstract public void joinGame(); // Jak human albo bot będzie sobie grał
 
 	public SequenceEnum checkScore() {
 		return Checker.checkScore(ownCards);
@@ -75,6 +75,12 @@ public abstract class Player {
 
 	public List<Card> getOwnCards() {
 		return ownCards;
+	}
+
+	public abstract boolean isHuman();
+
+	public void payChips(int howMany) {
+		ownChips = ownChips - howMany;
 	}
 
 }
