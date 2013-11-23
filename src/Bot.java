@@ -21,8 +21,8 @@ public class Bot extends Player {
 	};
 
 	@Override
-	List<Card> joinGame() {
-		return playGame();
+	public void joinGame() {
+		// return playGame();
 	}
 
 	// Losowanie różnych liczb ze zbioru 0. .5
@@ -160,6 +160,16 @@ public class Bot extends Player {
 			return ownCards;
 		}
 
+	}
+
+	/**
+	 * losuje czy bot doacza do gry
+	 * 
+	 * @return
+	 */
+	public boolean randomIfJoinTogame() {
+		// TODO zrobic losowanie
+		return false;
 	}
 
 }

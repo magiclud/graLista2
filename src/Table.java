@@ -4,11 +4,14 @@ import java.util.List;
 
 public class Table {
 
+	private static final int WPISOWE = 50;
+
 	List<Player> players = new ArrayList<>();
+	List<Player> playersInGame = new ArrayList<>();
 	List<List<Card>> playersCards = new ArrayList<>();
 	List<List<Card>> endOfGame;
 	List<Boolean> alreadyChangedCards = new ArrayList<>();
-	private int pool; // pula gry
+	private int pool = 0;
 	private int initialChipsForPlayers = 1000;
 
 	int numHumans, numBots;
@@ -93,6 +96,17 @@ public class Table {
 	}
 	void allin() {
 
+	}
+
+	/**
+	 * wejscie gracza do gry kosztuje go wpisowe
+	 * 
+	 * @param player
+	 */
+	public void addPlaterToGame(Player player) {
+		player.payChips(WPISOWE);
+		pool = pool + WPISOWE;
+		playersInGame.add(player);
 	}
 
 	public int getInitialChipsForPlayers() {

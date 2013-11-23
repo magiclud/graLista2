@@ -39,21 +39,11 @@ public class Human extends Player {
 
 // Klasa bezpośrednio związana z interfacem, ma być implementowana ?
 	@Override
-	List<Card> joinGame() {
+	public void joinGame() {
 
-		showCards();
-		// tutaj powinien pobrać indeksy do List<Integer> abandonedIndexes
-		// Tutaj powinien wybrać karty selectCardsem
-		showCards();
+		System.out.println("Player " + playerID + " dolacza do gry");
+		currentTable.addPlaterToGame(this);
 
-		// TUtaj użytkownik stwierdza, czy dalej chce grać
-		Boolean wannaPlay = false;
-		askEnd();
-
-		if (wannaPlay)
-			return ownCards;
-
-		return null;
 	}
 
 }

@@ -12,7 +12,7 @@ public class GameTest {
 				+ "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry");
 		String inString;
 		Scanner scanIn = new Scanner(System.in);
-		inString = scanIn.nextLine();
+		inString = "START";
 		if (!inString.equals("START")) {
 			System.out.println("System: Wychodzę z gry");
 			scanIn.close();
@@ -41,20 +41,13 @@ public class GameTest {
 			Table myTable = new Table(numHum, numBot);
 
 			//pytam wszystkihc playerow czy graja, jesli tak, to pobieram wpisowe
-			for (Player player : myTable.players) {
-				if (player.isHuman()){
-
-					// odpowiedz
-					// System.out.println("System: Czy human ID: " + player.getPlayerID() + " gra? <<T or N>>");
-					// String odpowiedz = scanIn.nextLine();
-					// if (odpowiedz.equals("T") || odpowiedz.equals("N")){
-					//
-					// }
-
-				}
-			}
+			askEverybodyToJoinTheGame(scanIn, myTable);
 
 
+			// TU nie mam pojecia co sie dzieje, ale ja bym tego nie poprawia tylko napisal od nowa, bo bedzie latwiej,
+			// pokazalem Ci jak zrobic ladnie pierwsza petle z pytanie o wejscie do gry
+			// wzorujac sie na tym co napisalem (i ewnetualnie na tym nizej, ale lepiej nie za duzo),
+			// mozesz napisac kolejnac metoda ktora bedzie miala petle licytacji
 			for (int i = 0; i < numHum; ++i) {
 				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
 				while (inString.equals("N") || inString.endsWith("T")) {
@@ -140,6 +133,33 @@ public class GameTest {
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
 
+	}
+
+	private static void askEverybodyToJoinTheGame(Scanner scanIn, Table myTable) {
+		for (Player player : myTable.players) {
+			if (player.isHuman()){
+				String answer = getAnswerFor(player, scanIn);
+				if (answer.equals("T")) {
+					player.joinGame();
+				}
+			}
+			else {
+				Bot bot = (Bot) player;
+				if (bot.randomIfJoinTogame()) {
+					bot.joinGame();
+				}
+			}
+		}
+	}
+
+	private static String getAnswerFor(Player player, Scanner scanIn) {
+
+		String odpowiedz = "";
+		while (!odpowiedz.equals("T") && !odpowiedz.equals("N")) {
+			System.out.println("System: Czy human ID: " + player.getPlayerID() + " gra? <<T or N>>");
+			odpowiedz = scanIn.nextLine();;
+		}
+		return odpowiedz;
 	}
 
 }
