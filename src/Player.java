@@ -8,12 +8,14 @@ public abstract class Player {
 	private int ownChips;
 	// private Boolean alreadyChangedCards = false;
 
-	private int chipsForBidding;
+	public int chipsForBidding;
 	public int playerID;
 
 	public String newPlayerID;
 	public int newToBet;
 	boolean newAlreadyChangedCards = false;
+	
+	StatusEnum playerStatus = null;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player
 																				// ma

@@ -1,7 +1,7 @@
 
 
 
-	public enum StatusEnum {
+	public enum ActionsEnum {
 		CLEAN, SB_PLAYED, SB_ALL_IN, SB_CALL, FOLD;
 
 		public boolean isGreater(CourtEnum secondCourt) {

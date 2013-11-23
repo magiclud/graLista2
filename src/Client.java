@@ -1,3 +1,5 @@
+import java.awt.event.ActionEvent;
+import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
 import java.awt.event.WindowListener;
 import java.io.IOException;
@@ -8,7 +10,7 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
-public class Client implements WindowListener {
+public class Client implements WindowListener, ActionListener {
 	static String poprawnyAdresIPRegexp = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$";
 	static String poprawnyPortRegexp = "^[0-9]{4}+$";
 
@@ -50,24 +52,6 @@ public class Client implements WindowListener {
 
 	public static void main(String[] args) {
 
-		if (args.length != 0) {
-			if (args.length == 2) {// args[0] - adresIp, args[1] - adres portu
-				// try {
-
-				// if (args[0].matches(poprawnyAdresIPRegexp) &&
-				// args[1].matches(poprawnyPortRegexp)) {
-				// / numerPortu = Integer.parseInt(args[1]);
-				// } else
-				// throw new
-				// LiczbaException("Niepoprawwnie wpisany adresIP lub port serwera");
-				// } catch (NumberFormatException ex) {
-				System.out.println("nieprawidło wprowadzony numer portu");
-				// } catch (LiczbaException e) {
-				// System.out.println(e.getMessage());
-				// }
-			} else
-				System.out.println("nieprawidło wprowadzony adres serwera i numer portu");
-		}
 		// KlientGUI kalkulator = new KlientGUI();
 		// kalkulator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		// kalkulator.setVisible(true);
@@ -101,6 +85,10 @@ public class Client implements WindowListener {
 
 	@Override
 	public void windowDeactivated(WindowEvent e) {
+	}
+
+	@Override
+	public void actionPerformed(ActionEvent e) {
 	}
 
 }
