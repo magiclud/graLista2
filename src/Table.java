@@ -4,14 +4,16 @@ import java.util.List;
 
 public class Table {
 
+	private static final int WPISOWE = 50;
 	List<Player> players = new ArrayList<>();
 	List<List<Card>> playersCards = new ArrayList<>();
 	List<List<Card>> endOfGame;
 	List<Boolean> alreadyChangedCards = new ArrayList<>();
 	List<Player> playersInGame = new ArrayList<>();
-	private int pool; // pula gry
+	private int pool = 0; // pula gry
+	private int initialChipsForPlayers = 1000;
 
-	int numHumans, numBots, numChips;
+	int numHumans, numBots;
 	// SZKIC
 	int startZetony, startWpisowe;
 
@@ -32,7 +34,7 @@ public class Table {
 		return null;
 	}
 
-	public Table(int numHumans, int numBots, int numChips) {
+	public Table(int numHumans, int numBots) {
 
 		this.actualDeck = new Deck(); // Tutaj już mają być karty rozdane,
 										// znaczy się :-)
@@ -52,7 +54,6 @@ public class Table {
 		}
 		this.numHumans = numHumans;
 		this.numBots = numBots;
-		this.numChips = numChips;
 
 		// trzeba ustawaic cos co bedzie mowilo ile graczy faktycznie chce
 		// zagrac i zaplaciic
@@ -144,10 +145,6 @@ public class Table {
 		Player player = findPlayer(PlayerID);
 		roundStatus = StatusEnum.SB_ALL_IN;
 
-	}
-
-	public int getNumChips() {
-		return numChips;
 	}
 
 	List<Card> giveCards(int numbOfCards) {
@@ -250,6 +247,21 @@ public class Table {
 	public void setPlayersInGame(Player player) {
 		playersInGame.add(player);
 
+	}
+
+	/**
+	 * wejscie gracza do gry kosztuje go wpisowe
+	 * 
+	 * @param player
+	 */
+	public void addPlaterToGame(Player player) {
+		player.payChips(WPISOWE);
+		pool = pool + WPISOWE;
+		playersInGame.add(player);
+	}
+
+	public int getInitialChipsForPlayers() {
+		return initialChipsForPlayers;
 	}
 
 }
