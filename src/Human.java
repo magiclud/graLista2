@@ -38,12 +38,5 @@ public class Human extends Player {
 	// }
 
 // Klasa bezpośrednio związana z interfacem, ma być implementowana ?
-	@Override
-	public void joinGame() {
-
-		System.out.println("Player " + playerID + " dolacza do gry");
-		currentTable.addPlaterToGame(this);
-
-	}
 
 }

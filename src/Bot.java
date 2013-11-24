@@ -20,11 +20,6 @@ public class Bot extends Player {
 		return false;
 	};
 
-	@Override
-	public void joinGame() {
-		// return playGame();
-	}
-
 	// Losowanie różnych liczb ze zbioru 0. .5
 	List<Integer> randomDifferentNumbers(int howMany) {
 		if (howMany > 5 || howMany < 0)

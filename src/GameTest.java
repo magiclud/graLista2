@@ -148,18 +148,12 @@ public class GameTest {
 				String answer = getAnswerFor(player, scanIn);
 				if (answer.equals("T")) {
 					player.joinGame();
-					// dopisuje do grajacych graczy
-					myTable.setPlayersInGame(player);
-					// pobieram wpisowe jesli gra
-					myTable.addPlaterToGame(player);
 				}
 			}
 			else {
 				Bot bot = (Bot) player;
 				if (bot.randomIfJoinTogame()) {
 					bot.joinGame();
-					myTable.setPlayersInGame(bot);
-					myTable.addPlaterToGame(bot);
 				}
 			}
 		}

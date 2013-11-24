@@ -14,7 +14,7 @@ public abstract class Player {
 	public String newPlayerID;
 	public int newToBet;
 	boolean newAlreadyChangedCards = false;
-	
+
 	StatusEnum playerStatus = null;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player
@@ -55,7 +55,11 @@ public abstract class Player {
 		return chipsForBidding;
 	}
 
-	abstract public void joinGame(); // Jak human albo bot będzie sobie grał
+	public void joinGame() {
+		// wykorzystanie metody toString2
+		System.out.println("Dolaczam do gry - " + this);
+		currentTable.addPlaterToGame(this);
+	}
 
 	public SequenceEnum checkScore() {
 		return Checker.checkScore(ownCards);
@@ -81,6 +85,11 @@ public abstract class Player {
 
 	public void payChips(int howMany) {
 		ownChips = ownChips - howMany;
+	}
+
+	@Override
+	public String toString() {
+		return "Player id: " + playerID + ", karty: " + ownCards + ", wynik: " + checkScore();
 	}
 
 }

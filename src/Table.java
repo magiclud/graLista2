@@ -19,13 +19,13 @@ public class Table {
 	int startZetony, startWpisowe;
 
 	int currentMax;
-	
+
 	StatusEnum roundStatus = StatusEnum.CLEAN;
-	
+
 
 	Deck actualDeck;
-	
-	
+
+
 	// Zwraca wskaźnik na playera jeżeli znaleziono takiego w naszej puli graczy
 	Player findPlayer(String szukanyPlayerID) {
 		for(int i = 0; i < players.size(); ++i) {
@@ -65,33 +65,32 @@ public class Table {
 
 	// Metoda, która rozpoczyna grę
 
-	
+
 //	  public void startGame() { for (int i = 0; i < players.size(); ++i) {
 //	  endOfGame.add(players.get(i).joinGame()); } }
-	 
+
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany
 
 	void startGame() {
-		
+
 		roundStatus = StatusEnum.CLEAN;
 		int currentMax = startWpisowe;
-		// ustaw każdemu graczowi pole newToBet na minimum ! ! ! 
-	/*	void startRound() {
-			void makeRequest(PlayerID); //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM PRZEZ SERVER ADAPTER
-			
-		} */
-		
-	} 
-	/*
-	 * void startGame() {
+		// ustaw każdemu graczowi pole newToBet na minimum ! ! !
+		/* void startRound() {
+		 * void makeRequest(PlayerID); //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM PRZEZ SERVER ADAPTER
+		 * 
+		 * } */
+
+	}
+	
+	/* void startGame() {
 	 * 
 	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
 	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
 	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
 	 * PRZEZ SERVER ADAPTER }
 	 * 
-	 * }
-	 */
+	 * } */
 	void check() {
 
 	}
@@ -105,14 +104,12 @@ public class Table {
 		currentMax = howMuch;
 }
 	// \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd
-	/*
-	 * void bet(String PlayerID, int howMuch) throws Exception { Player player =
+	/* void bet(String PlayerID, int howMuch) throws Exception { Player player =
 	 * findPlayer(PlayerID); if(howMuch < currentMax) throw new
 	 * IllegalStateException("za mało obstawiasz !"); changeStatus
 	 * player.newToBet = howmuch; currentMax = newToBet
 	 * 
-	 * }
-	 */
+	 * } */
 	void raise() {
 
 	}
@@ -245,11 +242,6 @@ public class Table {
 		return tempPlayerCards;
 	}
 
-	// wstawiam gracza na liste grajcych
-	public void setPlayersInGame(Player player) {
-		playersInGame.add(player);
-	}
-
 	/**
 	 * wejscie gracza do gry kosztuje go wpisowe
 	 * 
@@ -258,6 +250,7 @@ public class Table {
 	public void addPlaterToGame(Player player) {
 		player.payChips(WPISOWE);
 		pool = pool + WPISOWE;
+		playersInGame.add(player);
 	}
 
 	public int getInitialChipsForPlayers() {

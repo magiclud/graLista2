@@ -17,7 +17,7 @@ public class Card {
 		return suit;
 	}
 
-	@Override 
+	@Override
 	public boolean equals(Object obj) {
 		if (this == obj)
 			return true;
@@ -47,5 +47,10 @@ public class Card {
 		}
 		return false;
 
+	}
+
+	@Override
+	public String toString() {
+		return court + "" + suit;
 	}
 }
