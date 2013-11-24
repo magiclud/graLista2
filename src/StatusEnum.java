@@ -2,7 +2,28 @@
 
 
 	public enum StatusEnum {
-		CLEAN, SB_PLAYED, SB_ALL_IN, SB_CALL, FOLD;
+	CLEAN, CHECK, BET, RAISE, CALL, ALL_IN, FOLD;
+
+	public String toString() {
+
+		switch (this) {
+		case CLEAN:
+			return "CLEAN";
+		case CHECK:
+			return "CHECK";
+		case BET:
+			return "BET";
+		case RAISE:
+			return "RAISE";
+		case CALL:
+			return "CALL";
+		case ALL_IN:
+			return "ALL-IN";
+		case FOLD:
+			return "FOLD";
+		}
+		throw new IllegalStateException("nieprawidlowy ruch");
+	}
 
 		public boolean isGreater(CourtEnum secondCourt) {
 			if (this.ordinal() > secondCourt.ordinal()) {

@@ -5,7 +5,7 @@ public abstract class Player {
 	protected List<Card> ownCards;
 	protected Table currentTable;
 	private Sorter ownSorter = new Sorter();
-	private int ownChips;
+	public int ownChips;
 	// private Boolean alreadyChangedCards = false;
 
 	public int chipsForBidding;
@@ -15,7 +15,7 @@ public abstract class Player {
 	public int newToBet;
 	boolean newAlreadyChangedCards = false;
 
-	StatusEnum playerStatus = null;
+	StatusEnum playerStatus;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player
 																				// ma
@@ -42,6 +42,8 @@ public abstract class Player {
 			System.out.print("[" + i + "]" + ownCards.get(i).getCourt() + ownCards.get(i).getSuit() + " ");
 		}
 	}
+	
+	void changeCardsStrategy(){}
 
 	public int getOwnChips() {
 		return ownChips;
@@ -58,7 +60,7 @@ public abstract class Player {
 	public void joinGame() {
 		// wykorzystanie metody toString2
 		System.out.println("Dolaczam do gry - " + this);
-		currentTable.addPlaterToGame(this);
+		currentTable.addPlayerToGame(this);
 	}
 
 	public SequenceEnum checkScore() {
@@ -76,6 +78,10 @@ public abstract class Player {
 		ownSorter.sort(ownCards);
 
 	}
+	abstract List<Card> playGame(); // metoda która zmienia karty playera, 
+									// zwraca jakie ma po wymianie
+	abstract void gameStrategy();
+	abstract int zacznijLicytacje();
 
 	public List<Card> getOwnCards() {
 		return ownCards;

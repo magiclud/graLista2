@@ -1,20 +1,16 @@
+public enum ActionsEnum {
+	BET, FOLD, ALL_IN, CHECK, CALL, RAISE;
 
 
-
-	public enum ActionsEnum {
-		CLEAN, SB_PLAYED, SB_ALL_IN, SB_CALL, FOLD;
-
-		public boolean isGreater(CourtEnum secondCourt) {
-			if (this.ordinal() > secondCourt.ordinal()) {
-				return true;
-			}
-			return false;
+	public boolean isGreater(CourtEnum secondCourt) {
+		if (this.ordinal() > secondCourt.ordinal()) {
+			return true;
 		}
-
-		public boolean isLess(CourtEnum court) {
-			return this.ordinal() < court.ordinal();
-		}
-
+		return false;
 	}
 
+	public boolean isLess(CourtEnum court) {
+		return this.ordinal() < court.ordinal();
+	}
 
+}

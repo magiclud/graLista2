@@ -39,4 +39,22 @@ public class Human extends Player {
 
 // Klasa bezpośrednio związana z interfacem, ma być implementowana ?
 
+	@Override
+	List<Card> playGame() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	void gameStrategy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	int zacznijLicytacje() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }

@@ -42,8 +42,8 @@ public class GameTest {
 
 			//pytam wszystkihc playerow czy graja, jesli tak, to pobieram wpisowe
 			askEverybodyToJoinTheGame(scanIn, myTable);
-			// pierwssza liscyatcja
-			firstBidding(myTable);
+			// pierwssza licytacja
+			firstBidding(scanIn, myTable);
 
 			for (int i = 0; i < numHum; ++i) {
 				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
@@ -132,25 +132,47 @@ public class GameTest {
 
 	}
 
-	private static void firstBidding(Table myTable) {
+	private static void firstBidding(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.playersInGame) {
 			//TODO
-			askPlayersWhatMove(player, myTable);
+			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
+			askPlayersWhatMove(scanIn, player);
 		}
 	}
 
-	private static void askPlayersWhatMove(Player player,Table myTable) {
-		switch (){
-			case StatusEnum.SB_PLAYED:
-				return myTable.bet(player.getPlayerID(), 20);//TODO how much?
-			case StatusEnum.SB_ALL_IN:
-				return myTable.allin(player);
-			case StatusEnum.SB_CALL:
-				return myTable.call(player);
-			case StatusEnum.FOLD:
-				return myTable.fold(player);			
-		}
+	private static void askPlayersWhatMove(Scanner scanIn, Player player) {
 		
+		
+		String odpowiedz = "";
+		while (!odpowiedz.equals("CHECK") && !odpowiedz.equals("BET") && !odpowiedz.equals("RAISE")&& !odpowiedz.equals("CALL")&& !odpowiedz.equals("FOLD") &&!odpowiedz.equals("ALL-IN")) {
+
+			// switch (odpowiedz) {
+			// case odpowiedz = StatusEnum.CHECK.toString():
+			// System.out.println("Player: CHECK -czekam, gdy wczesniejsi gracze nie postawili stawki w danej rundzie");
+			// // return player.bet(player.getPlayerID(), 20);//TODO how much?
+			// case odpowiedz = StatusEnum.BET.toString():
+			// System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
+			// System.out.println("System: Okresl wysokosc stawki");
+			// System.out.println("Player: BET ustawiam na " +
+			// getAnswerForMoney(scanIn));
+			// // return myTable.allin(player);
+			// case odpowiedz = StatusEnum.RAISE.toString():
+			// System.out.println("Player: RAISE -przebicie najwyzeszgo do tej pory zakladu innego gracza");
+			// System.out.println("System: Okresl wysokosc stawki");
+			// System.out.println("Player: BET ustawiam na " +
+			// getAnswerForMoney(scanIn));
+			// // return myTable.call(player);
+			// case odpowiedz = StatusEnum.ALL_IN.toString():
+			// System.out.println("Player: ALL_IN -stawiam pierwsza stawke w danej rundzie");
+			// // return myTable.fold(player);
+			// }
+			// odpowiedz = scanIn.nextLine();
+			//
+	}
+	}
+
+	private static String getAnswerForMoney(Scanner scanIn) {
+		return scanIn.nextLine();
 	}
 
 	private static void askEverybodyToJoinTheGame(Scanner scanIn, Table myTable) {
@@ -175,7 +197,7 @@ public class GameTest {
 		String odpowiedz = "";
 		while (!odpowiedz.equals("T") && !odpowiedz.equals("N")) {
 			System.out.println("System: Czy human ID: " + player.getPlayerID() + " gra? <<T or N>>");
-			odpowiedz = scanIn.nextLine();;
+			odpowiedz = scanIn.nextLine();
 		}
 		return odpowiedz;
 	}

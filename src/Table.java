@@ -11,14 +11,14 @@ public class Table {
 	List<Boolean> alreadyChangedCards = new ArrayList<>();
 	List<Player> playersInGame = new ArrayList<>();
 	private int pool = 0; // pula gry
-	private int initialChipsForPlayers = 1000;
 
 
 	int numHumans, numBots;
+	
 	// SZKIC
 	int startZetony, startWpisowe;
-
-	int currentMax;
+	StatusEnum statusRundy = StatusEnum.CLEAN; // początkowy status rundy
+	int currentMax; // ile maksymalnie ostatnio obstawiono
 
 	StatusEnum roundStatus = StatusEnum.CLEAN;
 
@@ -73,24 +73,45 @@ public class Table {
 
 	void startGame() {
 
-		roundStatus = StatusEnum.CLEAN;
 		int currentMax = startWpisowe;
-		// ustaw każdemu graczowi pole newToBet na minimum ! ! !
-		/* void startRound() {
-		 * void makeRequest(PlayerID); //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM PRZEZ SERVER ADAPTER
-		 * 
-		 * } */
 
+		// 1. wydaj wszystkim graczom żetony player.ownChips = startZetony;
+		
+		rozpocznijRunde();
+		
+	}
+	void rozpocznijRunde() {
+		// 1. ktory gracz pierwszy ? byc moze zrob jakas liste playerow
+		statusRundy = StatusEnum.CLEAN;
+		// 2. ustaw status player.playerStatus = StatusEnum.CLEAN;
+		actualDeck = new Deck();
+		// 3. rozdaj graczom karty
+		// 4. Kolejno graczom nadawaj rozkaz licytacji
+		// Player kolejny = find(NextPlayerID);
+		// try {
+		// int currentMax = kolejny.zacznijLicytacje(currentMax, List<StatusEnum> playersStatuses,
+		// mozliweRuchy) } catch (Exception ex) {}
+		// uproszczenie statusRundy = player.playerStatus;
+		
+		// Wywolujemy u kazdego player player.gameStrategy() zeby wymienil karty
+		
+		// ZNOWU LICYTACJA
+		
+		// Wywolujemy u kazdego player player.gameStrategy() zeby wymienil karty
+		
+		// ZABIERAMY gRACZON CZIPS I ODDAJEMY WYGRANEMU
+	}
+	// trzeba ZROBIC FUNKCJĘ 
+	List<ActionsEnum> mozliweRuchy(StatusEnum statusRundy) {
+		List<ActionsEnum> solution = null;
+		return solution;
 	}
 	
-	/* void startGame() {
-	 * 
-	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
-	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
-	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
-	 * PRZEZ SERVER ADAPTER }
-	 * 
-	 * } */
+	
+	
+	
+	
+
 	void check() {
 
 	}
@@ -100,7 +121,7 @@ public class Table {
 			throw new IllegalStateException("Za mało obstawiasz !");
 		if(howMuch > player.chipsForBidding)
 			throw new IllegalStateException("Za mało masz coins żeby tak zrobić !");
-		roundStatus = StatusEnum.SB_PLAYED;
+		roundStatus = StatusEnum.BET;
 		currentMax = howMuch;
 }
 	// \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd
@@ -120,7 +141,7 @@ public class Table {
 		if(howMuch > player.chipsForBidding)
 			throw new IllegalStateException("Za mało masz coins żeby tak zrobić !");
 		currentMax = howMuch;
-		roundStatus = StatusEnum.SB_PLAYED;
+		roundStatus = StatusEnum.RAISE;
 }
 
 	void call() {
@@ -130,7 +151,7 @@ public class Table {
 		Player player = findPlayer(PlayerID);
 		if(player.chipsForBidding < currentMax)
 			throw new IllegalStateException("Za mało masz coins !");
-		roundStatus = StatusEnum.SB_CALL;
+		roundStatus = StatusEnum.CALL;
 	}
 	void fold() {
 
@@ -141,7 +162,7 @@ public class Table {
 	}
 	void allin(String PlayerID) {
 		Player player = findPlayer(PlayerID);
-		roundStatus = StatusEnum.SB_ALL_IN;
+		roundStatus = StatusEnum.ALL_IN;
 
 	}
 
@@ -247,14 +268,14 @@ public class Table {
 	 * 
 	 * @param player
 	 */
-	public void addPlaterToGame(Player player) {
+	public void addPlayerToGame(Player player) {
 		player.payChips(WPISOWE);
 		pool = pool + WPISOWE;
 		playersInGame.add(player);
 	}
 
 	public int getInitialChipsForPlayers() {
-		return initialChipsForPlayers;
+		return startZetony;
 	}
 
 	public static int getWpisowe() {

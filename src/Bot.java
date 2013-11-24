@@ -3,9 +3,9 @@ import java.util.List;
 import java.util.Random;
 
 public class Bot extends Player {
-	Random botCards = new Random();
-	MakeOrder order;
-	Sorter s;
+	private Random botCards = new Random();
+	private MakeOrder order;
+	private Sorter s;
 
 	public Bot(List<Card> givenCards, Table currentTable, int playerID) {
 		super(givenCards, currentTable, playerID);
@@ -23,8 +23,7 @@ public class Bot extends Player {
 	// Losowanie różnych liczb ze zbioru 0. .5
 	List<Integer> randomDifferentNumbers(int howMany) {
 		if (howMany > 5 || howMany < 0)
-			throw new IllegalStateException(
-					"Niepoprawna ilość kart jakie chcesz wylosować !");
+			throw new IllegalStateException("Niepoprawna ilość kart jakie chcesz wylosować !");
 		List<Integer> differentNumbers = new ArrayList<Integer>();
 		int[] differentIndexes = new int[5];
 		for (int i = 0; i < 5; ++i) {
@@ -50,55 +49,56 @@ public class Bot extends Player {
 		abandonedIndexes = randomDifferentNumbers(howMany);
 		requestCards(abandonedIndexes);
 	}
-
+	
 	// Rozgrywka z prywatną strategią
 	List<Card> playGame() {
-		/*for(int i = 0; i < 5; ++i) {
-			System.out.println(ownCards.get(i).getCourt() + " " + ownCards.get(i).getSuit() + i);
-		}*/
+		/*
+		 * for(int i = 0; i < 5; ++i) {
+		 * System.out.println(ownCards.get(i).getCourt() + " " +
+		 * ownCards.get(i).getSuit() + i); }
+		 */
 		if (order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0) == 5)
 			return ownCards;
 		// Co się dzieje jak jest prawie poker ?
-		if(order.maxRowsSizes.get(0) ==4 && order.orderBySuitQuantity.get(0)==4) {
-			if(order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
+		if (order.maxRowsSizes.get(0) == 4 && order.orderBySuitQuantity.get(0) == 4) {
+			if (order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
 				List<Integer> abandonedIndexes = new ArrayList<Integer>();
-				for(int i = 0; i < 5; ++i) {
-					if(!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
-							abandonedIndexes.add(i);
+				for (int i = 0; i < 5; ++i) {
+					if (!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
+						abandonedIndexes.add(i);
 				}
 				requestCards(abandonedIndexes);
-				for(int i =0; i < abandonedIndexes.size(); ++i) {
+				for (int i = 0; i < abandonedIndexes.size(); ++i) {
 					System.out.println(abandonedIndexes.get(i));
 				}
 				return ownCards;
 			}
 		}
-		if(order.orderByCourtQuantity.get(0)==4)
+		if (order.orderByCourtQuantity.get(0) == 4)
 			return ownCards;
-		if(order.orderByCourtQuantity.get(0)==3 && order.orderByCourtQuantity.get(1)==2)
+		if (order.orderByCourtQuantity.get(0) == 3 && order.orderByCourtQuantity.get(1) == 2)
 			return ownCards;
 		// Co się dzieje jak jest prawie ful i prawie kareta ?
 		// Patrz jak są 3 takie same karty, wymien pozostale 2
-		if(order.orderBySuitQuantity.get(0)==5)
+		if (order.orderBySuitQuantity.get(0) == 5)
 			return ownCards;
-		if(order.orderBySuitQuantity.get(0)==4) {
+		if (order.orderBySuitQuantity.get(0) == 4) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 0; i < 5; ++i) {
-				if(!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
+			for (int i = 0; i < 5; ++i) {
+				if (!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
 					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
 
 			return ownCards;
 		}
-		if(order.maxRowsSizes.get(0)==5)
+		if (order.maxRowsSizes.get(0) == 5)
 			return ownCards;
-		if(order.maxRowsSizes.get(0)==4) {
+		if (order.maxRowsSizes.get(0) == 4) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 0; i < 5; ++i) {
-				if(ownCards.get(i).getCourt().ordinal()>(order.maxRowsEndCard.get(0).getCourt().ordinal())
-						|| ownCards.get(i).getCourt().ordinal() < (order.maxRowsEndCard.get(0).getCourt().ordinal() -4)
-						)
+			for (int i = 0; i < 5; ++i) {
+				if (ownCards.get(i).getCourt().ordinal() > (order.maxRowsEndCard.get(0).getCourt().ordinal())
+						|| ownCards.get(i).getCourt().ordinal() < (order.maxRowsEndCard.get(0).getCourt().ordinal() - 4))
 					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
@@ -106,23 +106,22 @@ public class Bot extends Player {
 			return ownCards;
 		}
 		// Jak są 3 takie same karty, wymień pozostałe 2
-		if(order.orderByCourtQuantity.get(0)==3 ) {
+		if (order.orderByCourtQuantity.get(0) == 3) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 0; i < 5; ++i) {
-				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()))
-						abandonedIndexes.add(i);
+			for (int i = 0; i < 5; ++i) {
+				if (!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()))
+					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
 
 			return ownCards;
 		}
 		// Jak jest układ 2 pary, wymień 1 kartę
-		if(order.orderByCourtQuantity.get(0)==2 && order.orderByCourtQuantity.get(1)==2 ) {
+		if (order.orderByCourtQuantity.get(0) == 2 && order.orderByCourtQuantity.get(1) == 2) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 0; i < 5; ++i) {
-				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()) &&
-						!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(1).getCourt())
-						)
+			for (int i = 0; i < 5; ++i) {
+				if (!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt())
+						&& !ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(1).getCourt()))
 					abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
@@ -130,11 +129,10 @@ public class Bot extends Player {
 			return ownCards;
 		}
 		// Jak jest układ 1 para, wymień 3 karty
-		if(order.orderByCourtQuantity.get(0)==2) {
+		if (order.orderByCourtQuantity.get(0) == 2) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 0; i < 5; ++i) {
-				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt())
-)
+			for (int i = 0; i < 5; ++i) {
+				if (!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()))
 					abandonedIndexes.add(i);
 
 			}
@@ -145,13 +143,14 @@ public class Bot extends Player {
 		// W przeciwnym razie wymień 4 karty :D
 		else {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
-			for(int i = 0; i < 4; ++i) {
+			for (int i = 0; i < 4; ++i) {
 				abandonedIndexes.add(i);
 			}
 			requestCards(abandonedIndexes);
-			/*for(int i =0; i < abandonedIndexes.size(); ++i) {
-			 * System.out.println(abandonedIndexes.get(i));
-			 * } */
+			/*
+			 * for(int i =0; i < abandonedIndexes.size(); ++i) {
+			 * System.out.println(abandonedIndexes.get(i)); }
+			 */
 			return ownCards;
 		}
 
@@ -167,9 +166,19 @@ public class Bot extends Player {
 		return random.nextBoolean();
 	}
 
+	@Override
+	void gameStrategy() {
+		// TODO Auto-generated method stub
+		
+	}
+
+	@Override
+	int zacznijLicytacje() {
+		// TODO Auto-generated method stub
+		return 0;
+	}
+
 }
-
-
 
 class MakeOrder {
 	List<Card> orderByCourtQuality;
@@ -208,9 +217,7 @@ class MakeOrder {
 		int i = 0;
 		while (i < 5) {
 			int j = 1;
-			while (!(i == 4)
-					&& inspectedCards.get(i).getCourt()
-							.equals(inspectedCards.get(i + 1).getCourt())) {
+			while (!(i == 4) && inspectedCards.get(i).getCourt().equals(inspectedCards.get(i + 1).getCourt())) {
 				++i;
 				++j;
 			}
@@ -220,8 +227,7 @@ class MakeOrder {
 				orderByCourtQuantity.add(j);
 			} else {
 				int k = 0;
-				while (k < orderByCourtQuantity.size()
-						&& j < orderByCourtQuantity.get(k)) {
+				while (k < orderByCourtQuantity.size() && j < orderByCourtQuantity.get(k)) {
 					++k;
 				}
 				if (k < orderByCourtQuantity.size()) {
@@ -246,21 +252,19 @@ class MakeOrder {
 		orderBySuitQuality = new ArrayList<Card>();
 		orderBySuitQuantity = new ArrayList<Integer>();
 
-		for(i = 0; i < colors.size(); ++i) {
+		for (i = 0; i < colors.size(); ++i) {
 			int counter = 0;
-			for(int j = 0; j < 5; ++j ) {
-				if(inspectedCards.get(j).getSuit().equals(colors.get(i).getSuit()))
-				++counter;
+			for (int j = 0; j < 5; ++j) {
+				if (inspectedCards.get(j).getSuit().equals(colors.get(i).getSuit()))
+					++counter;
 			}
 
-			if(orderBySuitQuality.size() == 0 ) {
+			if (orderBySuitQuality.size() == 0) {
 				orderBySuitQuality.add(colors.get(i));
 				orderBySuitQuantity.add(counter);
-			}
-			else {
+			} else {
 				int k = 0;
-				while (k < orderBySuitQuantity.size()
-						&& counter < orderBySuitQuantity.get(k)) {
+				while (k < orderBySuitQuantity.size() && counter < orderBySuitQuantity.get(k)) {
 					++k;
 				}
 				if (k < orderBySuitQuantity.size()) {
@@ -274,39 +278,35 @@ class MakeOrder {
 		}
 
 		// Posortuj według najdłuższego znalezionego streeta :D
-			maxRowsEndCard = new ArrayList<Card>();
-			maxRowsSizes = new ArrayList<Integer>();
-				i = 0;
-				while (i < 5) {
-					int j = 1;
-					while ((i != 4)
-							&& (inspectedCards.get(i).getCourt().ordinal() + 1
-									 == inspectedCards.get(i + 1).getCourt().ordinal())) {
-						++i;
-						++j;
+		maxRowsEndCard = new ArrayList<Card>();
+		maxRowsSizes = new ArrayList<Integer>();
+		i = 0;
+		while (i < 5) {
+			int j = 1;
+			while ((i != 4) && (inspectedCards.get(i).getCourt().ordinal() + 1 == inspectedCards.get(i + 1).getCourt().ordinal())) {
+				++i;
+				++j;
 
-					}
-					if (maxRowsEndCard.size() == 0) {
-						maxRowsEndCard.add(inspectedCards.get(i));
-						maxRowsSizes.add(j);
-					} else {
-						int k = 0;
-						while (k < maxRowsSizes.size()
-								&& j < maxRowsSizes.get(k)) {
-							++k;
-						}
-						if (k < maxRowsSizes.size()) {
-							maxRowsEndCard.add(k, inspectedCards.get(i));
-							maxRowsSizes.add(k, j);
-						} else {
-							maxRowsEndCard.add(inspectedCards.get(i));
-							maxRowsSizes.add(j);
-						}
-
-					}
-					++i;
+			}
+			if (maxRowsEndCard.size() == 0) {
+				maxRowsEndCard.add(inspectedCards.get(i));
+				maxRowsSizes.add(j);
+			} else {
+				int k = 0;
+				while (k < maxRowsSizes.size() && j < maxRowsSizes.get(k)) {
+					++k;
+				}
+				if (k < maxRowsSizes.size()) {
+					maxRowsEndCard.add(k, inspectedCards.get(i));
+					maxRowsSizes.add(k, j);
+				} else {
+					maxRowsEndCard.add(inspectedCards.get(i));
+					maxRowsSizes.add(j);
 				}
 
+			}
+			++i;
+		}
 
 	}
 }
