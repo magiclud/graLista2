@@ -42,12 +42,9 @@ public class GameTest {
 
 			//pytam wszystkihc playerow czy graja, jesli tak, to pobieram wpisowe
 			askEverybodyToJoinTheGame(scanIn, myTable);
-
-
-			// TU nie mam pojecia co sie dzieje, ale ja bym tego nie poprawia tylko napisal od nowa, bo bedzie latwiej,
-			// pokazalem Ci jak zrobic ladnie pierwsza petle z pytanie o wejscie do gry
-			// wzorujac sie na tym co napisalem (i ewnetualnie na tym nizej, ale lepiej nie za duzo),
-			// mozesz napisac kolejnac metoda ktora bedzie miala petle licytacji
+			// pierwssza liscyatcja
+			firstBidding(myTable);
+			askPlayersWhatMove();
 			for (int i = 0; i < numHum; ++i) {
 				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
 				while (inString.equals("N") || inString.endsWith("T")) {
@@ -135,18 +132,34 @@ public class GameTest {
 
 	}
 
+	private static void firstBidding(Table myTable) {
+		for (Player player : myTable.playersInGame) {
+			myTable.bet(player.getPlayerID(), 20);
+		}
+	}
+
+	private static void askPlayersWhatMove() {
+
+	}
+
 	private static void askEverybodyToJoinTheGame(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.players) {
 			if (player.isHuman()){
 				String answer = getAnswerFor(player, scanIn);
 				if (answer.equals("T")) {
 					player.joinGame();
+					// dopisuje do grajacych graczy
+					myTable.setPlayersInGame(player);
+					// pobieram wpisowe jesli gra
+					myTable.addPlaterToGame(player);
 				}
 			}
 			else {
 				Bot bot = (Bot) player;
 				if (bot.randomIfJoinTogame()) {
 					bot.joinGame();
+					myTable.setPlayersInGame(bot);
+					myTable.addPlaterToGame(bot);
 				}
 			}
 		}

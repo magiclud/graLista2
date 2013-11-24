@@ -168,8 +168,8 @@ public class Bot extends Player {
 	 * @return
 	 */
 	public boolean randomIfJoinTogame() {
-		// TODO zrobic losowanie
-		return false;
+		Random random = new Random();
+		return random.nextBoolean();
 	}
 
 }

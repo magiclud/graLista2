@@ -13,6 +13,7 @@ public class Table {
 	private int pool = 0; // pula gry
 	private int initialChipsForPlayers = 1000;
 
+
 	int numHumans, numBots;
 	// SZKIC
 	int startZetony, startWpisowe;
@@ -244,9 +245,9 @@ public class Table {
 		return tempPlayerCards;
 	}
 
+	// wstawiam gracza na liste grajcych
 	public void setPlayersInGame(Player player) {
 		playersInGame.add(player);
-
 	}
 
 	/**
@@ -257,11 +258,14 @@ public class Table {
 	public void addPlaterToGame(Player player) {
 		player.payChips(WPISOWE);
 		pool = pool + WPISOWE;
-		playersInGame.add(player);
 	}
 
 	public int getInitialChipsForPlayers() {
 		return initialChipsForPlayers;
+	}
+
+	public static int getWpisowe() {
+		return WPISOWE;
 	}
 
 }
