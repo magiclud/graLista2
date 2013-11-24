@@ -44,7 +44,7 @@ public class GameTest {
 			askEverybodyToJoinTheGame(scanIn, myTable);
 			// pierwssza liscyatcja
 			firstBidding(myTable);
-			askPlayersWhatMove();
+
 			for (int i = 0; i < numHum; ++i) {
 				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
 				while (inString.equals("N") || inString.endsWith("T")) {
@@ -134,12 +134,23 @@ public class GameTest {
 
 	private static void firstBidding(Table myTable) {
 		for (Player player : myTable.playersInGame) {
-			myTable.bet(player.getPlayerID(), 20);
+			//TODO
+			askPlayersWhatMove(player, myTable);
 		}
 	}
 
-	private static void askPlayersWhatMove() {
-
+	private static void askPlayersWhatMove(Player player,Table myTable) {
+		switch (){
+			case StatusEnum.SB_PLAYED:
+				return myTable.bet(player.getPlayerID(), 20);//TODO how much?
+			case StatusEnum.SB_ALL_IN:
+				return myTable.allin(player);
+			case StatusEnum.SB_CALL:
+				return myTable.call(player);
+			case StatusEnum.FOLD:
+				return myTable.fold(player);			
+		}
+		
 	}
 
 	private static void askEverybodyToJoinTheGame(Scanner scanIn, Table myTable) {
