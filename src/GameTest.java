@@ -150,9 +150,9 @@ public class GameTest {
 			switch (StatusEnum.valueOf(odpowiedz)) {
 			case CHECK:
 			 System.out.println("Player: CHECK -czekam, gdy wczesniejsi gracze nie postawili stawki w danej rundzie");
-			 // return player.bet(player.getPlayerID(), 20);//TODO how much?
+				player.check();
 				break;
-			case BET:
+			case BET:// TODO how much?
 			 System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
 			 System.out.println("System: Okresl wysokosc stawki");
 			 System.out.println("Player: BET ustawiam na " +

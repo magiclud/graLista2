@@ -1,3 +1,6 @@
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.GridLayout;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.awt.event.WindowEvent;
@@ -8,9 +11,19 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import javax.swing.JButton;
+import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JTextField;
 
-public class Client implements WindowListener, ActionListener {
+public class Client extends JFrame implements WindowListener, ActionListener {
+
+	private JTextField tekstPiwerwszaLiczba;
+	private JButton buttonRozwiaz;
+	private JTextField wyswietlacz;
+
+	private static String pierwszaLiczba;
+
 	static String poprawnyAdresIPRegexp = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$";
 	static String poprawnyPortRegexp = "^[0-9]{4}+$";
 
@@ -23,27 +36,12 @@ public class Client implements WindowListener, ActionListener {
 	private ObjectOutputStream strumienWyjsciowy;
 	private ObjectInputStream strumienWejsciowy;
 
-	Thread watekOdbiorcy = new Thread(new OdbiorcaKomunikatow());
 
 	public Client() {
-	}
-
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
-
-		Client klient = new Client();
-		klient.doDziela();
-
-	}
-
-	private void doDziela() throws IOException, ClassNotFoundException {
 		try {
 			gniazdo = new Socket(adresIP, numerPortu);
 			strumienWyjsciowy = new ObjectOutputStream(gniazdo.getOutputStream());
 			strumienWejsciowy = new ObjectInputStream(gniazdo.getInputStream());
-
-			watekOdbiorcy.start();
-
-			strumienWejsciowy.close();
 		} catch (UnknownHostException e) {
 			infoOBledzie(e.getMessage());// dialgo o nieprawidlowym adresie
 											// serwera
@@ -51,23 +49,87 @@ public class Client implements WindowListener, ActionListener {
 			infoOBledzie(e.getMessage()); // gdy nieprawidłowo wpisalam numer
 											// portu lub adresIp
 		}
+		GridLayout gridLayout = new GridLayout(5, 0);
+		setSize(400, 400);
+		setLocation(300, 200);
+		setTitle("Klient");
+		getContentPane().setBackground(new Color(230, 230, 250));
+		setLayout(gridLayout);
+		setResizable(false); // blokada zmiany rozmiaru
+
+		tekstPiwerwszaLiczba = new JTextField();
+		tekstPiwerwszaLiczba.setEnabled(true);
+		tekstPiwerwszaLiczba.setForeground(new Color(139, 0, 139));
+		tekstPiwerwszaLiczba.setBackground(new Color(135, 206, 235));
+		tekstPiwerwszaLiczba.setFont(new Font("SansSerif", Font.BOLD, 16));
+
+		buttonRozwiaz = new JButton("Podaj wynik");
+		buttonRozwiaz.setEnabled(true);
+		buttonRozwiaz.setVisible(true);
+		buttonRozwiaz.setForeground(new Color(75, 0, 130));
+		buttonRozwiaz.setFont(new Font("Dialog", Font.BOLD, 16));
+
+		wyswietlacz = new JTextField();
+		wyswietlacz.setVisible(true);
+		wyswietlacz.setEnabled(true);
+		wyswietlacz.setForeground(new Color(75, 0, 130));
+		wyswietlacz.setFont(new Font("Dialog", Font.BOLD, 16));
+
+		buttonRozwiaz.addActionListener(this);
+
+		addWindowListener(this);
+		add(tekstPiwerwszaLiczba);
+		add(buttonRozwiaz);
+		add(wyswietlacz);
+
 	}
 
-	public class OdbiorcaKomunikatow implements Runnable {
-		public void run() {
-			String message;
-			;
-			try {
-				while ((message = (String) strumienWejsciowy.readObject()) != null) {
-					System.out.println("Odczytano: " + message);
-					strumienWyjsciowy.writeObject("chce grac: ");
+	public void actionPerformed(ActionEvent e) {
+		Object zrodlo = e.getSource();
+		if (zrodlo == buttonRozwiaz) {
+			pierwszaLiczba = tekstPiwerwszaLiczba.getText();
 
-				}
-			} catch (Exception ex) {
-				ex.printStackTrace();
-			}
+			listenSocket(pierwszaLiczba);
 		}
 	}
+
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
+
+		Client klient = new Client();
+		klient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		klient.setVisible(true);
+
+	}
+
+	public void listenSocket(String pierwszaLiczba) {
+		try {
+
+			// Send a message to the client application
+			// OutputStream abstrakcyjną klasą obsługującą strumień wyjściowy
+			strumienWyjsciowy.writeObject(pierwszaLiczba + "od clienta");
+
+			// Read and display the response message sent by server application
+			// abstrakcyjną klasą obsługującą strumień wejściowy
+			String message = (String) strumienWejsciowy.readObject();
+
+			System.out.println("Message: " + message);
+			wyswietlacz.setText(message);
+
+			/*********** wyjątek nieznanego hosta **********/
+		} catch (UnknownHostException e) {// w przypadku braku identyfikacji
+											// komputera o podanej nazwie lub
+											// adresie, wyjatek do metody
+											// getLocalHost()
+			e.printStackTrace();// Jeżeli nazwa hosta jest nieznana lub serwer
+								// nazw nie działa
+			/*********** wyjątek wejścia-wyjścia *********/
+		} catch (IOException e) {
+			e.printStackTrace();
+		} catch (ClassNotFoundException e) {
+			e.printStackTrace();
+		}
+	}
+
 
 	private void infoOBledzie(String message) {
 		// TODO wiadomosc w Swingu
@@ -104,8 +166,5 @@ public class Client implements WindowListener, ActionListener {
 	public void windowDeactivated(WindowEvent e) {
 	}
 
-	@Override
-	public void actionPerformed(ActionEvent e) {
-	}
 
 }

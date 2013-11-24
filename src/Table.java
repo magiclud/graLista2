@@ -1,12 +1,14 @@
 import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
+import java.util.Random;
 
 public class Table {
 
 	private static final int WPISOWE = 50;
 	private List<Player> players = new ArrayList<>();
 	private List<List<Card>> playersCards = new ArrayList<>();
+	private Random randomPlayer= new Random();
 	private List<List<Card>> endOfGame;
 	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
@@ -17,11 +19,11 @@ public class Table {
 
 	// SZKIC
 	private int startZetony, startWpisowe;
-	private StatusEnum statusRundy = StatusEnum.CLEAN; // początkowy status
-														// rundy
+
 	private int currentMax; // ile maksymalnie ostatnio obstawiono
 
-	private StatusEnum roundStatus = StatusEnum.CLEAN;
+	private StatusEnum roundStatus = StatusEnum.CLEAN;// początkowy status
+	// rundy
 
 	private Deck actualDeck;
 
@@ -79,7 +81,19 @@ public class Table {
 
 	public void rozpocznijRunde() {
 		// 1. ktory gracz pierwszy ? byc moze zrob jakas liste playerow
-		statusRundy = StatusEnum.CLEAN;
+			List<Player> tempListOfPlayers= new ArrayList();
+			Player random = playersInGame.get(playersInGame.size());
+			tempListOfPlayers.add(random); 
+			playersInGame.remove(random);
+			for (int i=0; i<playersInGame.size(); i++){
+				tempListOfPlayers.add(playersInGame.get(i));
+			}
+			playersInGame.clear();
+			playersInGame = tempListOfPlayers;
+		
+			
+			
+		roundStatus = StatusEnum.CLEAN;
 		// 2. ustaw status player.playerStatus = StatusEnum.CLEAN;
 		actualDeck = new Deck();
 		// 3. rozdaj graczom karty

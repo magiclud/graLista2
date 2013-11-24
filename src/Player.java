@@ -102,4 +102,9 @@ public abstract class Player {
 		return "Player id: " + playerID + ", karty: " + ownCards + ", wynik: " + checkScore();
 	}
 
+	public void check() {
+		System.out.println("Player: Czekam");
+		playerStatus = StatusEnum.CHECK;
+		return;
+	}
 }
