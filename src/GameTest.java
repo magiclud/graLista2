@@ -137,51 +137,57 @@ public class GameTest {
 		for (Player player : myTable.getPlayersInGame()) {
 			// TODO
 			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
+			if (player.isHuman()) {
 			askPlayersWhatMove(scanIn, player);
+			}
+			// askBotWhatMove(myTable);
 		}
 	}
 
+	// private static void askBotWhatMove(Table myTable) {
+	// for (Player player : myTable.getPlayersInGame()) {
+	// if(player.getPlayerStatus().equals(StatusEnum.BET)||
+	// player.getPlayerStatus().equals(StatusEnum.RAISE)){
+	//
+	// }
+	// }
+	//
+	// }
+
 	private static void askPlayersWhatMove(Scanner scanIn, Player player) {
-		
-		
+
+		int howMuch = 20;
 		String odpowiedz = "";
-		while (!odpowiedz.equals("CHECK") && !odpowiedz.equals("BET") && !odpowiedz.equals("RAISE")&& !odpowiedz.equals("CALL")&& !odpowiedz.equals("FOLD") &&!odpowiedz.equals("ALL-IN")) {
+		while (!odpowiedz.equals("CHECK") && !odpowiedz.equals("BET") && !odpowiedz.equals("RAISE") && !odpowiedz.equals("CALL")
+				&& !odpowiedz.equals("FOLD") && !odpowiedz.equals("ALL-IN")) {
 
 			switch (StatusEnum.valueOf(odpowiedz)) {
 			case CHECK:
-			 System.out.println("Player: CHECK -czekam, gdy wczesniejsi gracze nie postawili stawki w danej rundzie");
 				player.check();
 				break;
 			case BET:// TODO how much?
-			 System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
-			 System.out.println("System: Okresl wysokosc stawki");
-			 System.out.println("Player: BET ustawiam na " +
-			 getAnswerForMoney(scanIn));
-			 // return myTable.allin(player);
+				player.bet(player, howMuch);
+				System.out.println("System: Okresl wysokosc stawki");
+				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
 				break;
 			case RAISE:
-			 System.out.println("Player: RAISE -przebicie najwyzeszgo do tej pory zakladu innego gracza");
-			 System.out.println("System: Okresl wysokosc stawki");
-			 System.out.println("Player: BET ustawiam na " +
-			 getAnswerForMoney(scanIn));
-			 // return myTable.call(player);
+				player.raise(player, howMuch);
+				System.out.println("System: Okresl wysokosc stawki");
+				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
+				// return myTable.call(player);
 				break;
 			case ALL_IN:
-				System.out.println("Player: ALL_IN -stawiam wszystko");
+				player.allin(player);
 				break;
 			case CALL:
-				System.out.println("Player: CALL -wyrównuje");
+				player.call(player);
 				break;
-
 			case FOLD:
-				System.out.println("Player: FOLD nie wchodze");
+				player.fold();
 				break;
-
-			 // return myTable.fold(player);
-			 }
-			 odpowiedz = scanIn.nextLine();
-			
-	}
+			}
+			odpowiedz = scanIn.nextLine();
+		}
 	}
 
 	private static String getAnswerForMoney(Scanner scanIn) {

@@ -21,7 +21,7 @@ public class Bot extends Player {
 	};
 
 	// Losowanie różnych liczb ze zbioru 0. .5
-	List<Integer> randomDifferentNumbers(int howMany) {
+	public List<Integer> randomDifferentNumbers(int howMany) {
 		if (howMany > 5 || howMany < 0)
 			throw new IllegalStateException("Niepoprawna ilość kart jakie chcesz wylosować !");
 		List<Integer> differentNumbers = new ArrayList<Integer>();
@@ -40,7 +40,7 @@ public class Bot extends Player {
 		return differentNumbers;
 	}
 
-	void wybierzLosowo() {
+	public void wybierzLosowo() {
 		List<Integer> abandonedIndexes = new ArrayList<Integer>();
 		int howMany;
 
@@ -167,13 +167,13 @@ public class Bot extends Player {
 	}
 
 	@Override
-	void gameStrategy() {
-		// TODO Auto-generated method stub
+	public void gameStrategy() {
+
 
 	}
 
 	@Override
-	int zacznijLicytacje() {
+	public int zacznijLicytacje() {
 		// TODO Auto-generated method stub
 		return 0;
 	}

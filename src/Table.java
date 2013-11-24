@@ -143,46 +143,38 @@ public class Table {
 	 * 
 	 * }
 	 */
-	public void raise() {
-
-	}
-
-	public void raise(String PlayerID, int howMuch) throws Exception {
-		Player player = findPlayer(PlayerID);
-		if (howMuch <= currentMax)
-			throw new IllegalStateException("Za mało obstawiasz !");
-		if (howMuch > player.chipsForBidding)
-			throw new IllegalStateException("Za mało masz coins żeby tak zrobić !");
-		currentMax = howMuch;
-		roundStatus = StatusEnum.RAISE;
-	}
-
-	public void call() {
-
-	}
-
-	public void call(String PlayerID) {
-		Player player = findPlayer(PlayerID);
-		if (player.chipsForBidding < currentMax)
-			throw new IllegalStateException("Za mało masz coins !");
-		roundStatus = StatusEnum.CALL;
-	}
-
-	public void fold() {
-
-	}
-
-	public void fold(String PlayerID) {
-		Player player = findPlayer(PlayerID);
-		player.setPlayerStatus(StatusEnum.FOLD);
-	}
-
-	public void allin(String PlayerID) {
-		Player player = findPlayer(PlayerID);
-		roundStatus = StatusEnum.ALL_IN;
-
-	}
-
+	/*********************************************
+	 * do uduniecia ********************************* public void raise() {
+	 * 
+	 * }
+	 * 
+	 * public void raise(String PlayerID, int howMuch) throws Exception { Player
+	 * player = findPlayer(PlayerID); if (howMuch <= currentMax) throw new
+	 * IllegalStateException("Za mało obstawiasz !"); if (howMuch >
+	 * player.chipsForBidding) throw new
+	 * IllegalStateException("Za mało masz coins żeby tak zrobić !"); currentMax
+	 * = howMuch; player.setPlayerStatus(StatusEnum.RAISE); roundStatus =
+	 * StatusEnum.RAISE; }
+	 * 
+	 * public void call() {
+	 * 
+	 * }
+	 * 
+	 * public void call(String PlayerID) { Player player = findPlayer(PlayerID);
+	 * if (player.chipsForBidding < currentMax) throw new
+	 * IllegalStateException("Za mało masz coins !"); roundStatus =
+	 * StatusEnum.CALL; player.setPlayerStatus(StatusEnum.CALL); }
+	 * 
+	 * public void fold() {
+	 * 
+	 * }
+	 * 
+	 * public void fold(String PlayerID) { Player player = findPlayer(PlayerID);
+	 * player.setPlayerStatus(StatusEnum.FOLD); }
+	 * 
+	 * public void allin(String PlayerID) { Player player =
+	 * findPlayer(PlayerID); roundStatus = StatusEnum.ALL_IN; }
+	 ***************************************************************************************/
 	public List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
 	}
@@ -305,6 +297,30 @@ public class Table {
 
 	public List<Player> getPlayersInGame() {
 		return playersInGame;
+	}
+
+	public void setCurrentMax(int currentMax) {
+		this.currentMax = currentMax;
+	}
+
+	public int getCurrentMax() {
+		return currentMax;
+	}
+
+	public StatusEnum getRoundStatus() {
+		return roundStatus;
+	}
+
+	public void setRoundStatus(StatusEnum roundStatus) {
+		this.roundStatus = roundStatus;
+	}
+
+	public int getPool() {
+		return pool;
+	}
+
+	public void setPool(int pool) {
+		this.pool = pool;
 	}
 
 }

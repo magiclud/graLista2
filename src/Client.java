@@ -18,20 +18,15 @@ import javax.swing.JTextField;
 
 public class Client extends JFrame implements WindowListener, ActionListener {
 
-	private JTextField tekstPiwerwszaLiczba;
-	private JButton buttonRozwiaz;
+
+	private static final long serialVersionUID = 1L;
+	private JTextField tekstWiadomosci;
+	private JButton wyslijTekst;
 	private JTextField wyswietlacz;
+	private static String wiadomosc;
 
-	private static String pierwszaLiczba;
-
-	static String poprawnyAdresIPRegexp = "^(?:[0-9]{1,3}\\.){3}[0-9]{1,3}$";
-	static String poprawnyPortRegexp = "^[0-9]{4}+$";
-
-	private static int numerPortu = 1793;// z domyslna wartoscia
-	private static String adresIP = "localhost";// localhost: 127.0.0.1 adres IP
-												// używany podczas testownia
-												// kienta i serwera na tym samym
-												// komputerze
+	private static int numerPortu = 1793;
+	private static String adresIP = "localhost";
 	private Socket gniazdo;
 	private ObjectOutputStream strumienWyjsciowy;
 	private ObjectInputStream strumienWejsciowy;
@@ -52,22 +47,22 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 		GridLayout gridLayout = new GridLayout(5, 0);
 		setSize(400, 400);
 		setLocation(300, 200);
-		setTitle("Klient");
+		setTitle("Gracz");
 		getContentPane().setBackground(new Color(230, 230, 250));
 		setLayout(gridLayout);
 		setResizable(false); // blokada zmiany rozmiaru
 
-		tekstPiwerwszaLiczba = new JTextField();
-		tekstPiwerwszaLiczba.setEnabled(true);
-		tekstPiwerwszaLiczba.setForeground(new Color(139, 0, 139));
-		tekstPiwerwszaLiczba.setBackground(new Color(135, 206, 235));
-		tekstPiwerwszaLiczba.setFont(new Font("SansSerif", Font.BOLD, 16));
+		tekstWiadomosci = new JTextField();
+		tekstWiadomosci.setEnabled(true);
+		tekstWiadomosci.setForeground(new Color(139, 0, 139));
+		tekstWiadomosci.setBackground(new Color(135, 206, 235));
+		tekstWiadomosci.setFont(new Font("SansSerif", Font.BOLD, 16));
 
-		buttonRozwiaz = new JButton("Podaj wynik");
-		buttonRozwiaz.setEnabled(true);
-		buttonRozwiaz.setVisible(true);
-		buttonRozwiaz.setForeground(new Color(75, 0, 130));
-		buttonRozwiaz.setFont(new Font("Dialog", Font.BOLD, 16));
+		wyslijTekst = new JButton("Wyslij wiadomosc");
+		wyslijTekst.setEnabled(true);
+		wyslijTekst.setVisible(true);
+		wyslijTekst.setForeground(new Color(75, 0, 130));
+		wyslijTekst.setFont(new Font("Dialog", Font.BOLD, 16));
 
 		wyswietlacz = new JTextField();
 		wyswietlacz.setVisible(true);
@@ -75,21 +70,21 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 		wyswietlacz.setForeground(new Color(75, 0, 130));
 		wyswietlacz.setFont(new Font("Dialog", Font.BOLD, 16));
 
-		buttonRozwiaz.addActionListener(this);
+		wyslijTekst.addActionListener(this);
 
 		addWindowListener(this);
-		add(tekstPiwerwszaLiczba);
-		add(buttonRozwiaz);
+		add(tekstWiadomosci);
+		add(wyslijTekst);
 		add(wyswietlacz);
 
 	}
 
 	public void actionPerformed(ActionEvent e) {
 		Object zrodlo = e.getSource();
-		if (zrodlo == buttonRozwiaz) {
-			pierwszaLiczba = tekstPiwerwszaLiczba.getText();
+		if (zrodlo == wyslijTekst) {
+			wiadomosc = tekstWiadomosci.getText();
 
-			listenSocket(pierwszaLiczba);
+			listenSocket(wiadomosc);
 		}
 	}
 
@@ -101,15 +96,13 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 
 	}
 
-	public void listenSocket(String pierwszaLiczba) {
+	public void listenSocket(String odpowiedz) {
 		try {
 
 			// Send a message to the client application
-			// OutputStream abstrakcyjną klasą obsługującą strumień wyjściowy
-			strumienWyjsciowy.writeObject(pierwszaLiczba + "od clienta");
+			strumienWyjsciowy.writeObject(odpowiedz);
 
 			// Read and display the response message sent by server application
-			// abstrakcyjną klasą obsługującą strumień wejściowy
 			String message = (String) strumienWejsciowy.readObject();
 
 			System.out.println("Message: " + message);
@@ -132,7 +125,6 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 
 
 	private void infoOBledzie(String message) {
-		// TODO wiadomosc w Swingu
 		JOptionPane.showMessageDialog(null, "Klient nie mógł połaczyć się z serwerem.\nNieprawidłowy adres IP lub numer portu.", "Blad",
 				JOptionPane.ERROR_MESSAGE);
 		System.exit(0);

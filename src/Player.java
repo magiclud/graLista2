@@ -37,6 +37,10 @@ public abstract class Player {
 		this.playerStatus = playerStatus;
 	}
 
+	public StatusEnum getPlayerStatus() {
+		return playerStatus;
+	}
+
 	public int getPlayerID() {
 		return playerID;
 	}
@@ -46,8 +50,9 @@ public abstract class Player {
 			System.out.print("[" + i + "]" + ownCards.get(i).getCourt() + ownCards.get(i).getSuit() + " ");
 		}
 	}
-	
-	void changeCardsStrategy(){}
+
+	void changeCardsStrategy() {
+	}
 
 	public int getOwnChips() {
 		return ownChips;
@@ -57,7 +62,7 @@ public abstract class Player {
 		this.ownChips = ownChips;
 	}
 
-	public int chipsForBidding(){
+	public int chipsForBidding() {
 		return chipsForBidding;
 	}
 
@@ -82,9 +87,13 @@ public abstract class Player {
 		ownSorter.sort(ownCards);
 
 	}
-	abstract List<Card> playGame(); // metoda która zmienia karty playera, 
+
+	abstract List<Card> playGame(); // metoda która zmienia karty playera,
 									// zwraca jakie ma po wymianie
+
+
 	abstract void gameStrategy();
+
 	abstract int zacznijLicytacje();
 
 	public List<Card> getOwnCards() {
@@ -106,5 +115,59 @@ public abstract class Player {
 		System.out.println("Player: Czekam");
 		playerStatus = StatusEnum.CHECK;
 		return;
+	}
+
+	public void bet(Player player, int howMuch) {// TODO
+		if (howMuch < currentTable.getCurrentMax()) {
+		}
+		// throw new IllegalStateException("Za mało obstawiasz !");
+		if (howMuch > player.chipsForBidding) {
+		}
+		// throw new
+		// IllegalStateException("Za mało masz coins żeby tak zrobić !");
+		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+		currentTable.setRoundStatus(StatusEnum.BET);
+		currentTable.setCurrentMax(howMuch);
+		System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
+		player.setPlayerStatus(StatusEnum.BET);
+	}
+
+	public void raise(Player player, int howMuch) {// throws Exception {//TODO
+		if (howMuch <= currentTable.getCurrentMax())
+			// throw new IllegalStateException("Za mało obstawiasz !");
+			if (howMuch > player.chipsForBidding) {
+			}
+		// throw new
+		// IllegalStateException("Za mało masz coins żeby tak zrobić !");
+		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+		currentTable.setCurrentMax(howMuch);
+		currentTable.setRoundStatus(StatusEnum.RAISE);
+		player.setPlayerStatus(StatusEnum.RAISE);
+		System.out.println("Player: RAISE -przebijam najwyzszy do tej pory zaklad innego gracza");
+	}
+
+	public void allin(Player player) {
+		if (currentTable.getCurrentMax() < player.chipsForBidding) {
+			currentTable.setCurrentMax(player.chipsForBidding);
+		}
+		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+		currentTable.setRoundStatus(StatusEnum.ALL_IN);
+		player.setPlayerStatus(StatusEnum.ALL_IN);
+		System.out.println("Player: ALL_IN -stawiam wszystko");
+
+	}
+
+	public void call(Player player) {
+		if (player.chipsForBidding < currentTable.getCurrentMax())
+			throw new IllegalStateException("Za mało masz coins !");
+		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+		currentTable.setRoundStatus(StatusEnum.CALL);
+		player.setPlayerStatus(StatusEnum.CALL);
+		System.out.println("Player: CALL -wyrównuje");
+	}
+
+	public void fold() {// TODO
+		playerStatus = StatusEnum.FOLD;
+		System.out.println("Player: FOLD -pasuje");
 	}
 }
