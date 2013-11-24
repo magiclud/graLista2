@@ -52,13 +52,11 @@ public class Server {
 				ObjectOutputStream strumienWyjsciowy = new ObjectOutputStream(socket.getOutputStream());
 				String message = (String) strumienWejsciowy.readObject();
 
-				while (!message.equals("koniec")) {
 
 					// TODO
 					strumienWyjsciowy.writeObject("Wynik. Wygral: ");
 
 					message = (String) strumienWejsciowy.readObject();
-				}
 
 				System.out.println("Klient konczy polaczenie z adresu: " + socket.getInetAddress());
 				strumienWyjsciowy.close();

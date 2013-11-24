@@ -24,21 +24,39 @@ public class Client implements WindowListener, ActionListener {
 	private ObjectInputStream strumienWejsciowy;
 
 	public Client() {
-		/************** Próba połączenia z serwerem *************************/
-		// getHostName() - metoda klasy InetAddress umożliwiającą operacje
-		// na adresie
-		// Metoda ta zwraca nazwę komputera jako obiekt klasy String
+	}
+
+
+
+	public static void main(String[] args) throws ClassNotFoundException, IOException {
+
+		Client klient = new Client();
+		klient.doDziela();
+
+	}
+
+	private void doDziela() throws IOException, ClassNotFoundException {
 		try {
 			gniazdo = new Socket(adresIP, numerPortu);
 			strumienWyjsciowy = new ObjectOutputStream(gniazdo.getOutputStream());
 			strumienWejsciowy = new ObjectInputStream(gniazdo.getInputStream());
 
+			strumienWyjsciowy.writeObject("chce grac: ");
+
+			String message = (String) strumienWejsciowy.readObject();
+
+		System.out.println("Message: " + message);
+
+			strumienWejsciowy.close();
 		} catch (UnknownHostException e) {
 			infoOBledzie(e.getMessage());// dialgo o nieprawidlowym adresie
 											// serwera
 		} catch (IOException e) {
 			infoOBledzie(e.getMessage()); // gdy nieprawidłowo wpisalam numer
 											// portu lub adresIp
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 	}
 
@@ -47,15 +65,6 @@ public class Client implements WindowListener, ActionListener {
 		JOptionPane.showMessageDialog(null, "Klient nie mógł połaczyć się z serwerem.\nNieprawidłowy adres IP lub numer portu.", "Blad",
 				JOptionPane.ERROR_MESSAGE);
 		System.exit(0);
-	}
-
-	public static void main(String[] args) {
-
-		// KlientGUI kalkulator = new KlientGUI();
-		// kalkulator.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		// kalkulator.setVisible(true);
-		// kalkulator.pack(); - ustala minimalny rozmiar okna
-
 	}
 
 	@Override
