@@ -7,6 +7,7 @@ public class Bot extends Player {
 	private MakeOrder order;
 	private Sorter s;
 
+
 	public Bot(List<Card> givenCards, Table currentTable, int playerID) {
 		super(givenCards, currentTable, playerID);
 		s = new Sorter();
@@ -168,7 +169,6 @@ public class Bot extends Player {
 
 	@Override
 	public void gameStrategy() {
-
 
 	}
 

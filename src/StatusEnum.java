@@ -33,5 +33,6 @@ public enum StatusEnum {
 	public boolean isLess(CourtEnum court) {
 		return this.ordinal() < court.ordinal();
 	}
+	
 
 }

@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -138,21 +139,25 @@ public class GameTest {
 			// TODO
 			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
 			if (player.isHuman()) {
-			askPlayersWhatMove(scanIn, player);
+				askPlayersWhatMove(scanIn, player);
 			}
 			// askBotWhatMove(myTable);
 		}
 	}
 
-	// private static void askBotWhatMove(Table myTable) {
-	// for (Player player : myTable.getPlayersInGame()) {
-	// if(player.getPlayerStatus().equals(StatusEnum.BET)||
-	// player.getPlayerStatus().equals(StatusEnum.RAISE)){
-	//
-	// }
-	// }
-	//
-	// }
+	private static void askBotWhatMove(Table myTable, Player playerb) {
+		Random botsMove = new Random();
+		Bot bot = (Bot) playerb;
+		for (Player player : myTable.getPlayersInGame()) {
+			if (player.getPlayerStatus().equals(StatusEnum.BET) || player.getPlayerStatus().equals(StatusEnum.RAISE)) {
+
+				// moze wylosowac call(3), raise(4), all-i(5)
+				int temp = botsMove.nextInt(3) + 3;
+
+			}
+		}
+
+	}
 
 	private static void askPlayersWhatMove(Scanner scanIn, Player player) {
 
