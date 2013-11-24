@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-
 public class CheckerTest {
-
 
 	List<Card> someCards;
 	Table someTable;
@@ -155,8 +153,5 @@ public class CheckerTest {
 
 		assertTrue(Checker.checkScore(firstPlayer.getOwnCards()).equals(SequenceEnum.THREE_OF_A_KIND));
 	}
-
-
-
 
 }

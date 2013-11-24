@@ -37,7 +37,7 @@ public class Human extends Player {
 	// requestCards(abandonedIndexes);
 	// }
 
-// Klasa bezpośrednio związana z interfacem, ma być implementowana ?
+	// Klasa bezpośrednio związana z interfacem, ma być implementowana ?
 
 	@Override
 	List<Card> playGame() {
@@ -48,7 +48,7 @@ public class Human extends Player {
 	@Override
 	void gameStrategy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

@@ -69,6 +69,7 @@ public class JudgeTest {
 		expectedIdexes.add(2);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
+
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushEndDraw() {// remis
 		// dwoch graczy ma pokera - remis
@@ -82,6 +83,7 @@ public class JudgeTest {
 		expectedIdexes.add(2);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
+
 	@Test
 	public final void testSelectWinnersIfFirtFirstPlayerWithStraigthFlush() {
 
@@ -151,6 +153,7 @@ public class JudgeTest {
 		expectedIdexes.add(3);
 		assertEquals(expectedIdexes, Judge.selectWinners(players));
 	}
+
 	@Test
 	public final void testSelectWinnersIfTwoPlayersHaveFlushAndFiveIdenticalCardsEndDraw() {
 		// dwoch graczy ma kolor i piec kart o tych samych figurach - remis
@@ -674,7 +677,7 @@ public class JudgeTest {
 		straightFlush.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
 		straightFlush.add(new Card(CourtEnum.KING, SuitEnum.HEART));
 		straightFlush.add(new Card(CourtEnum.ACE, SuitEnum.HEART));
-		return new Human(straightFlush, currentTable,2);
+		return new Human(straightFlush, currentTable, 2);
 	}
 
 	private Player playerWithStarightFlushStartingWith2Spade(int playerId) {

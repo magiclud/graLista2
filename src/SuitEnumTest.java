@@ -3,9 +3,7 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-
 public class SuitEnumTest {
-
 
 	@Test
 	public void testujZeSerceJestWiekszeOdDzwonka() {

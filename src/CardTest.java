@@ -3,7 +3,6 @@ import static org.junit.Assert.assertTrue;
 
 import org.junit.Test;
 
-
 public class CardTest {
 
 	@Test
@@ -29,6 +28,5 @@ public class CardTest {
 
 		assertTrue(piatkaSerce.isGreater(piatkaPik));
 	}
-
 
 }

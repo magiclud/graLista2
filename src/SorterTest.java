@@ -5,9 +5,7 @@ import java.util.List;
 
 import org.junit.Test;
 
-
 public class SorterTest {
-
 
 	List<Card> someCards;
 	Table someTable;
@@ -21,7 +19,7 @@ public class SorterTest {
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 
-		Player checkSort = new Human(someCards, someTable,2);
+		Player checkSort = new Human(someCards, someTable, 2);
 
 		ArrayList<Card> cardsInOrder = new ArrayList<>();
 		cardsInOrder.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));

@@ -1,7 +1,5 @@
 
-
-
-	public enum StatusEnum {
+public enum StatusEnum {
 	CLEAN, CHECK, BET, RAISE, CALL, ALL_IN, FOLD;
 
 	public String toString() {
@@ -25,17 +23,15 @@
 		throw new IllegalStateException("nieprawidlowy ruch");
 	}
 
-		public boolean isGreater(CourtEnum secondCourt) {
-			if (this.ordinal() > secondCourt.ordinal()) {
-				return true;
-			}
-			return false;
+	public boolean isGreater(CourtEnum secondCourt) {
+		if (this.ordinal() > secondCourt.ordinal()) {
+			return true;
 		}
-
-		public boolean isLess(CourtEnum court) {
-			return this.ordinal() < court.ordinal();
-		}
-
+		return false;
 	}
 
+	public boolean isLess(CourtEnum court) {
+		return this.ordinal() < court.ordinal();
+	}
 
+}

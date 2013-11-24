@@ -49,7 +49,7 @@ public class Bot extends Player {
 		abandonedIndexes = randomDifferentNumbers(howMany);
 		requestCards(abandonedIndexes);
 	}
-	
+
 	// Rozgrywka z prywatną strategią
 	List<Card> playGame() {
 		/*
@@ -169,7 +169,7 @@ public class Bot extends Player {
 	@Override
 	void gameStrategy() {
 		// TODO Auto-generated method stub
-		
+
 	}
 
 	@Override

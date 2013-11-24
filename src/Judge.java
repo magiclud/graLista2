@@ -99,8 +99,9 @@ public class Judge {
 
 			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
 			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
-			
-			if (Selector.selectHighestFromFlushOrStraight(highestPlayerCards).getCourt().isLess(Selector.selectHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
+
+			if (Selector.selectHighestFromFlushOrStraight(highestPlayerCards).getCourt()
+					.isLess(Selector.selectHighestFromFlushOrStraight(currentPlayerCards).getCourt())) {
 				highest = index;
 			}
 		}
@@ -111,7 +112,8 @@ public class Judge {
 
 			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
 			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
-			if (Selector.selectHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector.selectHighestFromFlushOrStraight(currentPlayerCards).getCourt()
+			if (Selector.selectHighestFromFlushOrStraight(highestPlayerCards).getCourt() == Selector.selectHighestFromFlushOrStraight(
+					currentPlayerCards).getCourt()
 					&& highest != index) {
 				indexesHighest.add(index);
 			}
@@ -360,9 +362,8 @@ public class Judge {
 
 			List<Card> highestPlayerCards = listPlayers.get(highest).getOwnCards();
 			List<Card> currentPlayerCards = listPlayers.get(index).getOwnCards();
-			if (Selector.selectHighestFromTwoPair(highestPlayerCards).getCourt() == Selector.selectHighestFromTwoPair(
-					currentPlayerCards).getCourt()
-					&& highest != index) {
+			if (Selector.selectHighestFromTwoPair(highestPlayerCards).getCourt() == Selector.selectHighestFromTwoPair(currentPlayerCards)
+					.getCourt() && highest != index) {
 				indexesHighest.add(index);
 			}
 		}
@@ -692,4 +693,3 @@ public class Judge {
 	}
 
 }
-

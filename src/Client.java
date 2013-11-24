@@ -23,7 +23,6 @@ public class Client implements WindowListener, ActionListener {
 	private ObjectOutputStream strumienWyjsciowy;
 	private ObjectInputStream strumienWejsciowy;
 
-
 	public Client() {
 		/************** Próba połączenia z serwerem *************************/
 		// getHostName() - metoda klasy InetAddress umożliwiającą operacje

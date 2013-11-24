@@ -15,7 +15,7 @@ public abstract class Player {
 	public int newToBet;
 	boolean newAlreadyChangedCards = false;
 
-	StatusEnum playerStatus;
+	private StatusEnum playerStatus;
 
 	public Player(List<Card> givenCards, Table currentTable, int playerID) { // Player
 																				// ma
@@ -31,6 +31,10 @@ public abstract class Player {
 		// tu ma byc pierwsze sortowanie kart - kolejne po wymianie
 		ownSorter.sort(ownCards);
 		this.ownChips = currentTable.getInitialChipsForPlayers();
+	}
+
+	public void setPlayerStatus(StatusEnum playerStatus) {
+		this.playerStatus = playerStatus;
 	}
 
 	public int getPlayerID() {

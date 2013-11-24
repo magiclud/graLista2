@@ -6,7 +6,6 @@ import java.util.List;
 
 import org.junit.Test;
 
-
 public class DeckTest {
 
 	@Test
@@ -15,9 +14,9 @@ public class DeckTest {
 		assertEquals(52, deck.getSize());
 
 	}
-	
+
 	@Test
-	public void testSprawdzaCzyPoDrugimSortowaniuOtrzymamInnyUkladKart(){
+	public void testSprawdzaCzyPoDrugimSortowaniuOtrzymamInnyUkladKart() {
 		Deck secondDeck = new Deck();
 		List<Card> someCards = new ArrayList<>(secondDeck.getDeck());
 		Deck afterShuffle = new Deck();

@@ -1,6 +1,5 @@
 import java.util.List;
 
-
 public class Selector {
 
 	public static Card selectHighestFromFlushOrStraight(List<Card> cardsToTest) {

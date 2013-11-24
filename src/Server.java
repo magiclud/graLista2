@@ -57,8 +57,6 @@ public class Server {
 					// TODO
 					strumienWyjsciowy.writeObject("Wynik. Wygral: ");
 
-
-
 					message = (String) strumienWejsciowy.readObject();
 				}
 
@@ -89,4 +87,4 @@ public class Server {
 			e.printStackTrace();
 		}
 	}
-	}
+}

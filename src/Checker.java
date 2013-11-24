@@ -1,6 +1,5 @@
 import java.util.List;
 
-
 public class Checker {
 
 	private static boolean checkIfStraightFlash(List<Card> cardsToTest) {
@@ -22,7 +21,6 @@ public class Checker {
 		}
 		return false;
 	}
-
 
 	private static boolean checkIfFourOfAKing(List<Card> cardsToTest) {
 		Card firstCard = cardsToTest.get(0);
@@ -93,9 +91,8 @@ public class Checker {
 				&& firstCard.getCourt().ordinal() + 4 == fifthCard.getCourt().ordinal()) {
 			return true;
 		}
-		if (firstCard.getCourt() == CourtEnum.TWO && secondCard.getCourt() == CourtEnum.THREE
-				&& thirdCard.getCourt() == CourtEnum.FOUR && fourthCard.getCourt() == CourtEnum.FIVE
-				&& fifthCard.getCourt() == CourtEnum.ACE) {
+		if (firstCard.getCourt() == CourtEnum.TWO && secondCard.getCourt() == CourtEnum.THREE && thirdCard.getCourt() == CourtEnum.FOUR
+				&& fourthCard.getCourt() == CourtEnum.FIVE && fifthCard.getCourt() == CourtEnum.ACE) {
 			return true;
 		}
 		return false;
@@ -129,10 +126,10 @@ public class Checker {
 		if (firstCard.getCourt().equals(secondCard.getCourt()) && thirdCard.getCourt().equals(fourthCard.getCourt())) {
 			return true;
 		}
-		if (secondCard.getCourt().equals(thirdCard.getCourt()) &&  fourthCard.getCourt().equals(fifthCard.getCourt())) {
+		if (secondCard.getCourt().equals(thirdCard.getCourt()) && fourthCard.getCourt().equals(fifthCard.getCourt())) {
 			return true;
 		}
-		if (firstCard.getCourt().equals(secondCard.getCourt()) &&  fourthCard.getCourt().equals(fifthCard.getCourt())) {
+		if (firstCard.getCourt().equals(secondCard.getCourt()) && fourthCard.getCourt().equals(fifthCard.getCourt())) {
 			return true;
 		}
 		return false;

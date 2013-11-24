@@ -5,31 +5,30 @@ import java.util.List;
 public class Table {
 
 	private static final int WPISOWE = 50;
-	List<Player> players = new ArrayList<>();
-	List<List<Card>> playersCards = new ArrayList<>();
-	List<List<Card>> endOfGame;
-	List<Boolean> alreadyChangedCards = new ArrayList<>();
-	List<Player> playersInGame = new ArrayList<>();
+	private List<Player> players = new ArrayList<>();
+	private List<List<Card>> playersCards = new ArrayList<>();
+	private List<List<Card>> endOfGame;
+	private List<Boolean> alreadyChangedCards = new ArrayList<>();
+	private List<Player> playersInGame = new ArrayList<>();
+
 	private int pool = 0; // pula gry
 
+	private int numHumans, numBots;
 
-	int numHumans, numBots;
-	
 	// SZKIC
-	int startZetony, startWpisowe;
-	StatusEnum statusRundy = StatusEnum.CLEAN; // początkowy status rundy
-	int currentMax; // ile maksymalnie ostatnio obstawiono
+	private int startZetony, startWpisowe;
+	private StatusEnum statusRundy = StatusEnum.CLEAN; // początkowy status
+														// rundy
+	private int currentMax; // ile maksymalnie ostatnio obstawiono
 
-	StatusEnum roundStatus = StatusEnum.CLEAN;
+	private StatusEnum roundStatus = StatusEnum.CLEAN;
 
-
-	Deck actualDeck;
-
+	private Deck actualDeck;
 
 	// Zwraca wskaźnik na playera jeżeli znaleziono takiego w naszej puli graczy
-	Player findPlayer(String szukanyPlayerID) {
-		for(int i = 0; i < players.size(); ++i) {
-			if(players.get(i).newPlayerID.equals(szukanyPlayerID))
+	public Player findPlayer(String szukanyPlayerID) {
+		for (int i = 0; i < players.size(); ++i) {
+			if (players.get(i).newPlayerID.equals(szukanyPlayerID))
 				return players.get(i);
 		}
 		return null;
@@ -61,26 +60,24 @@ public class Table {
 		//
 	}
 
-
-
 	// Metoda, która rozpoczyna grę
 
-
-//	  public void startGame() { for (int i = 0; i < players.size(); ++i) {
-//	  endOfGame.add(players.get(i).joinGame()); } }
+	// public void startGame() { for (int i = 0; i < players.size(); ++i) {
+	// endOfGame.add(players.get(i).joinGame()); } }
 
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany
 
-	void startGame() {
+	public void startGame() {
 
 		int currentMax = startWpisowe;
 
 		// 1. wydaj wszystkim graczom żetony player.ownChips = startZetony;
-		
+
 		rozpocznijRunde();
-		
+
 	}
-	void rozpocznijRunde() {
+
+	public void rozpocznijRunde() {
 		// 1. ktory gracz pierwszy ? byc moze zrob jakas liste playerow
 		statusRundy = StatusEnum.CLEAN;
 		// 2. ustaw status player.playerStatus = StatusEnum.CLEAN;
@@ -89,88 +86,94 @@ public class Table {
 		// 4. Kolejno graczom nadawaj rozkaz licytacji
 		// Player kolejny = find(NextPlayerID);
 		// try {
-		// int currentMax = kolejny.zacznijLicytacje(currentMax, List<StatusEnum> playersStatuses,
+		// int currentMax = kolejny.zacznijLicytacje(currentMax,
+		// List<StatusEnum> playersStatuses,
 		// mozliweRuchy) } catch (Exception ex) {}
 		// uproszczenie statusRundy = player.playerStatus;
-		
+
 		// Wywolujemy u kazdego player player.gameStrategy() zeby wymienil karty
-		
+
 		// ZNOWU LICYTACJA
-		
+
 		// Wywolujemy u kazdego player player.gameStrategy() zeby wymienil karty
-		
+
 		// ZABIERAMY gRACZON CZIPS I ODDAJEMY WYGRANEMU
 	}
-	// trzeba ZROBIC FUNKCJĘ 
-	List<ActionsEnum> mozliweRuchy(StatusEnum statusRundy) {
+
+	// trzeba ZROBIC FUNKCJĘ
+	public List<ActionsEnum> mozliweRuchy(StatusEnum statusRundy) {
 		List<ActionsEnum> solution = null;
 		return solution;
 	}
-	
-	
-	
-	
-	
 
-	void check() {
+	public void check() {
 
 	}
-	void bet(String PlayerID, int howMuch) throws Exception {
+
+	public void bet(String PlayerID, int howMuch) throws Exception {
 		Player player = findPlayer(PlayerID);
-		if(howMuch < currentMax)
+		if (howMuch < currentMax)
 			throw new IllegalStateException("Za mało obstawiasz !");
-		if(howMuch > player.chipsForBidding)
+		if (howMuch > player.chipsForBidding)
 			throw new IllegalStateException("Za mało masz coins żeby tak zrobić !");
 		roundStatus = StatusEnum.BET;
 		currentMax = howMuch;
-}
+	}
+
 	// \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd
-	/* void bet(String PlayerID, int howMuch) throws Exception { Player player =
+	/*
+	 * void bet(String PlayerID, int howMuch) throws Exception { Player player =
 	 * findPlayer(PlayerID); if(howMuch < currentMax) throw new
 	 * IllegalStateException("za mało obstawiasz !"); changeStatus
 	 * player.newToBet = howmuch; currentMax = newToBet
 	 * 
-	 * } */
-	void raise() {
+	 * }
+	 */
+	public void raise() {
 
 	}
-	void raise(String PlayerID, int howMuch) throws Exception {
+
+	public void raise(String PlayerID, int howMuch) throws Exception {
 		Player player = findPlayer(PlayerID);
-		if(howMuch <= currentMax)
+		if (howMuch <= currentMax)
 			throw new IllegalStateException("Za mało obstawiasz !");
-		if(howMuch > player.chipsForBidding)
+		if (howMuch > player.chipsForBidding)
 			throw new IllegalStateException("Za mało masz coins żeby tak zrobić !");
 		currentMax = howMuch;
 		roundStatus = StatusEnum.RAISE;
-}
+	}
 
-	void call() {
+	public void call() {
 
 	}
-	void call(String PlayerID) {
+
+	public void call(String PlayerID) {
 		Player player = findPlayer(PlayerID);
-		if(player.chipsForBidding < currentMax)
+		if (player.chipsForBidding < currentMax)
 			throw new IllegalStateException("Za mało masz coins !");
 		roundStatus = StatusEnum.CALL;
 	}
-	void fold() {
+
+	public void fold() {
 
 	}
-	void fold(String PlayerID) {
+
+	public void fold(String PlayerID) {
 		Player player = findPlayer(PlayerID);
-		player.playerStatus = StatusEnum.FOLD;
+		player.setPlayerStatus(StatusEnum.FOLD);
 	}
-	void allin(String PlayerID) {
+
+	public void allin(String PlayerID) {
 		Player player = findPlayer(PlayerID);
 		roundStatus = StatusEnum.ALL_IN;
 
 	}
 
-	List<Card> giveCards(int numbOfCards) {
+	public List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
 	}
 
-	List<Card> newSafeChangeCards(List<Integer> abandonedIndexes, String PlayerID) {
+	public List<Card> newSafeChangeCards(List<Integer> abandonedIndexes, String PlayerID) {
 		int numberCardsToReturn = abandonedIndexes.size();
 		Player player = findPlayer(PlayerID);
 		if (player.newAlreadyChangedCards)
@@ -216,7 +219,7 @@ public class Table {
 		return tempPlayerCards;
 	}
 
-	List<Card> safeChangeCards(List<Integer> abandonedIndexes, Player player) {
+	public List<Card> safeChangeCards(List<Integer> abandonedIndexes, Player player) {
 
 		int numberCardsToReturn = abandonedIndexes.size();
 		if (alreadyChangedCards.get(player.getPlayerID()))
@@ -280,6 +283,14 @@ public class Table {
 
 	public static int getWpisowe() {
 		return WPISOWE;
+	}
+
+	public List<Player> getPlayers() {
+		return players;
+	}
+
+	public List<Player> getPlayersInGame() {
+		return playersInGame;
 	}
 
 }
