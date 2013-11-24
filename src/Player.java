@@ -77,6 +77,24 @@ public abstract class Player {
 
 	}
 
+	public void changeCards(List<Integer> cardIndexesToChange) {
+
+		removerCards(cardIndexesToChange);
+		addNewCards(cardIndexesToChange.size());
+	}
+
+	private void addNewCards(int howManyToAdd) {
+		List<Card> newCards = currentTable.giveCards(howManyToAdd);
+		ownCards.addAll(newCards);
+		ownSorter.sort(ownCards);
+	}
+
+	private void removerCards(List<Integer> cardIndexesToChange) {
+		for (Integer index : cardIndexesToChange) {
+			ownCards.remove(index);
+		}
+	}
+
 	public List<Card> getOwnCards() {
 		return ownCards;
 	}
