@@ -8,7 +8,6 @@ public class Server {
 	private static int port = 1793;
 	private ServerSocket server = null;
 
-
 	public Server() {
 		try {
 			server = new ServerSocket(port);
@@ -51,9 +50,18 @@ public class Server {
 
 				ObjectInputStream strumienWejsciowy = new ObjectInputStream(socket.getInputStream());
 				ObjectOutputStream strumienWyjsciowy = new ObjectOutputStream(socket.getOutputStream());
-				String message = (String) strumienWejsciowy.readObject();
+				System.out
+						.println("System:  Jeżeli chcesz zacząć grę, wpisz START i kliknij Wyslij wiadomosc.\n Jeżeli chcesz zakonczyc gre wpisz KONIEC.");
 
-				while (message != "end") {
+				String message = (String) strumienWejsciowy.readObject();
+				strumienWyjsciowy.writeObject(" System: Wpisz ilu ma grać ludzi << 2<=numHum+numBot<=4 >>:");
+				String liczbaHumanow = (String) strumienWejsciowy.readObject();
+				strumienWyjsciowy.writeObject(" Liczba \"humanow\": " + liczbaHumanow
+						+ "\n System: Wpisz ile ma grać botów << 2<=numHum+numBot<=4 >>:");
+				String liczbaBotow = (String) strumienWejsciowy.readObject();
+				strumienWyjsciowy.writeObject(" Liczba botow: " + liczbaBotow + "\n");
+
+				while (message != "KONIEC") {
 					String[] tablica = message.split(" ");
 					System.out.println("Odczytano: " + message);
 					strumienWyjsciowy.writeObject("Wynik. Wygral: " + tablica[0]);

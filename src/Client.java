@@ -14,15 +14,17 @@ import java.net.UnknownHostException;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JOptionPane;
+import javax.swing.JScrollPane;
+import javax.swing.JTextArea;
 import javax.swing.JTextField;
+import javax.swing.ScrollPaneConstants;
 
 public class Client extends JFrame implements WindowListener, ActionListener {
-
 
 	private static final long serialVersionUID = 1L;
 	private JTextField tekstWiadomosci;
 	private JButton wyslijTekst;
-	private JTextField wyswietlacz;
+	private JTextArea odebraneWiadomosci;
 	private static String wiadomosc;
 
 	private static int numerPortu = 1793;
@@ -30,7 +32,6 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 	private Socket gniazdo;
 	private ObjectOutputStream strumienWyjsciowy;
 	private ObjectInputStream strumienWejsciowy;
-
 
 	public Client() {
 		try {
@@ -44,8 +45,8 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 			infoOBledzie(e.getMessage()); // gdy nieprawidłowo wpisalam numer
 											// portu lub adresIp
 		}
-		GridLayout gridLayout = new GridLayout(5, 0);
-		setSize(400, 400);
+		GridLayout gridLayout = new GridLayout(3, 0);
+		setSize(600, 400);
 		setLocation(300, 200);
 		setTitle("Gracz");
 		getContentPane().setBackground(new Color(230, 230, 250));
@@ -64,18 +65,27 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 		wyslijTekst.setForeground(new Color(75, 0, 130));
 		wyslijTekst.setFont(new Font("Dialog", Font.BOLD, 16));
 
-		wyswietlacz = new JTextField();
-		wyswietlacz.setVisible(true);
-		wyswietlacz.setEnabled(true);
-		wyswietlacz.setForeground(new Color(75, 0, 130));
-		wyswietlacz.setFont(new Font("Dialog", Font.BOLD, 16));
+		// wyswietlacz = new JLabel();
+		// wyswietlacz.setVisible(true);
+		// wyswietlacz.setEnabled(true);
+		// wyswietlacz.setForeground(new Color(75, 0, 130));
+		// wyswietlacz.setFont(new Font("Dialog", Font.BOLD, 16));
+		odebraneWiadomosci = new JTextArea(15, 50);
+		odebraneWiadomosci.setLineWrap(true);
+		odebraneWiadomosci.setWrapStyleWord(true);
+		odebraneWiadomosci.setEditable(false);
+		odebraneWiadomosci.setFont(new Font("SansSerif", Font.BOLD, 16));
+
+		JScrollPane przewijanie = new JScrollPane(odebraneWiadomosci);
+		przewijanie.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
+		przewijanie.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
 
 		wyslijTekst.addActionListener(this);
 
 		addWindowListener(this);
 		add(tekstWiadomosci);
 		add(wyslijTekst);
-		add(wyswietlacz);
+		add(odebraneWiadomosci);
 
 	}
 
@@ -106,7 +116,7 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 			String message = (String) strumienWejsciowy.readObject();
 
 			System.out.println("Message: " + message);
-			wyswietlacz.setText(message);
+			odebraneWiadomosci.setText(message);
 
 			/*********** wyjątek nieznanego hosta **********/
 		} catch (UnknownHostException e) {// w przypadku braku identyfikacji
@@ -122,7 +132,6 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 			e.printStackTrace();
 		}
 	}
-
 
 	private void infoOBledzie(String message) {
 		JOptionPane.showMessageDialog(null, "Klient nie mógł połaczyć się z serwerem.\nNieprawidłowy adres IP lub numer portu.", "Blad",
@@ -157,6 +166,5 @@ public class Client extends JFrame implements WindowListener, ActionListener {
 	@Override
 	public void windowDeactivated(WindowEvent e) {
 	}
-
 
 }
