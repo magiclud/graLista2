@@ -23,10 +23,10 @@ public class Client implements WindowListener, ActionListener {
 	private ObjectOutputStream strumienWyjsciowy;
 	private ObjectInputStream strumienWejsciowy;
 
+	Thread watekOdbiorcy = new Thread(new OdbiorcaKomunikatow());
+
 	public Client() {
 	}
-
-
 
 	public static void main(String[] args) throws ClassNotFoundException, IOException {
 
@@ -41,11 +41,7 @@ public class Client implements WindowListener, ActionListener {
 			strumienWyjsciowy = new ObjectOutputStream(gniazdo.getOutputStream());
 			strumienWejsciowy = new ObjectInputStream(gniazdo.getInputStream());
 
-			strumienWyjsciowy.writeObject("chce grac: ");
-
-			String message = (String) strumienWejsciowy.readObject();
-
-		System.out.println("Message: " + message);
+			watekOdbiorcy.start();
 
 			strumienWejsciowy.close();
 		} catch (UnknownHostException e) {
@@ -54,9 +50,22 @@ public class Client implements WindowListener, ActionListener {
 		} catch (IOException e) {
 			infoOBledzie(e.getMessage()); // gdy nieprawidłowo wpisalam numer
 											// portu lub adresIp
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+		}
+	}
+
+	public class OdbiorcaKomunikatow implements Runnable {
+		public void run() {
+			String message;
+			;
+			try {
+				while ((message = (String) strumienWejsciowy.readObject()) != null) {
+					System.out.println("Odczytano: " + message);
+					strumienWyjsciowy.writeObject("chce grac: ");
+
+				}
+			} catch (Exception ex) {
+				ex.printStackTrace();
+			}
 		}
 	}
 

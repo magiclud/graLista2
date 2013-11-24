@@ -8,6 +8,7 @@ public class Server {
 	private static int port = 1793;
 	private ServerSocket server = null;
 
+
 	public Server() {
 		try {
 			server = new ServerSocket(port);
@@ -52,11 +53,10 @@ public class Server {
 				ObjectOutputStream strumienWyjsciowy = new ObjectOutputStream(socket.getOutputStream());
 				String message = (String) strumienWejsciowy.readObject();
 
-
-					// TODO
+				while (message != null) {
+					System.out.println("Odczytano: " + message);
 					strumienWyjsciowy.writeObject("Wynik. Wygral: ");
-
-					message = (String) strumienWejsciowy.readObject();
+				}
 
 				System.out.println("Klient konczy polaczenie z adresu: " + socket.getInetAddress());
 				strumienWyjsciowy.close();
