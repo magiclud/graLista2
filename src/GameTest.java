@@ -1,8 +1,6 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 public class GameTest {
 
@@ -46,6 +44,8 @@ public class GameTest {
 			// wpisowe
 			askEverybodyToJoinTheGame(scanIn, myTable);
 
+			askToChangeCards(scanIn, myTable);
+
 			while (!koniecRundy) {
 				// pierwssza licytacja
 				firstBidding(scanIn, myTable);
@@ -78,69 +78,6 @@ public class GameTest {
 				}
 			}
 
-			for (int i = 0; i < numHum; ++i) {
-				// myTable.setPlayersInGame(myTable.players.get(i));
-				System.out.println("System: Partię rozgrywa human, ID: " + (i + 1));
-				System.out.println("Human: Masz na ręce:");
-				myTable.getPlayers().get(i).showCards();
-				System.out.println("\nSystem: Wpisz jakie karty chcesz pobrać wpisując ich indeksy.\n"
-						+ "Na przykład wpisz <<0,1,3>> aby pobrać karty [0], [1], [3]\n"
-						+ "Aby nic nie pobierać, po prostu naciśnij ENTER.");
-
-				inString = scanIn.nextLine();
-				Pattern pattern = Pattern.compile("^(([0-9],?)+)$");
-				Matcher matcher = pattern.matcher(inString);
-				Boolean properIn = false;
-				List<Integer> splittedInt = new ArrayList<Integer>();
-				while (matcher.find()) {
-					if (matcher.group().length() == inString.length()) {
-						String[] splitted = inString.split(",");
-						properIn = true;
-						if (splitted.length > 4) {
-							properIn = false;
-							System.out.println("System: możesz wymienić od 1 do 4 kart !");
-						}
-						for (int j = 0; j < splitted.length; ++j) {
-							splittedInt.add(Integer.parseInt(splitted[j]));
-							if (splittedInt.get(j) > 4 || splittedInt.get(j) < 0) {
-								properIn = false;
-								System.out.println("System: Podałeś niepoprawne indeksy.");
-							}
-							for (int k = 0; k < splittedInt.size() - 1; ++k) {
-								if (splittedInt.get(j).equals(splittedInt.get(k))) {
-									System.out.println("System: Wystąpiły powtórzenia w twoim ciągu.");
-									properIn = false;
-								}
-							}
-						}
-
-					}
-				}
-				if (properIn == true) {
-					myTable.getPlayers().get(i).requestCards(splittedInt);
-				} else if (inString.equals("")) {
-					System.out.println("System: Gracz nie chce wymieniać kart.");
-				} else
-					System.out.println("System: Gracz wprowadził niepoprawne dane.\n" + "Gracz nie wymienia kart.");
-				System.out.println("Gracz: Wchodzę do gry z kartami:");
-				myTable.getPlayers().get(i).showCards();
-				System.out.println("\n");
-				System.out.println();
-
-			}
-			for (int i = numHum; i < numHum + numBot; ++i) {
-				// System.out.println("System: Czy bot ID: " + (i + 1) +
-				// " gra? ");
-				// TODO czy bot gra?
-				System.out.println("System: Partię rozgrywa bot, ID: " + (i + 1));
-				System.out.println("Bot: Mam na ręce:");
-				myTable.getPlayers().get(i).showCards();
-				System.out.println("\nBot: Prowadzę rozgrywkę: ");
-				myTable.getPlayers().get(i).joinGame();
-				System.out.println("Bot: Wchodzę do gry z kartami:");
-				myTable.getPlayers().get(i).showCards();
-				System.out.println("\n");
-			}
 			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
 			for (int i = 0; i < winners.size(); ++i) {
 				System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
@@ -260,6 +197,40 @@ public class GameTest {
 			odpowiedz = scanIn.nextLine();
 		}
 		return odpowiedz;
+	}
+
+	private static void askToChangeCards(Scanner scanIn, Table myTable) {
+		for (Player player : myTable.getPlayersInGame()) {
+			if (player.isHuman()) {
+
+				System.out.println("\nSystem: Wpisz jakie karty chcesz pobrać wpisując ich indeksy.\n"
+						+ "Na przykład wpisz <<0,1,3>> aby pobrać karty [0], [1], [3]\n"
+						+ "Obecnie masz: " + player + "\n"
+						+ "Aby nic nie pobierać, po prostu naciśnij ENTER.");
+				player.showCards();
+				String odpowiedz = scanIn.nextLine();
+				if (!odpowiedz.isEmpty()) {
+					String[] indexesString = odpowiedz.split(",");
+					List<Integer> cardIndexesToChange = changeToIntegerList(indexesString);
+					player.changeCards(cardIndexesToChange);
+					System.out.println("Po zmianie: " + player);
+				}
+			}
+			else {
+				Bot bot = (Bot) player;
+				bot.changeCardsUsingStrategy();
+			}
+
+		}
+	}
+
+	private static List<Integer> changeToIntegerList(String[] indexesString) {
+		List<Integer> indexes = new ArrayList<Integer>();
+
+		for (String indexString : indexesString) {
+			indexes.add(Integer.parseInt(indexString));
+		}
+		return indexes;
 	}
 
 }
