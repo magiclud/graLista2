@@ -116,7 +116,7 @@ public abstract class Player {
 		playerStatus = StatusEnum.CHECK;
 	}
 
-	public void bet(Player player, int howMuch) {// TODO
+	public void bet(int howMuch) {// TODO
 		if (howMuch < currentTable.getCurrentMax()) {
 		}
 		// throw new IllegalStateException("Za mało obstawiasz !");
@@ -128,7 +128,7 @@ public abstract class Player {
 		currentTable.setRoundStatus(StatusEnum.BET);
 		currentTable.setCurrentMax(howMuch);
 		System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
-		player.setPlayerStatus(StatusEnum.BET);
+		playerStatus=StatusEnum.BET;
 	}
 
 	public void raise(Player player, int howMuch) {// throws Exception {//TODO
