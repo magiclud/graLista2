@@ -40,16 +40,36 @@ public class GameTest {
 
 			Table myTable = new Table(numHum, numBot);
 
+			boolean koniecRundy = false;
+
 			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
 			// wpisowe
 			askEverybodyToJoinTheGame(scanIn, myTable);
-			// pierwssza licytacja
-			firstBidding(scanIn, myTable);
+
+			while (!koniecRundy) {
+				// pierwssza licytacja
+				firstBidding(scanIn, myTable);
+
+				if (myTable.getPlayersInGame().size() == 0) {
+					System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
+					koniecRundy = true;
+				}
+				if (myTable.getPlayersInGame().size() == 1) {
+					System.out.println("Jeden gracz zgarnia cala pule ");
+					koniecRundy = true;
+				}
+				for (Player player : myTable.getPlayersInGame()) {
+					if (!myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
+							|| !myTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
+						System.out.println("Gracze wyrownali swoje stawki");
+						koniecRundy = true;
+					}
+				}
+			}
+			
+			
 
 			for (int i = 0; i < numHum; ++i) {
-				System.out.println("System: Czy human ID: " + (i + 1) + " gra? <<T or N>>");
-				while (inString.equals("N") || inString.endsWith("T")) {
-					if (inString.equals("T")) {
 						// myTable.setPlayersInGame(myTable.players.get(i));
 						System.out.println("System: Partię rozgrywa human, ID: " + (i + 1));
 						System.out.println("Human: Masz na ręce:");
@@ -97,14 +117,10 @@ public class GameTest {
 						myTable.getPlayers().get(i).showCards();
 						System.out.println("\n");
 						System.out.println();
-					} else {
-						if (!inString.equals("T") && !inString.equals("N")) {
-							System.out.println("Porsze odpowiedziec tylko T - jesli tak - human gra, N - jesli nie - human nie gra");
-						}
-					}
 
-				}
-			}
+
+			
+		}
 			for (int i = numHum; i < numHum + numBot; ++i) {
 				// System.out.println("System: Czy bot ID: " + (i + 1) +
 				// " gra? ");
@@ -121,17 +137,19 @@ public class GameTest {
 			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
 			for (int i = 0; i < winners.size(); ++i) {
 				System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
-			}
+			
 		}
 		// TUTAJ PROSZĘ WPISZ METODĘ JAK MAJĄ BYĆ OBSŁUGIWANE BOTY KTÓRY, JAK I
 		// CZY WYGRYWA
 		//
 		//
 
+		}
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
-
 	}
+
+
 
 	private static void firstBidding(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.getPlayersInGame()) {
@@ -141,45 +159,69 @@ public class GameTest {
 				askPlayersWhatMove(scanIn, player);
 			}
 			// jesli bot
-			Bot bot = (Bot) player;
-			System.out.println("Player: Bot wykonuje " + bot.makeMove());
+			askBotWhatMove(player, scanIn);
+
 		}
 	}
 
+	private static void askBotWhatMove(Player player, Scanner scanIn) {
+		Bot bot = (Bot) player;
+		System.out.println("Player: Bot wykonuje " + bot.makeMove());
+		playersMove(bot.makeMove(), player, scanIn);
+	}
 
+	private static void playersMove(StatusEnum move, Player player, Scanner scanIn) {
+
+		int howMuch = 0;
+		switch (move) {
+		case CHECK:
+			player.check();
+			break;
+		case BET:// TODO how much?
+			if (!player.isHuman()) {
+				System.out.println("System: Okresl wysokosc stawki ");
+				System.out.println("Player(BOT): BET ustawiam na " + player.getChipsForBidding());
+				player.bet(player.getChipsForBidding());// minimalna stawka?
+			}
+			System.out.println("System: Okresl wysokosc stawki ");
+			System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
+			howMuch = Integer.parseInt(getAnswerForMoney(scanIn));
+			player.bet(howMuch);
+			break;
+		case RAISE:
+			if (!player.isHuman()) {
+				Bot bot = (Bot) player;
+				System.out.println("System: Okresl wysokosc stawki");
+				System.out.println("Player(BOT): RAISE ustawiam na " + bot.chipsToRaise());
+				player.raise(bot.chipsToRaise());
+			}
+			System.out.println("System: Okresl wysokosc stawki");
+			System.out.println("Player: RAISE ustawiam na " + getAnswerForMoney(scanIn));
+			howMuch = Integer.parseInt(getAnswerForMoney(scanIn));
+			player.raise(howMuch);
+			break;
+		case ALL_IN:
+			player.allin();
+			break;
+		case CALL:
+			player.call();
+			break;
+		case FOLD:
+			player.fold();
+			break;
+		default:
+			break;
+		}
+	}
 
 	private static void askPlayersWhatMove(Scanner scanIn, Player player) {
 
-		int howMuch = 20;
 		String odpowiedz = "";
 		while (!odpowiedz.equals("CHECK") && !odpowiedz.equals("BET") && !odpowiedz.equals("RAISE") && !odpowiedz.equals("CALL")
 				&& !odpowiedz.equals("FOLD") && !odpowiedz.equals("ALL-IN")) {
 
-			switch (StatusEnum.valueOf(odpowiedz)) {
-			case CHECK:
-				player.check();
-				break;
-			case BET:// TODO how much?
-				player.bet(howMuch);
-				System.out.println("System: Okresl wysokosc stawki");
-				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
-				break;
-			case RAISE:
-				player.raise(howMuch);
-				System.out.println("System: Okresl wysokosc stawki");
-				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
-				// return myTable.call(player);
-				break;
-			case ALL_IN:
-				player.allin();
-				break;
-			case CALL:
-				player.call();
-				break;
-			case FOLD:
-				player.fold();
-				break;
-			}
+			StatusEnum move = StatusEnum.valueOf(odpowiedz);
+			playersMove(move, player, scanIn);
 			odpowiedz = scanIn.nextLine();
 		}
 	}

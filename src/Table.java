@@ -12,6 +12,7 @@ public class Table {
 	private List<List<Card>> endOfGame;
 	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
+	private List<StatusEnum> statusPlayersInGame = new ArrayList();
 
 	private int pool = 0; // pula gry
 
@@ -35,6 +36,14 @@ public class Table {
 		}
 		return null;
 	}
+	
+	public List<StatusEnum> getStatusPlayersInGame() {
+		for (Player player : getPlayersInGame()) {
+		statusPlayersInGame.add(player.getPlayerStatus());
+		}
+		return statusPlayersInGame;
+	}
+
 
 	public Table(int numHumans, int numBots) {
 

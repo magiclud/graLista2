@@ -8,7 +8,7 @@ public abstract class Player {
 	private int ownChips;
 	// private Boolean alreadyChangedCards = false;
 
-	private int chipsForBidding;
+	private int chipsForBidding = 20;// minimalna stawka?
 	private int playerID;
 
 	private String newPlayerID;
