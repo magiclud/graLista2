@@ -38,45 +38,13 @@ public class GameTest {
 
 			Table myTable = new Table(numHum, numBot);
 
-			boolean koniecRundy = false;
-
 			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
 			// wpisowe
 			askEverybodyToJoinTheGame(scanIn, myTable);
 
 			askToChangeCards(scanIn, myTable);
 
-			while (!koniecRundy) {
-				// pierwssza licytacja
-				firstBidding(scanIn, myTable);
-
-				if (myTable.getPlayersInGame().size() == 0) {
-					System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
-					koniecRundy = true;
-				}
-				if (myTable.getPlayersInGame().size() == 1
-						&& (myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || myTable.getStatusPlayersInGame().equals(
-								StatusEnum.RAISE))) {
-					System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + myTable.getPool());
-					myTable.setCoinsIfOnePlayerWin();
-					koniecRundy = true;
-				}
-				// TODO gracze mogli zagrac jedynie call, check, fold,
-				if (!myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
-						|| !myTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
-					System.out.println("Gracze wyrownali swoje stawki");
-					for (int i = 0; i < myTable.getWinners().size(); ++i) {
-						System.out.println("System: Player " + (myTable.getWinners().get(i) + 1) + "<< wygrywa");
-						if (myTable.getWinners().size() == 1) {
-							System.out.println("Gracz otrzymuje " + myTable.getPool());
-							myTable.setCoinsIfOnePlayerWin();
-						} else {
-							System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");
-						}
-					}
-					koniecRundy = true;
-				}
-			}
+			firstBiddingLoop(scanIn, myTable);
 
 			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
 			for (int i = 0; i < winners.size(); ++i) {
@@ -94,15 +62,52 @@ public class GameTest {
 		scanIn.close();
 	}
 
+	private static void firstBiddingLoop(Scanner scanIn, Table myTable) {
+
+		// dopoki licytacja sie NIE skonczyla
+		while (!myTable.isBiddingOver()) {
+			// pierwssza licytacja
+			firstBidding(scanIn, myTable);
+
+			if (myTable.getPlayersInGame().size() == 0) {
+				System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
+			}
+			if (myTable.getPlayersInGame().size() == 1
+					&& (myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || myTable.getStatusPlayersInGame().equals(
+							StatusEnum.RAISE))) {
+				System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + myTable.getPool());
+				myTable.setCoinsIfOnePlayerWin();
+			}
+			// TODO gracze mogli zagrac jedynie call, check, fold,
+			if (!myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
+					|| !myTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
+				System.out.println("Gracze wyrownali swoje stawki");
+				for (int i = 0; i < myTable.getWinners().size(); ++i) {
+					System.out.println("System: Player " + (myTable.getWinners().get(i) + 1) + "<< wygrywa");
+					if (myTable.getWinners().size() == 1) {
+						System.out.println("Gracz otrzymuje " + myTable.getPool());
+						myTable.setCoinsIfOnePlayerWin();
+					} else {
+						System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");
+					}
+				}
+			}
+		}
+	}
+
 	private static void firstBidding(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.getPlayersInGame()) {
 			// TODO
 			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
 			if (player.isHuman()) {// jesli to human
-				askPlayersWhatMove(scanIn, player);
+				String odpowiedz = askPlayersWhatMove(scanIn, player);
+				StatusEnum move = StatusEnum.valueOf(odpowiedz);
+				playersMove(move, player, scanIn);
 			}
-			// jesli bot
-			askBotWhatMove(player, scanIn);
+			else {
+				// jesli bot
+				askBotWhatMove(player, scanIn);
+			}
 
 		}
 	}
@@ -157,16 +162,15 @@ public class GameTest {
 		}
 	}
 
-	private static void askPlayersWhatMove(Scanner scanIn, Player player) {
+	private static String askPlayersWhatMove(Scanner scanIn, Player player) {
 
 		String odpowiedz = "";
 		while (!odpowiedz.equals("CHECK") && !odpowiedz.equals("BET") && !odpowiedz.equals("RAISE") && !odpowiedz.equals("CALL")
 				&& !odpowiedz.equals("FOLD") && !odpowiedz.equals("ALL-IN")) {
 
-			StatusEnum move = StatusEnum.valueOf(odpowiedz);
-			playersMove(move, player, scanIn);
 			odpowiedz = scanIn.nextLine();
 		}
+		return odpowiedz;
 	}
 
 	private static String getAnswerForMoney(Scanner scanIn) {

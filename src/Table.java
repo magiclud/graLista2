@@ -303,4 +303,13 @@ public class Table {
 	public void setWinners(List<Integer> winners) {
 		this.winners = Judge.selectWinners(getPlayers());
 	}
+
+	/**
+	 * sprawdza czy licytacja sie zakonczyla
+	 * 
+	 * @return
+	 */
+	public boolean isBiddingOver() {
+		return false;
+	}
 }
