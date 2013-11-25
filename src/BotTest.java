@@ -70,7 +70,7 @@ public class BotTest {
 
 
 		Bot exampleBot1 = new Bot(exampleDeck1.giveCards(5), exampleTable1, 2);
-		exampleBot1.playGame();
+		exampleBot1.changeCardsUsingStrategy();
 
 	}
 
@@ -86,7 +86,7 @@ public class BotTest {
 		abandonedIndexes.add(3);
 		abandonedIndexes.add(2);
 		abandonedIndexes.add(1);
-		exampleBot11.requestCards(abandonedIndexes);
+		exampleBot11.changeCards(abandonedIndexes);
 		System.out.println("Sol");
 		exampleBot11.getOwnCards();
 

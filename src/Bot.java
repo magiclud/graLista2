@@ -48,16 +48,16 @@ public class Bot extends Player {
 		howMany = botCards.nextInt(5);
 
 		abandonedIndexes = randomDifferentNumbers(howMany);
-		requestCards(abandonedIndexes);
+		changeCards(abandonedIndexes);
 	}
 
 	// Rozgrywka z prywatną strategią
-	List<Card> playGame() {
+	public void changeCardsUsingStrategy() {
 		/*for(int i = 0; i < 5; ++i) {
 			System.out.println(ownCards.get(i).getCourt() + " " + ownCards.get(i).getSuit() + i);
 		}*/
 		if (order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0) == 5)
-			return ownCards;
+			return;
 		// Co się dzieje jak jest prawie poker ?
 		if(order.maxRowsSizes.get(0) ==4 && order.orderBySuitQuantity.get(0)==4) {
 			if(order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
@@ -66,33 +66,31 @@ public class Bot extends Player {
 					if(!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
 							abandonedIndexes.add(i);
 				}
-				requestCards(abandonedIndexes);
+				changeCards(abandonedIndexes);
 				for(int i =0; i < abandonedIndexes.size(); ++i) {
 					System.out.println(abandonedIndexes.get(i));
 				}
-				return ownCards;
+				return;
 			}
 		}
 		if(order.orderByCourtQuantity.get(0)==4)
-			return ownCards;
+			return;
 		if(order.orderByCourtQuantity.get(0)==3 && order.orderByCourtQuantity.get(1)==2)
-			return ownCards;
+			return;
 		// Co się dzieje jak jest prawie ful i prawie kareta ?
 		// Patrz jak są 3 takie same karty, wymien pozostale 2
 		if(order.orderBySuitQuantity.get(0)==5)
-			return ownCards;
+			return;
 		if(order.orderBySuitQuantity.get(0)==4) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for(int i = 0; i < 5; ++i) {
 				if(!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
 					abandonedIndexes.add(i);
 			}
-			requestCards(abandonedIndexes);
-
-			return ownCards;
+			return;
 		}
 		if(order.maxRowsSizes.get(0)==5)
-			return ownCards;
+			return;
 		if(order.maxRowsSizes.get(0)==4) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for(int i = 0; i < 5; ++i) {
@@ -101,9 +99,9 @@ public class Bot extends Player {
 						)
 					abandonedIndexes.add(i);
 			}
-			requestCards(abandonedIndexes);
+			changeCards(abandonedIndexes);
 
-			return ownCards;
+			return;
 		}
 		// Jak są 3 takie same karty, wymień pozostałe 2
 		if(order.orderByCourtQuantity.get(0)==3 ) {
@@ -112,9 +110,9 @@ public class Bot extends Player {
 				if(!ownCards.get(i).getCourt().equals(order.orderByCourtQuality.get(0).getCourt()))
 						abandonedIndexes.add(i);
 			}
-			requestCards(abandonedIndexes);
+			changeCards(abandonedIndexes);
 
-			return ownCards;
+			return;
 		}
 		// Jak jest układ 2 pary, wymień 1 kartę
 		if(order.orderByCourtQuantity.get(0)==2 && order.orderByCourtQuantity.get(1)==2 ) {
@@ -125,9 +123,9 @@ public class Bot extends Player {
 						)
 					abandonedIndexes.add(i);
 			}
-			requestCards(abandonedIndexes);
+			changeCards(abandonedIndexes);
 
-			return ownCards;
+			return;
 		}
 		// Jak jest układ 1 para, wymień 3 karty
 		if(order.orderByCourtQuantity.get(0)==2) {
@@ -138,9 +136,9 @@ public class Bot extends Player {
 					abandonedIndexes.add(i);
 
 			}
-			requestCards(abandonedIndexes);
+			changeCards(abandonedIndexes);
 
-			return ownCards;
+			return;
 		}
 		// W przeciwnym razie wymień 4 karty :D
 		else {
@@ -148,11 +146,8 @@ public class Bot extends Player {
 			for(int i = 0; i < 4; ++i) {
 				abandonedIndexes.add(i);
 			}
-			requestCards(abandonedIndexes);
-			/*for(int i =0; i < abandonedIndexes.size(); ++i) {
-			 * System.out.println(abandonedIndexes.get(i));
-			 * } */
-			return ownCards;
+			changeCards(abandonedIndexes);
+			return;
 		}
 
 	}

@@ -1,3 +1,4 @@
+import java.util.Iterator;
 import java.util.List;
 
 public abstract class Player {
@@ -65,20 +66,7 @@ public abstract class Player {
 		return Checker.checkScore(ownCards);
 	}
 
-	// // żądanie kart od stołu, tutaj kontrolujemy wyjątkami liczbę arraylist
-	// itemków i numbOfCards żądanych !
-	public void requestCards(List<Integer> abandonedIndexes) {
-
-		List<Card> tempCards = currentTable.safeChangeCards(abandonedIndexes, this);
-
-		// Sortuje karty
-		this.ownCards = tempCards;
-		ownSorter.sort(ownCards);
-
-	}
-
 	public void changeCards(List<Integer> cardIndexesToChange) {
-
 		removerCards(cardIndexesToChange);
 		addNewCards(cardIndexesToChange.size());
 	}
@@ -90,8 +78,15 @@ public abstract class Player {
 	}
 
 	private void removerCards(List<Integer> cardIndexesToChange) {
-		for (Integer index : cardIndexesToChange) {
-			ownCards.remove(index);
+		Iterator<Card> iterator = ownCards.iterator();
+		int index = 0;
+		// do usuwania wygodniej uzyc iteratora
+		while (iterator.hasNext()) {
+			iterator.next();
+			if (cardIndexesToChange.contains(index)) {
+				iterator.remove();
+			}
+			index++;
 		}
 	}
 
