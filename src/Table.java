@@ -5,7 +5,6 @@ import java.util.Random;
 
 public class Table {
 
-	private static final int WPISOWE = 50;
 	private List<Player> players = new ArrayList<>();
 	private List<List<Card>> playersCards = new ArrayList<>();
 	private Random randomPlayer = new Random();
@@ -15,14 +14,13 @@ public class Table {
 	private List<StatusEnum> statusPlayersInGame = new ArrayList();
 	private List<Integer> winners = new ArrayList<>();
 
+	private int startWpisowe, startZetony;
 	private int pool = 0; // pula gry
 
 	private int numHumans, numBots;
 
-	// SZKIC
-	private int startZetony, startWpisowe;
-
-	private int currentMax; // ile maksymalnie ostatnio obstawiono
+	private int currentMax = startWpisowe; // ile maksymalnie ostatnio
+											// obstawiono
 
 	private StatusEnum roundStatus = StatusEnum.CLEAN;// początkowy status
 	// rundy
@@ -40,11 +38,10 @@ public class Table {
 
 	public List<StatusEnum> getStatusPlayersInGame() {
 		for (Player player : getPlayersInGame()) {
-		statusPlayersInGame.add(player.getPlayerStatus());
+			statusPlayersInGame.add(player.getPlayerStatus());
 		}
 		return statusPlayersInGame;
 	}
-
 
 	public Table(int numHumans, int numBots) {
 
@@ -79,35 +76,72 @@ public class Table {
 
 	// Metoda, która odbiera dla gracza od Deck żądane karty do wymiany
 
-	public void startGame() {
+	// public void startGame() {
+	//
+	// int currentMax = startWpisowe;
+	//
+	// }
 
-		int currentMax = startWpisowe;
-
-	}
-
-	/* void startGame() {
+	/*
+	 * void startGame() {
 	 * 
 	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
 	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
 	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
 	 * PRZEZ SERVER ADAPTER }
 	 * 
-	 * } */
+	 * }
+	 */
 	void check() {
 		rozpocznijRunde();
 	}
 
-	public void rozpocznijRunde() {
-		// 1. ktory gracz pierwszy ? byc moze zrob jakas liste playerow
+	public void losujGraczaRozpoczynajacego() {
 		List<Player> tempListOfPlayers = new ArrayList();
+		// losuje gracza rozpoczynajacego runde
 		Player random = playersInGame.get(playersInGame.size());
 		tempListOfPlayers.add(random);
 		playersInGame.remove(random);
+		// nastepnie do listy grajacych dodaje pozostalych graczy
 		for (int i = 0; i < playersInGame.size(); i++) {
 			tempListOfPlayers.add(playersInGame.get(i));
 		}
 		playersInGame.clear();
 		playersInGame = tempListOfPlayers;
+
+	}
+
+	public void ustawGraczaRozpoczynajacego() {
+		if (getPlayersInGame().size() == 4) {
+			Player temp = getPlayersInGame().get(3);
+			getPlayersInGame().set(3, getPlayersInGame().get(0));
+			getPlayersInGame().set(0, getPlayersInGame().get(1));
+			getPlayersInGame().set(1, getPlayersInGame().get(2));
+			getPlayersInGame().set(2, temp);
+		}
+		if (getPlayersInGame().size() == 3) {
+			Player temp = getPlayersInGame().get(2);
+			getPlayersInGame().set(2, getPlayersInGame().get(0));
+			getPlayersInGame().set(0, getPlayersInGame().get(1));
+			getPlayersInGame().set(1, temp);
+		}
+		Player temp = getPlayersInGame().get(1);
+		getPlayersInGame().set(1, getPlayersInGame().get(0));
+		getPlayersInGame().set(0, temp);
+	}
+
+	public void sprawdzCzyGraczeMajaWystarczajacaIloscZetonow() {
+		for (Player player : getPlayersInGame()) {
+			if (player.getOwnChips() < getStartWpisowe()) {
+				// usuwam gracza z listy grajacych gdy ma mniej zetonow niz
+				// wynosi wpisowe
+				getPlayersInGame().remove(player);
+			}
+		}
+	}
+
+	public void rozpocznijRunde() {
+		// 1. ktory gracz pierwszy ? byc moze zrob jakas liste playerow
 
 		roundStatus = StatusEnum.CLEAN;
 		// 2. ustaw status player.playerStatus = StatusEnum.CLEAN;
@@ -137,9 +171,7 @@ public class Table {
 	}
 
 	/*********************************************
-	 * do usuniecia *************** public void check() {
-	 * 
-	 * }
+	 * do usuniecia ***************
 	 * 
 	 * public void bet(String PlayerID, int howMuch) throws Exception { Player
 	 * player = findPlayer(PlayerID); if (howMuch < currentMax) throw new
@@ -156,38 +188,7 @@ public class Table {
 	 * 
 	 * }
 	 */
-	/*********************************************
-	 * do usuniecia ********************************* public void raise() {
-	 * 
-	 * }
-	 * 
-	 * public void raise(String PlayerID, int howMuch) throws Exception { Player
-	 * player = findPlayer(PlayerID); if (howMuch <= currentMax) throw new
-	 * IllegalStateException("Za mało obstawiasz !"); if (howMuch >
-	 * player.chipsForBidding) throw new
-	 * IllegalStateException("Za mało masz coins żeby tak zrobić !"); currentMax
-	 * = howMuch; player.setPlayerStatus(StatusEnum.RAISE); roundStatus =
-	 * StatusEnum.RAISE; }
-	 * 
-	 * public void call() {
-	 * 
-	 * }
-	 * 
-	 * public void call(String PlayerID) { Player player = findPlayer(PlayerID);
-	 * if (player.chipsForBidding < currentMax) throw new
-	 * IllegalStateException("Za mało masz coins !"); roundStatus =
-	 * StatusEnum.CALL; player.setPlayerStatus(StatusEnum.CALL); }
-	 * 
-	 * public void fold() {
-	 * 
-	 * }
-	 * 
-	 * public void fold(String PlayerID) { Player player = findPlayer(PlayerID);
-	 * player.setPlayerStatus(StatusEnum.FOLD); }
-	 * 
-	 * public void allin(String PlayerID) { Player player =
-	 * findPlayer(PlayerID); roundStatus = StatusEnum.ALL_IN; }
-	 ***************************************************************************************/
+
 	public List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
 	}
@@ -245,14 +246,16 @@ public class Table {
 			setPool(0);
 		}
 	}
+
 	/**
 	 * wejscie gracza do gry kosztuje go wpisowe
-	 *
+	 * 
 	 * @param player
 	 */
 	public void addPlayerToGame(Player player) {
-		player.payChips(WPISOWE);
-		pool = pool + WPISOWE;
+		player.payChips(getStartWpisowe());
+		pool = pool + getStartWpisowe();
+		player.setOwnChips(player.getOwnChips() - getStartWpisowe());
 		playersInGame.add(player);
 	}
 
@@ -260,8 +263,8 @@ public class Table {
 		return startZetony;
 	}
 
-	public static int getWpisowe() {
-		return WPISOWE;
+	public void setInitialChipsForPlayers(int startZetony) {
+		this.startZetony = startZetony;
 	}
 
 	public List<Player> getPlayers() {
@@ -304,12 +307,40 @@ public class Table {
 		this.winners = Judge.selectWinners(getPlayers());
 	}
 
+	public int getStartWpisowe() {
+		return startWpisowe;
+	}
+
+	public void setStartWpisowe(int startWpisowe) {
+		this.startWpisowe = startWpisowe;
+	}
+
 	/**
 	 * sprawdza czy licytacja sie zakonczyla
 	 * 
 	 * @return
 	 */
 	public boolean isBiddingOver() {
+		if (getPlayersInGame().size() == 0) {
+			System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
+			getStatusPlayersInGame().clear();
+			return true;
+		}
+		if (getPlayersInGame().size() == 1
+				&& (getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || getStatusPlayersInGame().equals(StatusEnum.RAISE))) {
+			System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + getPool());
+			Player oneWinner = players.get(getWinners().get(0));
+			oneWinner.setScore(oneWinner.getScore() + 1);
+			setCoinsIfOnePlayerWin();
+			getStatusPlayersInGame().clear();
+			return true;
+		}
+		// gracze mogli zagrac jedynie call, check, fold,
+		if (!getStatusPlayersInGame().equals(StatusEnum.ALL_IN) && !getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
+			System.out.println("Gracze wyrownali swoje stawki");
+			getStatusPlayersInGame().clear();
+			return true;
+		}
 		return false;
 	}
 }

@@ -3,8 +3,30 @@ import java.util.List;
 import java.util.Scanner;
 
 public class GameTest {
+	private static int numHum = 2;
+	private static int numBot = 2;
+	private static int poczatkoweZetony = 2000;
+	private static int wpisowe = 10;
+	static String poprawnyNapis = "human|bot";
 
 	public static void main(String[] args) {
+
+		try {
+			numHum = Integer.parseInt(args[0]);
+			args[1].matches(poprawnyNapis);
+			numBot = Integer.parseInt(args[2]);
+			args[3].matches(poprawnyNapis);
+			poczatkoweZetony = Integer.parseInt(args[4]);
+			wpisowe = Integer.parseInt(args[5]);
+			if (args[1].equals("bot")) {
+				int temp = numHum;
+				numHum = numBot;
+				numBot = temp;
+			}
+
+		} catch (NumberFormatException ex) {
+			System.out.println("nieprawidło wprowadzona liczba graczy/zetonow/wpisowergo");
+		}
 
 		System.out.println("System: Jeżeli chcesz zacząć grę, wpisz START i naciśnij ENTER,\n"
 				+ "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry");
@@ -15,32 +37,17 @@ public class GameTest {
 			System.out.println("System: Wychodzę z gry");
 			scanIn.close();
 		} else {
-			int numHum = 0, numBot = 0;
-			System.out.println("System: Zaczynam grę");
-			System.out.println("System: Wpisz ilu ma grać ludzi << 2<=numHum+numBot<=4 >>:");
-			try {
-				numHum = scanIn.nextInt();
-			} catch (Exception e) {
-				System.out.println("System:\nWprowadzono śmieciowe dane, kończę !");
-				scanIn.close();
-				System.exit(0);
-			}
-			System.out.println("System: Wpisz ile ma grać botów << 2<=numHum+numBot<=4 >>:");
-			try {
-				numBot = scanIn.nextInt();
-			} catch (Exception e) {
-				System.out.println("System:\nWprowadzono śmieciowe dane, kończę !");
-				scanIn.close();
-				System.exit(0);
-			}
 
 			inString = scanIn.nextLine();
 
 			Table myTable = new Table(numHum, numBot);
-
+			myTable.setStartWpisowe(wpisowe);
+			myTable.setInitialChipsForPlayers(poczatkoweZetony);
 			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
 			// wpisowe
 			askEverybodyToJoinTheGame(scanIn, myTable);
+
+			firstBiddingLoop(scanIn, myTable);
 
 			askToChangeCards(scanIn, myTable);
 
@@ -49,17 +56,28 @@ public class GameTest {
 			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
 			for (int i = 0; i < winners.size(); ++i) {
 				System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
-
+				if (myTable.getWinners().size() == 1) {
+					Player oneWinner = myTable.getPlayersInGame().get(winners.get(i));
+					oneWinner.setScore(oneWinner.getScore() + 1);
+					System.out.println("Gracz otrzymuje " + myTable.getPool());
+					myTable.setCoinsIfOnePlayerWin();
+				} else {
+					System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");// TODO
+				}
 			}
-			// TUTAJ PROSZĘ WPISZ METODĘ JAK MAJĄ BYĆ OBSŁUGIWANE BOTY KTÓRY,
-			// JAK I
-			// CZY WYGRYWA
-			//
-			//
+			dotychczasowyRanking(myTable);
+			myTable.getStatusPlayersInGame().clear();
 
 		}
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
+	}
+
+	private static void dotychczasowyRanking(Table myTable) {
+		for (Player player : myTable.getPlayersInGame()) {
+			System.out.println("Gracz " + player.getPlayerID() + " posiada " + player.getOwnChips() + " zetonow oraz " + player.getScore()
+					+ " punktow");
+		}
 	}
 
 	private static void firstBiddingLoop(Scanner scanIn, Table myTable) {
@@ -68,30 +86,6 @@ public class GameTest {
 		while (!myTable.isBiddingOver()) {
 			// pierwssza licytacja
 			firstBidding(scanIn, myTable);
-
-			if (myTable.getPlayersInGame().size() == 0) {
-				System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
-			}
-			if (myTable.getPlayersInGame().size() == 1
-					&& (myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || myTable.getStatusPlayersInGame().equals(
-							StatusEnum.RAISE))) {
-				System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + myTable.getPool());
-				myTable.setCoinsIfOnePlayerWin();
-			}
-			// TODO gracze mogli zagrac jedynie call, check, fold,
-			if (!myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
-					|| !myTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
-				System.out.println("Gracze wyrownali swoje stawki");
-				for (int i = 0; i < myTable.getWinners().size(); ++i) {
-					System.out.println("System: Player " + (myTable.getWinners().get(i) + 1) + "<< wygrywa");
-					if (myTable.getWinners().size() == 1) {
-						System.out.println("Gracz otrzymuje " + myTable.getPool());
-						myTable.setCoinsIfOnePlayerWin();
-					} else {
-						System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");
-					}
-				}
-			}
 		}
 	}
 
@@ -103,12 +97,10 @@ public class GameTest {
 				String odpowiedz = askPlayersWhatMove(scanIn, player);
 				StatusEnum move = StatusEnum.valueOf(odpowiedz);
 				playersMove(move, player, scanIn);
-			}
-			else {
+			} else {
 				// jesli bot
 				askBotWhatMove(player, scanIn);
 			}
-
 		}
 	}
 
@@ -208,8 +200,7 @@ public class GameTest {
 			if (player.isHuman()) {
 
 				System.out.println("\nSystem: Wpisz jakie karty chcesz pobrać wpisując ich indeksy.\n"
-						+ "Na przykład wpisz <<0,1,3>> aby pobrać karty [0], [1], [3]\n"
-						+ "Obecnie masz: " + player + "\n"
+						+ "Na przykład wpisz <<0,1,3>> aby pobrać karty [0], [1], [3]\n" + "Obecnie masz: " + player + "\n"
 						+ "Aby nic nie pobierać, po prostu naciśnij ENTER.");
 				player.showCards();
 				String odpowiedz = scanIn.nextLine();
@@ -219,12 +210,10 @@ public class GameTest {
 					player.changeCards(cardIndexesToChange);
 					System.out.println("Po zmianie: " + player);
 				}
-			}
-			else {
+			} else {
 				Bot bot = (Bot) player;
 				bot.changeCardsUsingStrategy();
 			}
-
 		}
 	}
 
