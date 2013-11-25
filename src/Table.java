@@ -8,7 +8,7 @@ public class Table {
 	private static final int WPISOWE = 50;
 	private List<Player> players = new ArrayList<>();
 	private List<List<Card>> playersCards = new ArrayList<>();
-	private Random randomPlayer= new Random();
+	private Random randomPlayer = new Random();
 	private List<List<Card>> endOfGame;
 	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
@@ -30,7 +30,7 @@ public class Table {
 	// Zwraca wskaźnik na playera jeżeli znaleziono takiego w naszej puli graczy
 	public Player findPlayer(String szukanyPlayerID) {
 		for (int i = 0; i < players.size(); ++i) {
-			if (players.get(i).newPlayerID.equals(szukanyPlayerID))
+			if (players.get(i).getNewPlayerID().equals(szukanyPlayerID))
 				return players.get(i);
 		}
 		return null;
@@ -81,18 +81,16 @@ public class Table {
 
 	public void rozpocznijRunde() {
 		// 1. ktory gracz pierwszy ? byc moze zrob jakas liste playerow
-			List<Player> tempListOfPlayers= new ArrayList();
-			Player random = playersInGame.get(playersInGame.size());
-			tempListOfPlayers.add(random); 
-			playersInGame.remove(random);
-			for (int i=0; i<playersInGame.size(); i++){
-				tempListOfPlayers.add(playersInGame.get(i));
-			}
-			playersInGame.clear();
-			playersInGame = tempListOfPlayers;
-		
-			
-			
+		List<Player> tempListOfPlayers = new ArrayList();
+		Player random = playersInGame.get(playersInGame.size());
+		tempListOfPlayers.add(random);
+		playersInGame.remove(random);
+		for (int i = 0; i < playersInGame.size(); i++) {
+			tempListOfPlayers.add(playersInGame.get(i));
+		}
+		playersInGame.clear();
+		playersInGame = tempListOfPlayers;
+
 		roundStatus = StatusEnum.CLEAN;
 		// 2. ustaw status player.playerStatus = StatusEnum.CLEAN;
 		actualDeck = new Deck();
@@ -120,23 +118,20 @@ public class Table {
 		return solution;
 	}
 
-	public void check() {
-
-	}
-
-	public void bet(String PlayerID, int howMuch) throws Exception {
-		Player player = findPlayer(PlayerID);
-		if (howMuch < currentMax)
-			throw new IllegalStateException("Za mało obstawiasz !");
-		if (howMuch > player.chipsForBidding)
-			throw new IllegalStateException("Za mało masz coins żeby tak zrobić !");
-		roundStatus = StatusEnum.BET;
-		currentMax = howMuch;
-	}
-
-	// \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd
-	/*
-	 * void bet(String PlayerID, int howMuch) throws Exception { Player player =
+	/*********************************************
+	 * do usuniecia *************** public void check() {
+	 * 
+	 * }
+	 * 
+	 * public void bet(String PlayerID, int howMuch) throws Exception { Player
+	 * player = findPlayer(PlayerID); if (howMuch < currentMax) throw new
+	 * IllegalStateException("Za mało obstawiasz !"); if (howMuch >
+	 * player.getChipsForBidding());{ throw new
+	 * IllegalStateException("Za mało masz coins żeby tak zrobić !");} //
+	 * roundStatus = StatusEnum.BET; currentMax = howMuch; }
+	 * 
+	 * // \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd /* void bet(String
+	 * PlayerID, int howMuch) throws Exception { Player player =
 	 * findPlayer(PlayerID); if(howMuch < currentMax) throw new
 	 * IllegalStateException("za mało obstawiasz !"); changeStatus
 	 * player.newToBet = howmuch; currentMax = newToBet
@@ -144,7 +139,7 @@ public class Table {
 	 * }
 	 */
 	/*********************************************
-	 * do uduniecia ********************************* public void raise() {
+	 * do usuniecia ********************************* public void raise() {
 	 * 
 	 * }
 	 * 
@@ -182,10 +177,10 @@ public class Table {
 	public List<Card> newSafeChangeCards(List<Integer> abandonedIndexes, String PlayerID) {
 		int numberCardsToReturn = abandonedIndexes.size();
 		Player player = findPlayer(PlayerID);
-		if (player.newAlreadyChangedCards)
+		if (player.isNewAlreadyChangedCards())
 			throw new IllegalStateException("Już wymieniałeś karty !");
 		else
-			player.newAlreadyChangedCards = true;
+			player.setNewAlreadyChangedCards(true);
 		if (numberCardsToReturn > 4) {
 			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
 		}

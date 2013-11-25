@@ -6,7 +6,7 @@ public class Bot extends Player {
 	private Random botCards = new Random();
 	private MakeOrder order;
 	private Sorter s;
-
+	private List<StatusEnum> statusPlayersInGame = new ArrayList();
 
 	public Bot(List<Card> givenCards, Table currentTable, int playerID) {
 		super(givenCards, currentTable, playerID);
@@ -176,6 +176,26 @@ public class Bot extends Player {
 	public int zacznijLicytacje() {
 		// TODO Auto-generated method stub
 		return 0;
+	}
+
+	public StatusEnum makeMove() {
+		Random botsMove = new Random();
+		int nrEnum;
+		for (Player player : currentTable.getPlayersInGame()) {
+			statusPlayersInGame.add(player.getPlayerStatus());
+		}
+		if (statusPlayersInGame.equals(StatusEnum.BET) || statusPlayersInGame.equals(StatusEnum.RAISE)
+				|| statusPlayersInGame.equals(StatusEnum.CALL)) {
+			// moze wylosowac call(3), raise(5), all-i(4)
+			return StatusEnum.values()[botsMove.nextInt(3) + 3];
+		}
+		if (statusPlayersInGame.size() < 1) {
+			return StatusEnum.values()[botsMove.nextInt(2) + 1];
+		}
+		if (statusPlayersInGame.equals(StatusEnum.ALL_IN)) {
+			return StatusEnum.values()[botsMove.nextInt(2) + 2];
+		}
+		return StatusEnum.values()[botsMove.nextInt(5) + 2];
 	}
 
 }

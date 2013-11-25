@@ -7,7 +7,7 @@ public class Casino {
 	}
 
 	public void bidding(Player player) {
-		int newChips = player.getOwnChips() - player.chipsForBidding();
+		int newChips = player.getOwnChips() - player.getChipsForBidding();
 		player.setOwnChips(newChips);
 	}
 }

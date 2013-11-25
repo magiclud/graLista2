@@ -1,6 +1,5 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 import java.util.Scanner;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
@@ -138,26 +137,16 @@ public class GameTest {
 		for (Player player : myTable.getPlayersInGame()) {
 			// TODO
 			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
-			if (player.isHuman()) {
+			if (player.isHuman()) {// jesli to human
 				askPlayersWhatMove(scanIn, player);
 			}
-			// askBotWhatMove(myTable);
+			// jesli bot
+			Bot bot = (Bot) player;
+			System.out.println("Player: Bot wykonuje " + bot.makeMove());
 		}
 	}
 
-	private static void askBotWhatMove(Table myTable, Player playerb) {
-		Random botsMove = new Random();
-		Bot bot = (Bot) playerb;
-		for (Player player : myTable.getPlayersInGame()) {
-			if (player.getPlayerStatus().equals(StatusEnum.BET) || player.getPlayerStatus().equals(StatusEnum.RAISE)) {
 
-				// moze wylosowac call(3), raise(4), all-i(5)
-				int temp = botsMove.nextInt(3) + 3;
-
-			}
-		}
-
-	}
 
 	private static void askPlayersWhatMove(Scanner scanIn, Player player) {
 
@@ -171,21 +160,21 @@ public class GameTest {
 				player.check();
 				break;
 			case BET:// TODO how much?
-				player.bet(player, howMuch);
+				player.bet(howMuch);
 				System.out.println("System: Okresl wysokosc stawki");
 				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
 				break;
 			case RAISE:
-				player.raise(player, howMuch);
+				player.raise(howMuch);
 				System.out.println("System: Okresl wysokosc stawki");
 				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
 				// return myTable.call(player);
 				break;
 			case ALL_IN:
-				player.allin(player);
+				player.allin();
 				break;
 			case CALL:
-				player.call(player);
+				player.call();
 				break;
 			case FOLD:
 				player.fold();
