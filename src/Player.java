@@ -114,7 +114,6 @@ public abstract class Player {
 	public void check() {
 		System.out.println("Player: Czekam");
 		playerStatus = StatusEnum.CHECK;
-		return;
 	}
 
 	public void bet(Player player, int howMuch) {// TODO
