@@ -54,73 +54,80 @@ public class GameTest {
 					System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
 					koniecRundy = true;
 				}
-				if (myTable.getPlayersInGame().size() == 1) {
-					System.out.println("Jeden gracz zgarnia cala pule ");
+				if (myTable.getPlayersInGame().size() == 1
+						&& (myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || myTable.getStatusPlayersInGame().equals(
+								StatusEnum.RAISE))) {
+					System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + myTable.getPool());
+					myTable.setCoinsIfOnePlayerWin();
 					koniecRundy = true;
 				}
-				for (Player player : myTable.getPlayersInGame()) {
-					if (!myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
-							|| !myTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
-						System.out.println("Gracze wyrownali swoje stawki");
-						koniecRundy = true;
+				// TODO gracze mogli zagrac jedynie call, check, fold,
+				if (!myTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
+						|| !myTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
+					System.out.println("Gracze wyrownali swoje stawki");
+					for (int i = 0; i < myTable.getWinners().size(); ++i) {
+						System.out.println("System: Player " + (myTable.getWinners().get(i) + 1) + "<< wygrywa");
+						if (myTable.getWinners().size() == 1) {
+							System.out.println("Gracz otrzymuje " + myTable.getPool());
+							myTable.setCoinsIfOnePlayerWin();
+						} else {
+							System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");
+						}
 					}
+					koniecRundy = true;
 				}
 			}
-			
-			
 
 			for (int i = 0; i < numHum; ++i) {
-						// myTable.setPlayersInGame(myTable.players.get(i));
-						System.out.println("System: Partię rozgrywa human, ID: " + (i + 1));
-						System.out.println("Human: Masz na ręce:");
-						myTable.getPlayers().get(i).showCards();
-						System.out.println("\nSystem: Wpisz jakie karty chcesz pobrać wpisując ich indeksy.\n"
-								+ "Na przykład wpisz <<0,1,3>> aby pobrać karty [0], [1], [3]\n"
-								+ "Aby nic nie pobierać, po prostu naciśnij ENTER.");
+				// myTable.setPlayersInGame(myTable.players.get(i));
+				System.out.println("System: Partię rozgrywa human, ID: " + (i + 1));
+				System.out.println("Human: Masz na ręce:");
+				myTable.getPlayers().get(i).showCards();
+				System.out.println("\nSystem: Wpisz jakie karty chcesz pobrać wpisując ich indeksy.\n"
+						+ "Na przykład wpisz <<0,1,3>> aby pobrać karty [0], [1], [3]\n"
+						+ "Aby nic nie pobierać, po prostu naciśnij ENTER.");
 
-						inString = scanIn.nextLine();
-						Pattern pattern = Pattern.compile("^(([0-9],?)+)$");
-						Matcher matcher = pattern.matcher(inString);
-						Boolean properIn = false;
-						List<Integer> splittedInt = new ArrayList<Integer>();
-						while (matcher.find()) {
-							if (matcher.group().length() == inString.length()) {
-								String[] splitted = inString.split(",");
-								properIn = true;
-								if (splitted.length > 4) {
+				inString = scanIn.nextLine();
+				Pattern pattern = Pattern.compile("^(([0-9],?)+)$");
+				Matcher matcher = pattern.matcher(inString);
+				Boolean properIn = false;
+				List<Integer> splittedInt = new ArrayList<Integer>();
+				while (matcher.find()) {
+					if (matcher.group().length() == inString.length()) {
+						String[] splitted = inString.split(",");
+						properIn = true;
+						if (splitted.length > 4) {
+							properIn = false;
+							System.out.println("System: możesz wymienić od 1 do 4 kart !");
+						}
+						for (int j = 0; j < splitted.length; ++j) {
+							splittedInt.add(Integer.parseInt(splitted[j]));
+							if (splittedInt.get(j) > 4 || splittedInt.get(j) < 0) {
+								properIn = false;
+								System.out.println("System: Podałeś niepoprawne indeksy.");
+							}
+							for (int k = 0; k < splittedInt.size() - 1; ++k) {
+								if (splittedInt.get(j).equals(splittedInt.get(k))) {
+									System.out.println("System: Wystąpiły powtórzenia w twoim ciągu.");
 									properIn = false;
-									System.out.println("System: możesz wymienić od 1 do 4 kart !");
 								}
-								for (int j = 0; j < splitted.length; ++j) {
-									splittedInt.add(Integer.parseInt(splitted[j]));
-									if (splittedInt.get(j) > 4 || splittedInt.get(j) < 0) {
-										properIn = false;
-										System.out.println("System: Podałeś niepoprawne indeksy.");
-									}
-									for (int k = 0; k < splittedInt.size() - 1; ++k) {
-										if (splittedInt.get(j).equals(splittedInt.get(k))) {
-											System.out.println("System: Wystąpiły powtórzenia w twoim ciągu.");
-											properIn = false;
-										}
-									}
-								}
-
 							}
 						}
-						if (properIn == true) {
-							myTable.getPlayers().get(i).requestCards(splittedInt);
-						} else if (inString.equals("")) {
-							System.out.println("System: Gracz nie chce wymieniać kart.");
-						} else
-							System.out.println("System: Gracz wprowadził niepoprawne dane.\n" + "Gracz nie wymienia kart.");
-						System.out.println("Gracz: Wchodzę do gry z kartami:");
-						myTable.getPlayers().get(i).showCards();
-						System.out.println("\n");
-						System.out.println();
 
+					}
+				}
+				if (properIn == true) {
+					myTable.getPlayers().get(i).requestCards(splittedInt);
+				} else if (inString.equals("")) {
+					System.out.println("System: Gracz nie chce wymieniać kart.");
+				} else
+					System.out.println("System: Gracz wprowadził niepoprawne dane.\n" + "Gracz nie wymienia kart.");
+				System.out.println("Gracz: Wchodzę do gry z kartami:");
+				myTable.getPlayers().get(i).showCards();
+				System.out.println("\n");
+				System.out.println();
 
-			
-		}
+			}
 			for (int i = numHum; i < numHum + numBot; ++i) {
 				// System.out.println("System: Czy bot ID: " + (i + 1) +
 				// " gra? ");
@@ -137,19 +144,18 @@ public class GameTest {
 			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
 			for (int i = 0; i < winners.size(); ++i) {
 				System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
-			
-		}
-		// TUTAJ PROSZĘ WPISZ METODĘ JAK MAJĄ BYĆ OBSŁUGIWANE BOTY KTÓRY, JAK I
-		// CZY WYGRYWA
-		//
-		//
+
+			}
+			// TUTAJ PROSZĘ WPISZ METODĘ JAK MAJĄ BYĆ OBSŁUGIWANE BOTY KTÓRY,
+			// JAK I
+			// CZY WYGRYWA
+			//
+			//
 
 		}
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
 	}
-
-
 
 	private static void firstBidding(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.getPlayersInGame()) {

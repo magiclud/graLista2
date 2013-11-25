@@ -13,6 +13,7 @@ public class Table {
 	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
 	private List<StatusEnum> statusPlayersInGame = new ArrayList();
+	private List<Integer> winners = new ArrayList<>();
 
 	private int pool = 0; // pula gry
 
@@ -276,6 +277,14 @@ public class Table {
 		return tempPlayerCards;
 	}
 
+	public void setCoinsIfOnePlayerWin() {
+		if (winners.size() == 1) {
+			// przekazanie wygranych pieniedzy graczowi
+			players.get(getWinners().get(0)).setOwnChips(players.get(getWinners().get(0)).getOwnChips() + getPool());
+			setPool(0);
+		}
+	}
+
 	/**
 	 * wejscie gracza do gry kosztuje go wpisowe
 	 * 
@@ -327,4 +336,11 @@ public class Table {
 		this.pool = pool;
 	}
 
+	public List<Integer> getWinners() {
+		return winners;
+	}
+
+	public void setWinners(List<Integer> winners) {
+		this.winners = Judge.selectWinners(getPlayers());
+	}
 }
