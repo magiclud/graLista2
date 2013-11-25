@@ -1,170 +1,45 @@
-import java.awt.Color;
-import java.awt.Font;
-import java.awt.GridLayout;
-import java.awt.event.ActionEvent;
-import java.awt.event.ActionListener;
-import java.awt.event.WindowEvent;
-import java.awt.event.WindowListener;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.net.InetAddress;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import javax.swing.JButton;
-import javax.swing.JFrame;
-import javax.swing.JOptionPane;
-import javax.swing.JScrollPane;
-import javax.swing.JTextArea;
-import javax.swing.JTextField;
-import javax.swing.ScrollPaneConstants;
+public class Client {
 
-public class Client extends JFrame implements WindowListener, ActionListener {
-
-	private static final long serialVersionUID = 1L;
-	private JTextField tekstWiadomosci;
-	private JButton wyslijTekst;
-	private JTextArea odebraneWiadomosci;
-	private static String wiadomosc;
-
-	private static int numerPortu = 1793;
-	private static String adresIP = "localhost";
-	private Socket gniazdo;
-	private ObjectOutputStream strumienWyjsciowy;
-	private ObjectInputStream strumienWejsciowy;
-
-	public Client() {
+	public static void main(String[] args) {
 		try {
-			gniazdo = new Socket(adresIP, numerPortu);
-			strumienWyjsciowy = new ObjectOutputStream(gniazdo.getOutputStream());
-			strumienWejsciowy = new ObjectInputStream(gniazdo.getInputStream());
-		} catch (UnknownHostException e) {
-			infoOBledzie(e.getMessage());// dialgo o nieprawidlowym adresie
-											// serwera
-		} catch (IOException e) {
-			infoOBledzie(e.getMessage()); // gdy nieprawidłowo wpisalam numer
-											// portu lub adresIp
-		}
-		GridLayout gridLayout = new GridLayout(3, 0);
-		setSize(600, 400);
-		setLocation(300, 200);
-		setTitle("Gracz");
-		getContentPane().setBackground(new Color(230, 230, 250));
-		setLayout(gridLayout);
-		setResizable(false); // blokada zmiany rozmiaru
+			//
+			// Create a connection to the server socket on the server application
+			//
+			InetAddress host = InetAddress.getLocalHost();
+			Socket socket = new Socket(host.getHostName(), 7777);
 
-		tekstWiadomosci = new JTextField();
-		tekstWiadomosci.setEnabled(true);
-		tekstWiadomosci.setForeground(new Color(139, 0, 139));
-		tekstWiadomosci.setBackground(new Color(135, 206, 235));
-		tekstWiadomosci.setFont(new Font("SansSerif", Font.BOLD, 16));
-
-		wyslijTekst = new JButton("Wyslij wiadomosc");
-		wyslijTekst.setEnabled(true);
-		wyslijTekst.setVisible(true);
-		wyslijTekst.setForeground(new Color(75, 0, 130));
-		wyslijTekst.setFont(new Font("Dialog", Font.BOLD, 16));
-
-		// wyswietlacz = new JLabel();
-		// wyswietlacz.setVisible(true);
-		// wyswietlacz.setEnabled(true);
-		// wyswietlacz.setForeground(new Color(75, 0, 130));
-		// wyswietlacz.setFont(new Font("Dialog", Font.BOLD, 16));
-		odebraneWiadomosci = new JTextArea(15, 50);
-		odebraneWiadomosci.setLineWrap(true);
-		odebraneWiadomosci.setWrapStyleWord(true);
-		odebraneWiadomosci.setEditable(false);
-		odebraneWiadomosci.setFont(new Font("SansSerif", Font.BOLD, 16));
-
-		JScrollPane przewijanie = new JScrollPane(odebraneWiadomosci);
-		przewijanie.setVerticalScrollBarPolicy(ScrollPaneConstants.VERTICAL_SCROLLBAR_ALWAYS);
-		przewijanie.setHorizontalScrollBarPolicy(ScrollPaneConstants.HORIZONTAL_SCROLLBAR_NEVER);
-
-		wyslijTekst.addActionListener(this);
-
-		addWindowListener(this);
-		add(tekstWiadomosci);
-		add(wyslijTekst);
-		add(odebraneWiadomosci);
-
-	}
-
-	public void actionPerformed(ActionEvent e) {
-		Object zrodlo = e.getSource();
-		if (zrodlo == wyslijTekst) {
-			wiadomosc = tekstWiadomosci.getText();
-
-			listenSocket(wiadomosc);
-		}
-	}
-
-	public static void main(String[] args) throws ClassNotFoundException, IOException {
-
-		Client klient = new Client();
-		klient.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		klient.setVisible(true);
-
-	}
-
-	public void listenSocket(String odpowiedz) {
-		try {
-
+			//
 			// Send a message to the client application
-			strumienWyjsciowy.writeObject(odpowiedz);
+			//
+			ObjectOutputStream oos = new ObjectOutputStream(socket.getOutputStream());
+			System.out.println("Wysyłam Agnieszka");
+			oos.writeObject("Agnieszka");
 
+			//
 			// Read and display the response message sent by server application
-			String message = (String) strumienWejsciowy.readObject();
+			//
+			ObjectInputStream ois = new ObjectInputStream(socket.getInputStream());
+			String message = (String) ois.readObject();
+			System.out.println("Otrzymuję: " + message);
 
-			System.out.println("Message: " + message);
-			odebraneWiadomosci.setText(message);
-
-			/*********** wyjątek nieznanego hosta **********/
-		} catch (UnknownHostException e) {// w przypadku braku identyfikacji
-											// komputera o podanej nazwie lub
-											// adresie, wyjatek do metody
-											// getLocalHost()
-			e.printStackTrace();// Jeżeli nazwa hosta jest nieznana lub serwer
-								// nazw nie działa
-			/*********** wyjątek wejścia-wyjścia *********/
-		} catch (IOException e) {
+			ois.close();
+			oos.close();
+		}
+		catch (UnknownHostException e) {
 			e.printStackTrace();
-		} catch (ClassNotFoundException e) {
+		}
+		catch (IOException e) {
+			e.printStackTrace();
+		}
+		catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		}
 	}
-
-	private void infoOBledzie(String message) {
-		JOptionPane.showMessageDialog(null, "Klient nie mógł połaczyć się z serwerem.\nNieprawidłowy adres IP lub numer portu.", "Blad",
-				JOptionPane.ERROR_MESSAGE);
-		System.exit(0);
-	}
-
-	@Override
-	public void windowOpened(WindowEvent e) {
-	}
-
-	@Override
-	public void windowClosing(WindowEvent e) {
-	}
-
-	@Override
-	public void windowClosed(WindowEvent e) {
-	}
-
-	@Override
-	public void windowIconified(WindowEvent e) {
-	}
-
-	@Override
-	public void windowDeiconified(WindowEvent e) {
-	}
-
-	@Override
-	public void windowActivated(WindowEvent e) {
-	}
-
-	@Override
-	public void windowDeactivated(WindowEvent e) {
-	}
-
 }
