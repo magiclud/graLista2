@@ -10,6 +10,7 @@ public abstract class Player {
 	private int score;
 	// private Boolean alreadyChangedCards = false;
 
+	// TODO ta zmienna do usuniecia, nie widze sensu jej stosowania
 	private int chipsForBidding = 20;// minimalna stawka?
 	private int playerID;
 
@@ -114,6 +115,7 @@ public abstract class Player {
 		return score;
 	}
 
+	// TODO zaminic na jakas lepsza nazwa, np: increaseScore()
 	public void setScore(int score) {
 		this.score = score;
 	}
@@ -129,6 +131,7 @@ public abstract class Player {
 	}
 
 	public void check() {
+		// TODO co tu jest sprawdzane i dlaczego?
 		if (currentTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
 				|| currentTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)
 				|| currentTable.getStatusPlayersInGame().equals(StatusEnum.BET)) {

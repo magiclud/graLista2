@@ -11,7 +11,6 @@ public class Table {
 	private List<List<Card>> endOfGame;
 	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
-	private List<StatusEnum> statusPlayersInGame = new ArrayList();
 	private List<Integer> winners = new ArrayList<>();
 
 	private int startWpisowe, startZetony;
@@ -37,6 +36,7 @@ public class Table {
 	}
 
 	public List<StatusEnum> getStatusPlayersInGame() {
+		List<StatusEnum> statusPlayersInGame = new ArrayList<>();
 		for (Player player : getPlayersInGame()) {
 			statusPlayersInGame.add(player.getPlayerStatus());
 		}

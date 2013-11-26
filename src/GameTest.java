@@ -53,6 +53,7 @@ public class GameTest {
 
 			firstBiddingLoop(scanIn, myTable);
 
+			// TODO osobna metoda jak powyzej
 			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
 			for (int i = 0; i < winners.size(); ++i) {
 				System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
@@ -66,8 +67,6 @@ public class GameTest {
 				}
 			}
 			dotychczasowyRanking(myTable);
-			myTable.getStatusPlayersInGame().clear();
-
 		}
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
