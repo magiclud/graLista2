@@ -193,9 +193,9 @@ public abstract class Player {
 		System.out.println("Player: CALL -wyrównuje");
 	}
 
-	public void payChipsToPool(int chipsForBidding) {
-		ownChips = ownChips - chipsForBidding;
-		currentTable.addToPool(chipsForBidding);
+	public void payChipsToPool(int chipsToPool) {
+		ownChips = ownChips - chipsToPool;
+		currentTable.addToPool(chipsToPool);
 	}
 
 	public void fold() {
@@ -204,7 +204,7 @@ public abstract class Player {
 		System.out.println("Player: FOLD -pasuje");
 	}
 
-	public void winChips(int pool) {
-		ownChips = ownChips + pool;
+	public void winChips(int chips) {
+		ownChips = ownChips + chips;
 	}
 }
