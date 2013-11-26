@@ -82,14 +82,16 @@ public class Table {
 	//
 	// }
 
-	/* void startGame() {
-	 *
+	/*
+	 * void startGame() {
+	 * 
 	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
 	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
 	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
 	 * PRZEZ SERVER ADAPTER }
-	 *
-	 * } */
+	 * 
+	 * }
+	 */
 	void check() {
 		rozpocznijRunde();
 	}
@@ -170,20 +172,20 @@ public class Table {
 
 	/*********************************************
 	 * do usuniecia ***************
-	 *
+	 * 
 	 * public void bet(String PlayerID, int howMuch) throws Exception { Player
 	 * player = findPlayer(PlayerID); if (howMuch < currentMax) throw new
 	 * IllegalStateException("Za mało obstawiasz !"); if (howMuch >
 	 * player.getChipsForBidding());{ throw new
 	 * IllegalStateException("Za mało masz coins żeby tak zrobić !");} //
 	 * roundStatus = StatusEnum.BET; currentMax = howMuch; }
-	 *
+	 * 
 	 * // \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd /* void bet(String
 	 * PlayerID, int howMuch) throws Exception { Player player =
 	 * findPlayer(PlayerID); if(howMuch < currentMax) throw new
 	 * IllegalStateException("za mało obstawiasz !"); changeStatus
 	 * player.newToBet = howmuch; currentMax = newToBet
-	 *
+	 * 
 	 * }
 	 */
 
@@ -247,7 +249,7 @@ public class Table {
 
 	/**
 	 * wejscie gracza do gry kosztuje go wpisowe
-	 *
+	 * 
 	 * @param player
 	 */
 	public void addPlayerToGame(Player player) {
@@ -309,10 +311,11 @@ public class Table {
 
 	/**
 	 * sprawdza czy licytacja sie zakonczyla
-	 *
+	 * 
 	 * @return
 	 */
 	public boolean isBiddingOver() {
+		int iloscAll_inWGrze = 0, iloscRaiseWGrze = 0;
 		if (playersInGame.size() == 0) {
 			System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
 			getStatusPlayersInGame().clear();
@@ -327,9 +330,20 @@ public class Table {
 			currentMax = 0;
 			return true;
 		}
+		// zliczam ile razy wystapilo All-in i ile razy raise w statusach graczy
+		// jesli raz to znaczy ze doszlo juz do konca licytacji
+		for (Player player : getPlayersInGame()) {
+			if (getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
+				iloscAll_inWGrze++;
+			}
+			if (getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
+				iloscRaiseWGrze++;
+			}
+		}
 		// gracze mogli zagrac jedynie call, check, fold, bo gdyby zagralii
 		// all-in lub raise to licytacja nadal trwa
-		if (!getStatusPlayersInGame().contains(StatusEnum.ALL_IN) && !getStatusPlayersInGame().contains(StatusEnum.RAISE)) {
+		if ((!getStatusPlayersInGame().contains(StatusEnum.ALL_IN) && !getStatusPlayersInGame().contains(StatusEnum.RAISE))
+				|| iloscAll_inWGrze == 1 || iloscRaiseWGrze == 1) {
 			System.out.println("Gracze wyrownali swoje stawki");
 			getStatusPlayersInGame().clear();
 			currentMax = 0;

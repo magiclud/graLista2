@@ -51,7 +51,7 @@ public class GameTest {
 
 			askToChangeCards(scanIn, myTable);
 
-			firstBiddingLoop(scanIn, myTable);
+			secondBiddingLoop(scanIn, myTable);
 
 			showWhoWin(myTable);
 
@@ -59,6 +59,18 @@ public class GameTest {
 		}
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
+	}
+
+	private static void secondBiddingLoop(Scanner scanIn, Table myTable) {
+
+		// sprawdzam czy w pierwszej rundzie wystapilo juz all-in
+		for (Player player : myTable.getPlayersInGame()) {
+			if (myTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
+				return;
+			}
+		}
+		firstBiddingLoop(scanIn, myTable);
+		
 	}
 
 	private static void showWhoWin(Table myTable) {
@@ -85,6 +97,9 @@ public class GameTest {
 	}
 
 	private static void firstBiddingLoop(Scanner scanIn, Table myTable) {
+
+		myTable.sprawdzCzyGraczeMajaWystarczajacaIloscZetonow();// jesli nie
+																// odpada z gry
 
 		// dopoki licytacja sie NIE skonczyla
 		while (!myTable.isBiddingOver()) {
