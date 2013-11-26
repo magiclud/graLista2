@@ -109,8 +109,9 @@ public class GameTest {
 
 	private static void askBotWhatMove(Player player, Scanner scanIn) {
 		Bot bot = (Bot) player;
-		System.out.println("Player: Bot wykonuje " + bot.makeMove());
-		playersMove(bot.makeMove(), player, scanIn);
+		StatusEnum move = bot.makeMove();
+		System.out.println("Player: Bot wykonuje " + move);
+		playersMove(move, player, scanIn);
 	}
 
 	private static void playersMove(StatusEnum move, Player player, Scanner scanIn) {
@@ -120,7 +121,7 @@ public class GameTest {
 		case CHECK:
 			player.check();
 			break;
-		case BET:// TODO how much?
+			case BET:
 			if (!player.isHuman()) {
 				System.out.println("System: Okresl wysokosc stawki ");
 				// System.out.println("Player(BOT): BET ustawiam na " +
@@ -139,6 +140,9 @@ public class GameTest {
 				System.out.println("Player(BOT): RAISE ustawiam na " + bot.chipsToRaise());
 				player.raise(bot.chipsToRaise());
 			}
+				// TODO te czesc nizej zawsze si wykonuje!!!!! nie powinien tu byc else? uruchamiasz czasem ta gre, bo
+				// jak nie piszecie testow, to musisz non stop testowac co napiszesz, bo zaufaj mi zawsze cos jest zle
+				// do poprawy wszystkie casy z tego co widze
 			System.out.println("System: Okresl wysokosc stawki");
 			System.out.println("Player: RAISE ustawiam na " + getAnswerForMoney(scanIn));
 			howMuch = Integer.parseInt(getAnswerForMoney(scanIn));

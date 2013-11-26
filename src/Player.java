@@ -115,15 +115,11 @@ public abstract class Player {
 	}
 	public abstract boolean isHuman();
 
-	public void payChips(int howMany) {
-		ownChips = ownChips - howMany;
-	}
-
 	@Override
 	public String toString() {
 		return "Player id: " + playerID + ", karty: " + ownCards + ", wynik: " + checkScore();
 	}
-	
+
 	int bet(int ileObstawiam, int currentMax) {
 		if (ileObstawiam <= currentMax)
 			throw new IllegalStateException("Za mało obstawiasz !");
@@ -170,6 +166,7 @@ public abstract class Player {
 		return chipsForBidding;
 	}
 
+	// TODO co to za inny fold?
 	int fold(int currentMax) {
 		playerStatus = StatusEnum.FOLD;
 		return currentMax;
@@ -181,6 +178,8 @@ public abstract class Player {
 		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)
 				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.RAISE)
 				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.BET)) {
+			// TODO rzuc inny wyjatek, taki wlasnej roboty z odpowiednia nazwa, bo ten wyjatek musi byc main obsluzony,
+			// zeby odopwiedni komunikat zaprezentowac userowi
 			throw new IllegalStateException("Wczesniejszy gracz postawil stawke.\n Niemozlwy jest ruch CHECK.");
 		}
 		System.out.println("Player: Czekam");
@@ -190,9 +189,7 @@ public abstract class Player {
 	public void bet(int chipsForBidding) {
 		// if (chipsForBidding < currentTable.getCurrentMax()) {
 		// usunela if bo bet ma byc tylko przy pierwszej licytacji
-		payChips(chipsForBidding);
-		currentTable.addToPool(chipsForBidding);
-		// currentTable.setRoundStatus(StatusEnum.BET);
+		payChipsToPool(chipsForBidding);
 		currentTable.setCurrentMax(chipsForBidding);
 		System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
 		playerStatus = StatusEnum.BET;
@@ -200,12 +197,12 @@ public abstract class Player {
 
 	public void raise(int chipsForBidding) {// throws Exception {//TODO
 		if (chipsForBidding <= currentTable.getCurrentMax()) {
+			// TODO rzuc inny wyjatek, taki wlasnej roboty z odpowiednia nazwa, bo ten wyjatek musi byc main obsluzony,
+			// zeby odopwiedni komunikat zaprezentowac userowi
 			throw new IllegalStateException("Za mało obstawiasz !");
 		}
-		payChips(chipsForBidding);
-		currentTable.addToPool(chipsForBidding);
+		payChipsToPool(chipsForBidding);
 		currentTable.setCurrentMax(chipsForBidding);
-		// /currentTable.setRoundStatus(StatusEnum.RAISE);
 		playerStatus = StatusEnum.RAISE;
 		System.out.println("Player: RAISE -przebijam najwyzszy do tej pory zaklad innego gracza");
 	}
@@ -214,11 +211,12 @@ public abstract class Player {
 		// sprawdzam czy obecny najwyzsze zagranie jest mniejsze niz ilosc
 		// zetonow jaka chce teraz zagrac gracz - jest tak wowczas ustawiam nowe
 		// najwyzsze zagranie
+		// TODO a jesli ten if nie jest speniony to co? gracz nadal obstawia all-in - do poprawy - wychodzi fakt, że nie
+		// piszesz testow
 		if (currentTable.getCurrentMax() < ownChips) {
 			currentTable.setCurrentMax(ownChips);
 		}
 		payChipsToPool(ownChips);
-		// currentTable.setRoundStatus(StatusEnum.ALL_IN);
 		playerStatus = StatusEnum.ALL_IN;
 		System.out.println("Player: ALL_IN -stawiam wszystko");
 
@@ -232,7 +230,6 @@ public abstract class Player {
 		}
 
 		payChipsToPool(currentTable.getCurrentMax());
-		// currentTable.setRoundStatus(StatusEnum.CALL);
 		playerStatus = StatusEnum.CALL;
 		System.out.println("Player: CALL -wyrównuje");
 	}
