@@ -168,12 +168,11 @@ public abstract class Player {
 			currentTable.setCurrentMax(chipsForBidding);
 		}
 
-		ownChips = 0;
 		// TODO allIn bierze wszytskie zetony gracza (ownChips) i obstawia je do puli, sprawdz wszystkie wykorzystania
 		// chipsForBidding
 		// bo mam wrazenie, ze ty tego żle używasz!!!! Dajcie sobie spokuj z tym agielskim, bo sami potem nie rozumiecie
 		// co piszecie!!!
-		currentTable.addToPool(chipsForBidding);
+		payChipsToPool(chipsForBidding);
 		// currentTable.setRoundStatus(StatusEnum.ALL_IN);
 		playerStatus = StatusEnum.ALL_IN;
 		System.out.println("Player: ALL_IN -stawiam wszystko");
