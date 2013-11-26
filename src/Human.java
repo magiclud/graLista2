@@ -26,7 +26,7 @@ public class Human extends Player {
 	}
 
 	@Override
-	int zacznijLicytacje() {
+	int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves, List<StatusEnum> playersMoves) {
 		// TODO Auto-generated method stub
 		return 0;
 	}

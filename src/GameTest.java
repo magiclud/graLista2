@@ -53,23 +53,28 @@ public class GameTest {
 
 			firstBiddingLoop(scanIn, myTable);
 
-			// TODO osobna metoda jak powyzej
-			List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
-			for (int i = 0; i < winners.size(); ++i) {
-				System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
-				if (myTable.getWinners().size() == 1) {
-					Player oneWinner = myTable.getPlayersInGame().get(winners.get(i));
-					oneWinner.setScore(oneWinner.getScore() + 1);
-					System.out.println("Gracz otrzymuje " + myTable.getPool());
-					myTable.setCoinsIfOnePlayerWin();
-				} else {
-					System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");// TODO
-				}
-			}
+			showWhoWin(myTable);
+
 			dotychczasowyRanking(myTable);
 		}
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
+	}
+
+	private static void showWhoWin(Table myTable) {
+		List<Integer> winners = Judge.selectWinners(myTable.getPlayers());
+		for (int i = 0; i < winners.size(); ++i) {
+			System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
+			if (myTable.getWinners().size() == 1) {
+				Player oneWinner = myTable.getPlayersInGame().get(winners.get(i));
+				oneWinner.increaseScore(oneWinner.getScore() + 1);
+				System.out.println("Gracz otrzymuje " + myTable.getPool());
+				myTable.setCoinsIfOnePlayerWin();
+			} else {
+				System.out.println("Jest remis. Pula gry przechodzi do nastepnej rundy");// TODO
+			}
+		}
+
 	}
 
 	private static void dotychczasowyRanking(Table myTable) {
@@ -90,7 +95,6 @@ public class GameTest {
 
 	private static void firstBidding(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.getPlayersInGame()) {
-			// TODO
 			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
 			if (player.isHuman()) {// jesli to human
 				String odpowiedz = askPlayersWhatMove(scanIn, player);
@@ -119,8 +123,9 @@ public class GameTest {
 		case BET:// TODO how much?
 			if (!player.isHuman()) {
 				System.out.println("System: Okresl wysokosc stawki ");
-				System.out.println("Player(BOT): BET ustawiam na " + player.getChipsForBidding());
-				player.bet(player.getChipsForBidding());// minimalna stawka?
+				// System.out.println("Player(BOT): BET ustawiam na " +
+				// player.getChipsForBidding());
+				// player.bet(player.getChipsForBidding());// minimalna stawka?
 			}
 			System.out.println("System: Okresl wysokosc stawki ");
 			System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));

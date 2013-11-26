@@ -10,9 +10,8 @@ public abstract class Player {
 	private int score;
 	// private Boolean alreadyChangedCards = false;
 
-	// TODO ta zmienna do usuniecia, nie widze sensu jej stosowania
-	private int chipsForBidding = 20;// minimalna stawka?
 	private int playerID;
+	int chipsForBidding;
 
 	private String newPlayerID;
 	// public int newToBet;
@@ -65,10 +64,6 @@ public abstract class Player {
 		return ownChips;
 	}
 
-	public int getChipsForBidding() {
-		return chipsForBidding;
-	}
-
 	public void joinGame() {
 		// wykorzystanie metody toString2
 		System.out.println("Dolaczam do gry - " + this);
@@ -104,8 +99,8 @@ public abstract class Player {
 	}
 
 	abstract void gameStrategy();
+	abstract int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves, List<StatusEnum> playersMoves);
 
-	abstract int zacznijLicytacje();
 
 	public List<Card> getOwnCards() {
 		return ownCards;
@@ -115,8 +110,7 @@ public abstract class Player {
 		return score;
 	}
 
-	// TODO zaminic na jakas lepsza nazwa, np: increaseScore()
-	public void setScore(int score) {
+	public void increaseScore(int score) {
 		this.score = score;
 	}
 	public abstract boolean isHuman();
@@ -129,12 +123,64 @@ public abstract class Player {
 	public String toString() {
 		return "Player id: " + playerID + ", karty: " + ownCards + ", wynik: " + checkScore();
 	}
+	
+	int bet(int ileObstawiam, int currentMax) {
+		if (ileObstawiam <= currentMax)
+			throw new IllegalStateException("Za mało obstawiasz !");
+		if (ileObstawiam > ownChips)
+			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
+		playerStatus = StatusEnum.BET;
+		chipsForBidding = ileObstawiam;
+		return chipsForBidding;
+	}
+
+	int raise(int ileObstawiam, int currentMax) {
+		if (ileObstawiam <= currentMax)
+			throw new IllegalStateException("Za mało obstawiasz !");
+		if (ileObstawiam > ownChips)
+			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
+		playerStatus = StatusEnum.RAISE;
+		chipsForBidding = ileObstawiam;
+		return chipsForBidding;
+	}
+
+	int call(int currentMax) {
+		int ileObstawiam = currentMax;
+		if (ileObstawiam > ownChips)
+			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
+		playerStatus = StatusEnum.CALL;
+		chipsForBidding = ileObstawiam;
+		return chipsForBidding;
+	}
+
+	int allIn() {
+		if (playerStatus == StatusEnum.FOLD)
+			throw new IllegalStateException("Przecież wcześniej odszedłeś z gry !");
+		playerStatus = StatusEnum.ALL_IN;
+		chipsForBidding = ownChips;
+		return chipsForBidding;
+	}
+
+	int check(int currentMax) {
+		int ileObstawiam = currentMax;
+		if (ileObstawiam > ownChips)
+			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
+		playerStatus = StatusEnum.CHECK;
+		chipsForBidding = ileObstawiam;
+		return chipsForBidding;
+	}
+
+	int fold(int currentMax) {
+		playerStatus = StatusEnum.FOLD;
+		return currentMax;
+	}
 
 	public void check() {
-		// TODO co tu jest sprawdzane i dlaczego?
-		if (currentTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)
-				|| currentTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)
-				|| currentTable.getStatusPlayersInGame().equals(StatusEnum.BET)) {
+		// w ifie sprawdzam czy ktos z graczy dal all-in, raise lub bet - gdyz
+		// wowczs nie moge CHECK
+		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)
+				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.RAISE)
+				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.BET)) {
 			throw new IllegalStateException("Wczesniejszy gracz postawil stawke.\n Niemozlwy jest ruch CHECK.");
 		}
 		System.out.println("Player: Czekam");
@@ -142,9 +188,8 @@ public abstract class Player {
 	}
 
 	public void bet(int chipsForBidding) {
-		if (chipsForBidding < currentTable.getCurrentMax()) {
-			throw new IllegalStateException("Za mało obstawiasz !");
-		}
+		// if (chipsForBidding < currentTable.getCurrentMax()) {
+		// usunela if bo bet ma byc tylko przy pierwszej licytacji
 		payChips(chipsForBidding);
 		currentTable.addToPool(chipsForBidding);
 		// currentTable.setRoundStatus(StatusEnum.BET);
@@ -166,16 +211,13 @@ public abstract class Player {
 	}
 
 	public void allin() {
-		// TODO co to niby sprawdza, bo nie rozumiem po co to jest? co by sie stao jakby tego nie bylo?
-		if (currentTable.getCurrentMax() < chipsForBidding) {
-			currentTable.setCurrentMax(chipsForBidding);
+		// sprawdzam czy obecny najwyzsze zagranie jest mniejsze niz ilosc
+		// zetonow jaka chce teraz zagrac gracz - jest tak wowczas ustawiam nowe
+		// najwyzsze zagranie
+		if (currentTable.getCurrentMax() < ownChips) {
+			currentTable.setCurrentMax(ownChips);
 		}
-
-		// TODO allIn bierze wszytskie zetony gracza (ownChips) i obstawia je do puli, sprawdz wszystkie wykorzystania
-		// chipsForBidding
-		// bo mam wrazenie, ze ty tego żle używasz!!!! Dajcie sobie spokuj z tym agielskim, bo sami potem nie rozumiecie
-		// co piszecie!!!
-		payChipsToPool(chipsForBidding);
+		payChipsToPool(ownChips);
 		// currentTable.setRoundStatus(StatusEnum.ALL_IN);
 		playerStatus = StatusEnum.ALL_IN;
 		System.out.println("Player: ALL_IN -stawiam wszystko");
@@ -183,14 +225,13 @@ public abstract class Player {
 	}
 
 	public void call() {
-		// TODO chipsForBidding - co wg ciebie przechodwuje ta zmienna? bo wg mnie to ile w danej licytacji postawi
-		// player zetonow,
-		// tu wg mnie powinno sie sprawdzac, czy zetony ktore posiada gracz ownChips sa wystarczajace?
-		if (chipsForBidding < currentTable.getCurrentMax()) {
+		// sprawdzam czy zetony ktore posiada gracz ownChips sa
+		// wystarczajace
+		if (ownChips < currentTable.getCurrentMax()) {
 			throw new IllegalStateException("Za mało masz coins !");
 		}
 
-		payChipsToPool(chipsForBidding);
+		payChipsToPool(currentTable.getCurrentMax());
 		// currentTable.setRoundStatus(StatusEnum.CALL);
 		playerStatus = StatusEnum.CALL;
 		System.out.println("Player: CALL -wyrównuje");

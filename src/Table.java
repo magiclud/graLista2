@@ -318,22 +318,22 @@ public class Table {
 			getStatusPlayersInGame().clear();
 			return true;
 		}
-		if (playersInGame.size() == 1
-				// TODO getStatusPlayersInGame() - to zwraca kolekcje kolekcja.equals(costam) zawsze da nulla, może ci
-				// chodzio o kontainst,
-				// proponuje najpierw w komentarzu napisac co to niby ten if sprawdza
-				&& (getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || getStatusPlayersInGame().equals(StatusEnum.RAISE))) {
-			System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + getPool());
+		if (playersInGame.size() == 1) {
+			System.out.println("Jeden gracz zgarnia cala pule: " + getPool());
 			Player oneWinner = players.get(getWinners().get(0));
-			oneWinner.setScore(oneWinner.getScore() + 1);
-			setCoinsIfOnePlayerWin();
+			oneWinner.increaseScore(oneWinner.getScore() + 1);// dodaj punkt
+																// graczowi
+			setCoinsIfOnePlayerWin();// przekaz mu kase
 			getStatusPlayersInGame().clear();
+			currentMax = 0;
 			return true;
 		}
-		// gracze mogli zagrac jedynie call, check, fold,
-		if (!getStatusPlayersInGame().equals(StatusEnum.ALL_IN) && !getStatusPlayersInGame().equals(StatusEnum.RAISE)) {
+		// gracze mogli zagrac jedynie call, check, fold, bo gdyby zagralii
+		// all-in lub raise to licytacja nadal trwa
+		if (!getStatusPlayersInGame().contains(StatusEnum.ALL_IN) && !getStatusPlayersInGame().contains(StatusEnum.RAISE)) {
 			System.out.println("Gracze wyrownali swoje stawki");
 			getStatusPlayersInGame().clear();
+			currentMax = 0;
 			return true;
 		}
 		return false;
