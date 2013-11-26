@@ -64,21 +64,21 @@ public class Bot extends Player {
 						abandonedIndexes.add(i);
 				}
 				changeCards(abandonedIndexes);
-				for(int i =0; i < abandonedIndexes.size(); ++i) {
+				for (int i = 0; i < abandonedIndexes.size(); ++i) {
 					System.out.println(abandonedIndexes.get(i));
 				}
 				return;
 			}
 		}
-		if(order.orderByCourtQuantity.get(0)==4)
+		if (order.orderByCourtQuantity.get(0) == 4)
 			return;
-		if(order.orderByCourtQuantity.get(0)==3 && order.orderByCourtQuantity.get(1)==2)
+		if (order.orderByCourtQuantity.get(0) == 3 && order.orderByCourtQuantity.get(1) == 2)
 			return;
 		// Co się dzieje jak jest prawie ful i prawie kareta ?
 		// Patrz jak są 3 takie same karty, wymien pozostale 2
-		if(order.orderBySuitQuantity.get(0)==5)
+		if (order.orderBySuitQuantity.get(0) == 5)
 			return;
-		if(order.orderBySuitQuantity.get(0)==4) {
+		if (order.orderBySuitQuantity.get(0) == 4) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for (int i = 0; i < 5; ++i) {
 				if (!ownCards.get(i).getSuit().equals(order.orderBySuitQuality.get(0).getSuit()))
@@ -86,9 +86,9 @@ public class Bot extends Player {
 			}
 			return;
 		}
-		if(order.maxRowsSizes.get(0)==5)
+		if (order.maxRowsSizes.get(0) == 5)
 			return;
-		if(order.maxRowsSizes.get(0)==4) {
+		if (order.maxRowsSizes.get(0) == 4) {
 			List<Integer> abandonedIndexes = new ArrayList<Integer>();
 			for (int i = 0; i < 5; ++i) {
 				if (ownCards.get(i).getCourt().ordinal() > (order.maxRowsEndCard.get(0).getCourt().ordinal())
@@ -162,244 +162,267 @@ public class Bot extends Player {
 	}
 
 	@Override
-	int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves,
-			List<StatusEnum> playersMoves) {
+	int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves, List<StatusEnum> playersMoves) {
 		// wstępne obliczenia
 		order = new MakeOrder(this.ownCards);
 		order.doTheJob();
 		Random generator = new Random();
-		
-		if (order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0) == 5)
-		{
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				bet(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+
+		if (order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0) == 5) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				bet(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 				return chipsForBidding;
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				raise(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				raise(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 				return chipsForBidding;
 			}
-			if(possibleMoves.contains(ActionsEnum.ALL_IN)) {
+			if (possibleMoves.contains(ActionsEnum.ALL_IN)) {
 				allIn();
 				return chipsForBidding;
 			}
 		}
 		// Co się dzieje jak jest prawie poker ?
-		if(order.maxRowsSizes.get(0) ==4 && order.orderBySuitQuantity.get(0)==4) {
-			if(order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
-				if(possibleMoves.contains(ActionsEnum.BET)) {
-					if(generator.nextDouble() < 0.3) {
-						bet(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+		if (order.maxRowsSizes.get(0) == 4 && order.orderBySuitQuantity.get(0) == 4) {
+			if (order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
+				if (possibleMoves.contains(ActionsEnum.BET)) {
+					if (generator.nextDouble() < 0.3) {
+						bet(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 						return chipsForBidding;
 					}
 				}
-				if(possibleMoves.contains(ActionsEnum.RAISE)) {
-					if(generator.nextDouble() < 0.3) {
-						raise(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+				if (possibleMoves.contains(ActionsEnum.RAISE)) {
+					if (generator.nextDouble() < 0.3) {
+						raise(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 						return chipsForBidding;
 					}
 				}
-				if(possibleMoves.contains(ActionsEnum.CHECK)) {
+				if (possibleMoves.contains(ActionsEnum.CHECK)) {
 					check(currentMax);
 					return chipsForBidding;
 				}
 			}
 		}
-		if(order.orderByCourtQuantity.get(0)==4) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.8) {
-					bet(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+		if (order.orderByCourtQuantity.get(0) == 4) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.8) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.8) {
-					raise(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.8) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
-		if(order.orderByCourtQuantity.get(0)==3 && order.orderByCourtQuantity.get(1)==2) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.6) {
-					bet(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+		if (order.orderByCourtQuantity.get(0) == 3 && order.orderByCourtQuantity.get(1) == 2) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.6) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.6) {
-					raise(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.6) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
 		// Co się dzieje jak jest prawie ful i prawie kareta ?
 		// Patrz jak są 3 takie same karty, wymien pozostale 2
-		if(order.orderBySuitQuantity.get(0)==5) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.5) {
-					bet(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+		if (order.orderBySuitQuantity.get(0) == 5) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.5) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.5) {
-					raise(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.5) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
-		if(order.orderBySuitQuantity.get(0)==4) {
+		if (order.orderBySuitQuantity.get(0) == 4) {
 
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.25) {
-					bet(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.25) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.25) {
-					raise(currentMax + (int)(generator.nextDouble()*0.6*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.25) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.6 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
-		if(order.maxRowsSizes.get(0)==5) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.4) {
-					bet(currentMax + (int)(generator.nextDouble()*0.4*currentMax), currentMax);
+		if (order.maxRowsSizes.get(0) == 5) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.4) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.4 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.4) {
-					raise(currentMax + (int)(generator.nextDouble()*0.4*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.4) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.4 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
-		if(order.maxRowsSizes.get(0)==4) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.15) {
-					bet(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+		if (order.maxRowsSizes.get(0) == 4) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.15) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.15) {
-					raise(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.15) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
 		// Jak są 3 takie same karty, wymień pozostałe 2
-		if(order.orderByCourtQuantity.get(0)==3 ) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.15) {
-					bet(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+		if (order.orderByCourtQuantity.get(0) == 3) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.15) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.15) {
-					raise(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.15) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
 		// Jak jest układ 2 pary, wymień 1 kartę
-		if(order.orderByCourtQuantity.get(0)==2 && order.orderByCourtQuantity.get(1)==2 ) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.15) {
-					bet(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+		if (order.orderByCourtQuantity.get(0) == 2 && order.orderByCourtQuantity.get(1) == 2) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.15) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.15) {
-					raise(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.15) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
 		// Jak jest układ 1 para, wymień 3 karty
-		if(order.orderByCourtQuantity.get(0)==2) {
-			if(possibleMoves.contains(ActionsEnum.BET)) {
-				if(generator.nextDouble() < 0.15) {
-					bet(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+		if (order.orderByCourtQuantity.get(0) == 2) {
+			if (possibleMoves.contains(ActionsEnum.BET)) {
+				if (generator.nextDouble() < 0.15) {
+					bet(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.RAISE)) {
-				if(generator.nextDouble() < 0.15) {
-					raise(currentMax + (int)(generator.nextDouble()*0.3*currentMax), currentMax);
+			if (possibleMoves.contains(ActionsEnum.RAISE)) {
+				if (generator.nextDouble() < 0.15) {
+					raise(currentMax + (int) (generator.nextDouble() * 0.3 * currentMax), currentMax);
 					return chipsForBidding;
 				}
 			}
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
 		}
 		// W przeciwnym razie wymień 4 karty :D
 		else {
-			if(possibleMoves.contains(ActionsEnum.CHECK)) {
+			if (possibleMoves.contains(ActionsEnum.CHECK)) {
 				check(currentMax);
 				return chipsForBidding;
 			}
-			if(possibleMoves.contains(ActionsEnum.CALL)) {
-				if(generator.nextDouble()<0.1) {
+			if (possibleMoves.contains(ActionsEnum.CALL)) {
+				if (generator.nextDouble() < 0.1) {
 					call(currentMax);
 					return chipsForBidding;
 				}
 			}
-			fold(currentMax); 
+			fold(currentMax);
 			return currentMax;
 		}
-		
 
 		return 0;
 	}
 
-	
-
-
 	public int chipsToRaise() {
+		Random generator = new Random();
+		if (order.maxRowsSizes.get(0) == 5 && order.orderBySuitQuantity.get(0) == 5) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.6 * currentTable.getCurrentMax());
+		}
+		// jest prawie poker
+		if (order.maxRowsSizes.get(0) == 4 && order.orderBySuitQuantity.get(0) == 4
+				&& order.maxRowsEndCard.get(0).getSuit().equals(order.orderBySuitQuality.get(0).getSuit())) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.6 * currentTable.getCurrentMax());
+		}
+		if ((order.orderByCourtQuantity.get(0) == 4) || (order.orderByCourtQuantity.get(0) == 3 && order.orderByCourtQuantity.get(1) == 2)) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.6 * currentTable.getCurrentMax());
+		}
+		// jest prawie ful i prawie kareta ?
+		if (order.orderBySuitQuantity.get(0) == 5 || (order.orderBySuitQuantity.get(0) == 4)) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.5 * currentTable.getCurrentMax());
+		}
+		if (order.maxRowsSizes.get(0) == 5) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.4 * currentTable.getCurrentMax());
+		}
+		// Jak są 3 takie same karty
+		if ((order.maxRowsSizes.get(0) == 4 || order.orderByCourtQuantity.get(0) == 3) && generator.nextDouble() < 0.15) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.3 * currentTable.getCurrentMax());
+		}
+		// Jak jest układ 2 pary Jak jest układ 1 para
+		if ((order.orderByCourtQuantity.get(0) == 2 && order.orderByCourtQuantity.get(1) == 2 && generator.nextDouble() < 0.15)
+				|| order.orderByCourtQuantity.get(0) == 2) {
+			return currentTable.getCurrentMax() + (int) (generator.nextDouble() * 0.3 * currentTable.getCurrentMax());
+		}
+		// w przeciwnym razie zdaj sie na los ;)
 		return botsCoins.nextInt(getOwnChips() + currentTable.getCurrentMax());
-
 	}
+
 	public StatusEnum makeMove() {
 		Random botsMove = new Random();
 
