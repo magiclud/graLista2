@@ -327,7 +327,6 @@ public class Table {
 			oneWinner.increaseScore(oneWinner.getScore() + 1);// dodaj punkt
 																// graczowi
 			setCoinsIfOnePlayerWin();// przekaz mu kase
-			getStatusPlayersInGame().clear();
 			currentMax = 0;
 			return true;
 		}
