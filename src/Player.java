@@ -43,10 +43,6 @@ public abstract class Player {
 		this.newAlreadyChangedCards = newAlreadyChangedCards;
 	}
 
-	public void setPlayerStatus(StatusEnum playerStatus) {
-		this.playerStatus = playerStatus;
-	}
-
 	public StatusEnum getPlayerStatus() {
 		return playerStatus;
 	}
@@ -66,10 +62,6 @@ public abstract class Player {
 
 	public int getOwnChips() {
 		return ownChips;
-	}
-
-	public void setOwnChips(int ownChips) {
-		this.ownChips = ownChips;
 	}
 
 	public int getChipsForBidding() {
@@ -151,7 +143,7 @@ public abstract class Player {
 			throw new IllegalStateException("Za mało obstawiasz !");
 		}
 		payChips(chipsForBidding);
-		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+		currentTable.addToPool(chipsForBidding);
 		// currentTable.setRoundStatus(StatusEnum.BET);
 		currentTable.setCurrentMax(chipsForBidding);
 		System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
@@ -163,39 +155,57 @@ public abstract class Player {
 			throw new IllegalStateException("Za mało obstawiasz !");
 		}
 		payChips(chipsForBidding);
-		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+		currentTable.addToPool(chipsForBidding);
 		currentTable.setCurrentMax(chipsForBidding);
 		// /currentTable.setRoundStatus(StatusEnum.RAISE);
-		setPlayerStatus(StatusEnum.RAISE);
+		playerStatus = StatusEnum.RAISE;
 		System.out.println("Player: RAISE -przebijam najwyzszy do tej pory zaklad innego gracza");
 	}
 
 	public void allin() {
+		// TODO co to niby sprawdza, bo nie rozumiem po co to jest? co by sie stao jakby tego nie bylo?
 		if (currentTable.getCurrentMax() < chipsForBidding) {
 			currentTable.setCurrentMax(chipsForBidding);
 		}
-		setOwnChips(0);
-		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+
+		ownChips = 0;
+		// TODO allIn bierze wszytskie zetony gracza (ownChips) i obstawia je do puli, sprawdz wszystkie wykorzystania
+		// chipsForBidding
+		// bo mam wrazenie, ze ty tego żle używasz!!!! Dajcie sobie spokuj z tym agielskim, bo sami potem nie rozumiecie
+		// co piszecie!!!
+		currentTable.addToPool(chipsForBidding);
 		// currentTable.setRoundStatus(StatusEnum.ALL_IN);
-		setPlayerStatus(StatusEnum.ALL_IN);
+		playerStatus = StatusEnum.ALL_IN;
 		System.out.println("Player: ALL_IN -stawiam wszystko");
 
 	}
 
 	public void call() {
+		// TODO chipsForBidding - co wg ciebie przechodwuje ta zmienna? bo wg mnie to ile w danej licytacji postawi
+		// player zetonow,
+		// tu wg mnie powinno sie sprawdzac, czy zetony ktore posiada gracz ownChips sa wystarczajace?
 		if (chipsForBidding < currentTable.getCurrentMax()) {
 			throw new IllegalStateException("Za mało masz coins !");
 		}
-		setOwnChips(ownChips - chipsForBidding);
-		currentTable.setPool(currentTable.getPool() + chipsForBidding);
+
+		payChipsToPool(chipsForBidding);
 		// currentTable.setRoundStatus(StatusEnum.CALL);
-		setPlayerStatus(StatusEnum.CALL);
+		playerStatus = StatusEnum.CALL;
 		System.out.println("Player: CALL -wyrównuje");
+	}
+
+	public void payChipsToPool(int chipsForBidding) {
+		ownChips = ownChips - chipsForBidding;
+		currentTable.addToPool(chipsForBidding);
 	}
 
 	public void fold() {
 		playerStatus = StatusEnum.FOLD;
 		currentTable.getPlayersInGame().remove(playerID);
 		System.out.println("Player: FOLD -pasuje");
+	}
+
+	public void winChips(int pool) {
+		ownChips = ownChips + pool;
 	}
 }

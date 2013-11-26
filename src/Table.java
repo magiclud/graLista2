@@ -82,16 +82,14 @@ public class Table {
 	//
 	// }
 
-	/*
-	 * void startGame() {
-	 * 
+	/* void startGame() {
+	 *
 	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
 	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
 	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
 	 * PRZEZ SERVER ADAPTER }
-	 * 
-	 * }
-	 */
+	 *
+	 * } */
 	void check() {
 		rozpocznijRunde();
 	}
@@ -172,20 +170,20 @@ public class Table {
 
 	/*********************************************
 	 * do usuniecia ***************
-	 * 
+	 *
 	 * public void bet(String PlayerID, int howMuch) throws Exception { Player
 	 * player = findPlayer(PlayerID); if (howMuch < currentMax) throw new
 	 * IllegalStateException("Za mało obstawiasz !"); if (howMuch >
 	 * player.getChipsForBidding());{ throw new
 	 * IllegalStateException("Za mało masz coins żeby tak zrobić !");} //
 	 * roundStatus = StatusEnum.BET; currentMax = howMuch; }
-	 * 
+	 *
 	 * // \/\/\/\/\/\/ bardzo WAŻNE ! ! ! ! ! przykłąd /* void bet(String
 	 * PlayerID, int howMuch) throws Exception { Player player =
 	 * findPlayer(PlayerID); if(howMuch < currentMax) throw new
 	 * IllegalStateException("za mało obstawiasz !"); changeStatus
 	 * player.newToBet = howmuch; currentMax = newToBet
-	 * 
+	 *
 	 * }
 	 */
 
@@ -242,20 +240,18 @@ public class Table {
 	public void setCoinsIfOnePlayerWin() {
 		if (winners.size() == 1) {
 			// przekazanie wygranych pieniedzy graczowi
-			players.get(getWinners().get(0)).setOwnChips(players.get(getWinners().get(0)).getOwnChips() + getPool());
-			setPool(0);
+			players.get(getWinners().get(0)).winChips(pool);
+			pool = 0;
 		}
 	}
 
 	/**
 	 * wejscie gracza do gry kosztuje go wpisowe
-	 * 
+	 *
 	 * @param player
 	 */
 	public void addPlayerToGame(Player player) {
-		player.payChips(getStartWpisowe());
-		pool = pool + getStartWpisowe();
-		player.setOwnChips(player.getOwnChips() - getStartWpisowe());
+		player.payChipsToPool(startWpisowe);
 		playersInGame.add(player);
 	}
 
@@ -295,10 +291,6 @@ public class Table {
 		return pool;
 	}
 
-	public void setPool(int pool) {
-		this.pool = pool;
-	}
-
 	public List<Integer> getWinners() {
 		return winners;
 	}
@@ -317,16 +309,19 @@ public class Table {
 
 	/**
 	 * sprawdza czy licytacja sie zakonczyla
-	 * 
+	 *
 	 * @return
 	 */
 	public boolean isBiddingOver() {
-		if (getPlayersInGame().size() == 0) {
+		if (playersInGame.size() == 0) {
 			System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
 			getStatusPlayersInGame().clear();
 			return true;
 		}
-		if (getPlayersInGame().size() == 1
+		if (playersInGame.size() == 1
+				// TODO getStatusPlayersInGame() - to zwraca kolekcje kolekcja.equals(costam) zawsze da nulla, może ci
+				// chodzio o kontainst,
+				// proponuje najpierw w komentarzu napisac co to niby ten if sprawdza
 				&& (getStatusPlayersInGame().equals(StatusEnum.ALL_IN) || getStatusPlayersInGame().equals(StatusEnum.RAISE))) {
 			System.out.println("Jeden gracz - sila przebicia - zgarnia cala pule: " + getPool());
 			Player oneWinner = players.get(getWinners().get(0));
@@ -342,5 +337,9 @@ public class Table {
 			return true;
 		}
 		return false;
+	}
+
+	public void addToPool(int chipsForBidding) {
+		pool = pool + chipsForBidding;
 	}
 }
