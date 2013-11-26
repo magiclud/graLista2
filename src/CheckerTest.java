@@ -15,7 +15,7 @@ public class CheckerTest {
 	// posortowane w konstruktorze, dlatego ponizsze testy sprawdzaja poprawnosc
 	// metod dla kart otrzymanych od playera}
 	@Test
-	public void checkIfPlayerHaveTwoPair() {
+	public void checkIfPlayerHaveTwoPair() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -29,7 +29,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveStraightFlush() {
+	public void checkIfPlayerHaveStraightFlush() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
@@ -43,7 +43,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveFourOfAKingFromBeggining() {
+	public void checkIfPlayerHaveFourOfAKingFromBeggining() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -57,7 +57,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveFourOfAKing() {
+	public void checkIfPlayerHaveFourOfAKing() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
@@ -71,7 +71,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveFullHouse() {
+	public void checkIfPlayerHaveFullHouse() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -85,7 +85,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveFullHouseSecondOption() {
+	public void checkIfPlayerHaveFullHouseSecondOption() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -99,7 +99,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveFlush() {
+	public void checkIfPlayerHaveFlush() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SEVEN, SuitEnum.CLUB));
@@ -113,7 +113,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveStrit() {
+	public void checkIfPlayerHaveStrit() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
@@ -127,7 +127,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveStritWithAce() {
+	public void checkIfPlayerHaveStritWithAce() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
@@ -141,7 +141,7 @@ public class CheckerTest {
 	}
 
 	@Test
-	public void checkIfPlayerHaveThreeOfAKind() {
+	public void checkIfPlayerHaveThreeOfAKind() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));

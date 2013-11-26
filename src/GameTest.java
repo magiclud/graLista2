@@ -11,7 +11,7 @@ public class GameTest {
 
 	public static void main(String[] args) {
 
-		try {
+		try {// w konsoli np. STaRT
 			numHum = Integer.parseInt(args[0]);
 			args[1].matches(poprawnyNapis);
 			numBot = Integer.parseInt(args[2]);
@@ -27,50 +27,53 @@ public class GameTest {
 		} catch (NumberFormatException ex) {
 			System.out.println("nieprawidło wprowadzona liczba graczy/zetonow/wpisowergo");
 		}
-
-		System.out.println("System: Jeżeli chcesz zacząć grę, wpisz START i naciśnij ENTER,\n"
-				+ "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry");
-		String inString;
 		Scanner scanIn = new Scanner(System.in);
-		inString = "START";
-		if (!inString.equals("START")) {
-			System.out.println("System: Wychodzę z gry");
-			scanIn.close();
-		} else {
+		/*
+		 * System.out.println(
+		 * "System: Jeżeli chcesz zacząć grę, wpisz START i naciśnij ENTER,\n" +
+		 * "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry"); String
+		 * inString; Scanner scanIn = new Scanner(System.in); inString =
+		 * "START"; if (!inString.equals("START")) {
+		 * System.out.println("System: Wychodzę z gry"); scanIn.close(); } else
+		 * {
+		 * 
+		 * inString = scanIn.nextLine();
+		 */
+			Table myTable = null;
+			try {
+				myTable = new Table(numHum, numBot);
 
-			inString = scanIn.nextLine();
+				myTable.setStartWpisowe(wpisowe);
+				myTable.setInitialChipsForPlayers(poczatkoweZetony);
+				// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
+				// wpisowe
+				askEverybodyToJoinTheGame(scanIn, myTable);
 
-			Table myTable = new Table(numHum, numBot);
-			myTable.setStartWpisowe(wpisowe);
-			myTable.setInitialChipsForPlayers(poczatkoweZetony);
-			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
-			// wpisowe
-			askEverybodyToJoinTheGame(scanIn, myTable);
+				firstBiddingLoop(scanIn, myTable);
 
-			firstBiddingLoop(scanIn, myTable);
+				askToChangeCards(scanIn, myTable);
 
-			askToChangeCards(scanIn, myTable);
+				secondBiddingLoop(scanIn, myTable);
 
-			secondBiddingLoop(scanIn, myTable);
+				showWhoWin(myTable);
 
-			showWhoWin(myTable);
-
-			dotychczasowyRanking(myTable);
-		}
+				dotychczasowyRanking(myTable);
+			} catch (ExceptionsInGame e) {
+				System.out.println(e.getMessage());
+			}
+		// }
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
 	}
 
-	private static void secondBiddingLoop(Scanner scanIn, Table myTable) {
+	private static void secondBiddingLoop(Scanner scanIn, Table myTable) throws ExceptionsInGame {
 
 		// sprawdzam czy w pierwszej rundzie wystapilo juz all-in
-		for (Player player : myTable.getPlayersInGame()) {
-			if (myTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
-				return;
-			}
+		if (myTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
+			return;
 		}
 		firstBiddingLoop(scanIn, myTable);
-		
+
 	}
 
 	private static void showWhoWin(Table myTable) {
@@ -79,7 +82,7 @@ public class GameTest {
 			System.out.println("System: Player " + (winners.get(i) + 1) + "<< wygrywa");
 			if (myTable.getWinners().size() == 1) {
 				Player oneWinner = myTable.getPlayersInGame().get(winners.get(i));
-				oneWinner.increaseScore(oneWinner.getScore() + 1);
+				oneWinner.increaseScore();
 				System.out.println("Gracz otrzymuje " + myTable.getPool());
 				myTable.setCoinsIfOnePlayerWin();
 			} else {
@@ -96,7 +99,7 @@ public class GameTest {
 		}
 	}
 
-	private static void firstBiddingLoop(Scanner scanIn, Table myTable) {
+	private static void firstBiddingLoop(Scanner scanIn, Table myTable) throws ExceptionsInGame {
 
 		myTable.sprawdzCzyGraczeMajaWystarczajacaIloscZetonow();// jesli nie
 																// odpada z gry
@@ -108,7 +111,7 @@ public class GameTest {
 		}
 	}
 
-	private static void firstBidding(Scanner scanIn, Table myTable) {
+	private static void firstBidding(Scanner scanIn, Table myTable) throws ExceptionsInGame {
 		for (Player player : myTable.getPlayersInGame()) {
 			System.out.println("System: Okresl ruch  <<CHECK / BET / RAISE / CALL / FOLD / ALL-IN>>");
 			if (player.isHuman()) {// jesli to human
@@ -122,26 +125,27 @@ public class GameTest {
 		}
 	}
 
-	private static void askBotWhatMove(Player player, Scanner scanIn) {
+	private static void askBotWhatMove(Player player, Scanner scanIn) throws ExceptionsInGame {
 		Bot bot = (Bot) player;
 		StatusEnum move = bot.makeMove();
 		System.out.println("Player: Bot wykonuje " + move);
 		playersMove(move, player, scanIn);
 	}
 
-	private static void playersMove(StatusEnum move, Player player, Scanner scanIn) {
+	private static void playersMove(StatusEnum move, Player player, Scanner scanIn) throws ExceptionsInGame {
 
 		int howMuch = 0;
 		switch (move) {
 		case CHECK:
 			player.check();
 			break;
-			case BET:
+		case BET:// TODO jaka wysokosc tego bet
 			if (!player.isHuman()) {
-				System.out.println("System: Okresl wysokosc stawki ");
-				// System.out.println("Player(BOT): BET ustawiam na " +
-				// player.getChipsForBidding());
-				// player.bet(player.getChipsForBidding());// minimalna stawka?
+				Bot bot = (Bot) player;
+				System.out.println("System: Okresl wysokosc stawki");
+				System.out.println("Player(BOT): BET ustawiam na " + bot.chipsToRaise());
+				player.raise(bot.chipsToRaise());
+				break;
 			}
 			System.out.println("System: Okresl wysokosc stawki ");
 			System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
@@ -154,10 +158,8 @@ public class GameTest {
 				System.out.println("System: Okresl wysokosc stawki");
 				System.out.println("Player(BOT): RAISE ustawiam na " + bot.chipsToRaise());
 				player.raise(bot.chipsToRaise());
+				break;
 			}
-				// TODO te czesc nizej zawsze si wykonuje!!!!! nie powinien tu byc else? uruchamiasz czasem ta gre, bo
-				// jak nie piszecie testow, to musisz non stop testowac co napiszesz, bo zaufaj mi zawsze cos jest zle
-				// do poprawy wszystkie casy z tego co widze
 			System.out.println("System: Okresl wysokosc stawki");
 			System.out.println("Player: RAISE ustawiam na " + getAnswerForMoney(scanIn));
 			howMuch = Integer.parseInt(getAnswerForMoney(scanIn));

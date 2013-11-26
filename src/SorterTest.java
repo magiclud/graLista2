@@ -11,7 +11,7 @@ public class SorterTest {
 	Table someTable;
 
 	@Test
-	public void testSpawdzaCzyKartySaPosortowane() {
+	public void testSpawdzaCzyKartySaPosortowane() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));

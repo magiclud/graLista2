@@ -43,7 +43,10 @@ public class Table {
 		return statusPlayersInGame;
 	}
 
-	public Table(int numHumans, int numBots) {
+	public Table() {
+	};
+
+	public Table(int numHumans, int numBots) throws ExceptionsInGame {
 
 		this.actualDeck = new Deck(); // Tutaj już mają być karty rozdane,
 										// znaczy się :-)
@@ -324,8 +327,7 @@ public class Table {
 		if (playersInGame.size() == 1) {
 			System.out.println("Jeden gracz zgarnia cala pule: " + getPool());
 			Player oneWinner = players.get(getWinners().get(0));
-			oneWinner.increaseScore(oneWinner.getScore() + 1);// dodaj punkt
-																// graczowi
+			oneWinner.increaseScore();// dodaj punkt graczowi
 			setCoinsIfOnePlayerWin();// przekaz mu kase
 			currentMax = 0;
 			return true;

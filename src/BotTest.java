@@ -10,7 +10,7 @@ import org.junit.Test;
 public class BotTest {
 
 	@Test
-	public void testZwracamOdpowiedniaIloscKartPrzyLosowaniu() {
+	public void testZwracamOdpowiedniaIloscKartPrzyLosowaniu() throws ExceptionsInGame {
 		Deck exampleDeck = new Deck();
 		Table exampleTable = new Table(2, 2); // <<<< tylko z powodów
 												// formalnych
@@ -19,7 +19,7 @@ public class BotTest {
 	}
 
 	@Test
-	public void testRozneLiczbyPrzyLosowaniu() {
+	public void testRozneLiczbyPrzyLosowaniu() throws ExceptionsInGame {
 		Deck exampleDeck0 = new Deck();
 		Table exampleTable0 = new Table(2, 2); // <<<< tylko z powodów
 												// formalnych
@@ -34,7 +34,7 @@ public class BotTest {
 	}
 
 	@Test(expected = Exception.class)
-	public void testJuzWymienialKartyINieMozeWiecej() {
+	public void testJuzWymienialKartyINieMozeWiecej() throws ExceptionsInGame {
 		Deck exampleDeck = new Deck();
 		Table exampleTable = new Table(2, 2); // <<<< tylko z powodów
 												// formalnych
@@ -60,7 +60,7 @@ public class BotTest {
 	}
 
 	@Test
-	public void testMyStrategy() {
+	public void testMyStrategy() throws ExceptionsInGame {
 		Deck exampleDeck1 = new Deck();
 		Table exampleTable1 = new Table(2, 2);
 		List<Card> cards12 = new ArrayList<Card>();
@@ -76,7 +76,7 @@ public class BotTest {
 	}
 
 	@Test
-	public void testWymieńKarty() {
+	public void testWymieńKarty() throws ExceptionsInGame {
 		System.out.println("___");
 		Table exampleTable11 = new Table(2, 2);
 		Player exampleBot11 = exampleTable11.getPlayers().get(3);

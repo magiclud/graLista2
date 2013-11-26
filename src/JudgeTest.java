@@ -7,11 +7,11 @@ import org.junit.Test;
 
 public class JudgeTest {
 
-	private Table currentTable = new Table(3, 1);
+	private Table currentTable = new Table();
 
 	// //////////
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushOneOnTheEnd() {
+	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushOneOnTheEnd() throws ExceptionsInGame {
 		// dwoch graczy ma pokera - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing(1));
@@ -26,7 +26,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThreePlayersHaveStraightFlushEndDraw() {// remis
+	public final void testSelectWinnersIfThreePlayersHaveStraightFlushEndDraw() throws ExceptionsInGame {// remis
 		// dwoch graczy ma pokera - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing(1));
@@ -41,7 +41,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfFourPlayersHaveStraightFlushEndDraw() {// remis
+	public final void testSelectWinnersIfFourPlayersHaveStraightFlushEndDraw() throws ExceptionsInGame {// remis
 		// dwoch graczy ma pokera - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithStraightFlushStartingWith2Club(1));
@@ -57,7 +57,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveStraightFlush() {
+	public final void testSelectWinnersIfTwoPlayersHaveStraightFlush() throws ExceptionsInGame {
 		// dwoch graczy ma pokera - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing(1));
@@ -71,7 +71,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushEndDraw() {// remis
+	public final void testSelectWinnersIfTwoPlayersHaveStraightFlushEndDraw() throws ExceptionsInGame {// remis
 		// dwoch graczy ma pokera - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing2(1));
@@ -85,7 +85,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfFirtFirstPlayerWithStraigthFlush() {
+	public final void testSelectWinnersIfFirtFirstPlayerWithStraigthFlush() throws ExceptionsInGame {
 
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithStraightFlushStartingWith2Club(1));
@@ -102,7 +102,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveFourOfAKind() {
+	public final void testSelectWinnersIfTwoPlayersHaveFourOfAKind() throws ExceptionsInGame {
 		// dwoch graczy ma 'czworke' - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing(1));
@@ -115,7 +115,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveFullHouse() {
+	public final void testSelectWinnersIfTwoPlayersHaveFullHouse() throws ExceptionsInGame {
 		// dwoch graczy ma '3 i 2' - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithFullHouseWith9i10(1));
@@ -128,7 +128,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveTwoCardsTwoPlayersHaveFlush() {
+	public final void testSelectWinnersIfTwoPlayersHaveTwoCardsTwoPlayersHaveFlush() throws ExceptionsInGame {
 		// dwoch graczy ma kolor - jeden wygrywa - z wyzsza karta
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithTwoPairWith65i2(1));
@@ -141,7 +141,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThreePlayersHaveFlushAndFourIdenticalCards() {
+	public final void testSelectWinnersIfThreePlayersHaveFlushAndFourIdenticalCards() throws ExceptionsInGame {
 		// trzech graczy ma kolor - jeden wygrywa - ale nalezy sprawdzic cztery
 		// karty
 		List<Player> players = new ArrayList<>();
@@ -155,7 +155,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveFlushAndFiveIdenticalCardsEndDraw() {
+	public final void testSelectWinnersIfTwoPlayersHaveFlushAndFiveIdenticalCardsEndDraw() throws ExceptionsInGame {
 		// dwoch graczy ma kolor i piec kart o tych samych figurach - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithFlushWithHeart(1));
@@ -169,7 +169,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThirdPlayerWithStraight() {
+	public final void testSelectWinnersIfThirdPlayerWithStraight() throws ExceptionsInGame {
 
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithTwoPairWith65i2(1));
@@ -182,7 +182,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThreePlayersHaveStraight() {
+	public final void testSelectWinnersIfThreePlayersHaveStraight() throws ExceptionsInGame {
 		// trzech graczy ma Strit - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithTwoPairWith65i2(1));
@@ -195,7 +195,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveStraightEndDraw() {
+	public final void testSelectWinnersIfTwoPlayersHaveStraightEndDraw() throws ExceptionsInGame {
 		// dwoch graczy ma Strit i karty o jednakowych figurach - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithTwoPairWith65i2(1));
@@ -209,7 +209,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThreePlayersHaveThreeOfAKind() {
+	public final void testSelectWinnersIfThreePlayersHaveThreeOfAKind() throws ExceptionsInGame {
 		// trzech graczy ma 'trojke' - jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithThreeOfAKindWith6(1));
@@ -222,7 +222,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThreePlayersHaveTwoPair() {
+	public final void testSelectWinnersIfThreePlayersHaveTwoPair() throws ExceptionsInGame {
 		// trzech graczy maja uklad dwoch par - wygrywa ten o najsilniejszym
 		// ukldzie
 		List<Player> players = new ArrayList<>();
@@ -236,7 +236,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalFirstPair() {
+	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalFirstPair() throws ExceptionsInGame {
 		// dwoch graczy maja 'dwojke' i jednakowa mocniejesza pare- wygrywa ten
 		// o najsilniejszej drugiej parze
 		List<Player> players = new ArrayList<>();
@@ -250,7 +250,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveTwoPairIdenticalTwoPairs() {
+	public final void testSelectWinnersIfTwoPlayersHaveTwoPairIdenticalTwoPairs() throws ExceptionsInGame {
 		// dwoch graczy maja 'dwojke' i dwie jednakowe pary- wygrywa ten
 		// o najsilniejszej piatej karcie
 		List<Player> players = new ArrayList<>();
@@ -264,7 +264,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalCardsEndDraw() {
+	public final void testSelectWinnersIfTwoPlayersHaveTwoPairAndIdenticalCardsEndDraw() throws ExceptionsInGame {
 		// dwoch graczy maja 'dwojke' i karty jednakowych figurach - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing2(1));
@@ -278,7 +278,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfThirdPlayerWithOnePair() {
+	public final void testSelectWinnersIfThirdPlayerWithOnePair() throws ExceptionsInGame {
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing3(1));
 		players.add(playerWithNothing(2));
@@ -290,7 +290,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayersHaveOnePair() {
+	public final void testSelectWinnersIfTwoPlayersHaveOnePair() throws ExceptionsInGame {
 		// dwoch graczy ma 'One Pair' - wygrywa gracz z najsilniejsza para
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing3(1));
@@ -303,7 +303,7 @@ public class JudgeTest {
 	}
 
 	// @Test
-	public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() {
+	public final void testSelectWinnersIfTwoPlayersHaveOneIdenticalPair() throws ExceptionsInGame {
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing3(1));
 		players.add(playerWithNothing2(2));
@@ -316,7 +316,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfPlayerHaveOnlyHighCard() {
+	public final void testSelectWinnersIfPlayerHaveOnlyHighCard() throws ExceptionsInGame {
 		// wygrywa jeden gracz
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing3(1));
@@ -329,7 +329,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndCardsAreIdenticalEndDraw() {
+	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndCardsAreIdenticalEndDraw() throws ExceptionsInGame {
 		// dwoch graczy ma identyczne karty bez ukladu - remis
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing(1));
@@ -341,7 +341,7 @@ public class JudgeTest {
 	}
 
 	@Test
-	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndSomeAreIdentical() {
+	public final void testSelectWinnersIfTwoPlayerHaveOnlyHighCardAndSomeAreIdentical() throws ExceptionsInGame {
 		// dwoch graczy maja podobne karty- jeden wygrywa
 		List<Player> players = new ArrayList<>();
 		players.add(playerWithNothing5(1));
@@ -370,7 +370,7 @@ public class JudgeTest {
 	// assertEquals(Judge.sortListOfPlayers(players), expectedOrder);
 	// }
 
-	private Player playerWithNothing(int playerId) {
+	private Player playerWithNothing(int playerId) throws ExceptionsInGame {
 		List<Card> nothing2 = new ArrayList<>();
 		nothing2.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		nothing2.add(new Card(CourtEnum.FIVE, SuitEnum.CLUB));
@@ -380,7 +380,7 @@ public class JudgeTest {
 		return new Human(nothing2, currentTable, playerId);
 	}
 
-	private Player playerWithNothing2(int playerId) {
+	private Player playerWithNothing2(int playerId) throws ExceptionsInGame {
 		List<Card> nothing1 = new ArrayList<>();
 		nothing1.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		nothing1.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -390,7 +390,7 @@ public class JudgeTest {
 		return new Human(nothing1, currentTable, playerId);
 	}
 
-	private Player playerWithNothing3(int playerId) {
+	private Player playerWithNothing3(int playerId) throws ExceptionsInGame {
 		List<Card> nothing1 = new ArrayList<>();
 		nothing1.add(new Card(CourtEnum.THREE, SuitEnum.DIAMOND));
 		nothing1.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
@@ -400,7 +400,7 @@ public class JudgeTest {
 		return new Human(nothing1, currentTable, playerId);
 	}
 
-	private Player playerWithNothing4(int playerId) {
+	private Player playerWithNothing4(int playerId) throws ExceptionsInGame {
 		List<Card> nothing1 = new ArrayList<>();
 		nothing1.add(new Card(CourtEnum.THREE, SuitEnum.SPADE));
 		nothing1.add(new Card(CourtEnum.FOUR, SuitEnum.CLUB));
@@ -410,7 +410,7 @@ public class JudgeTest {
 		return new Human(nothing1, currentTable, playerId);
 	}
 
-	private Player playerWithNothing5(int playerId) {
+	private Player playerWithNothing5(int playerId) throws ExceptionsInGame {
 		List<Card> nothing1 = new ArrayList<>();
 		nothing1.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		nothing1.add(new Card(CourtEnum.FOUR, SuitEnum.SPADE));
@@ -420,7 +420,7 @@ public class JudgeTest {
 		return new Human(nothing1, currentTable, playerId);
 	}
 
-	private Player playerWithOnePairWith5(int playerId) {
+	private Player playerWithOnePairWith5(int playerId) throws ExceptionsInGame {
 		List<Card> onePair = new ArrayList<>();
 		onePair.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		onePair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -430,7 +430,7 @@ public class JudgeTest {
 		return new Human(onePair, currentTable, playerId);
 	}
 
-	private Player playerWithOnePair3WithQueen(int playerId) {
+	private Player playerWithOnePair3WithQueen(int playerId) throws ExceptionsInGame {
 		List<Card> onePair = new ArrayList<>();
 		onePair.add(new Card(CourtEnum.FOUR, SuitEnum.DIAMOND));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
@@ -440,7 +440,7 @@ public class JudgeTest {
 		return new Human(onePair, currentTable, playerId);
 	}
 
-	private Player playerWithOnePair2WithQueen(int playerId) {
+	private Player playerWithOnePair2WithQueen(int playerId) throws ExceptionsInGame {
 		List<Card> onePair = new ArrayList<>();
 		onePair.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.SPADE));
@@ -450,7 +450,7 @@ public class JudgeTest {
 		return new Human(onePair, currentTable, playerId);
 	}
 
-	private Player playerWithOnePairWithQueen(int playerId) {
+	private Player playerWithOnePairWithQueen(int playerId) throws ExceptionsInGame {
 		List<Card> onePair = new ArrayList<>();
 		onePair.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
 		onePair.add(new Card(CourtEnum.QUEEN, SuitEnum.HEART));
@@ -460,7 +460,7 @@ public class JudgeTest {
 		return new Human(onePair, currentTable, playerId);
 	}
 
-	private Player playerWithTwoPairWith65i2(int playerId) {
+	private Player playerWithTwoPairWith65i2(int playerId) throws ExceptionsInGame {
 		List<Card> twoPair = new ArrayList<>();
 		twoPair.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		twoPair.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -470,7 +470,7 @@ public class JudgeTest {
 		return new Human(twoPair, currentTable, playerId);
 	}
 
-	private Player playerWithTwoPairWith26i5(int playerId) {
+	private Player playerWithTwoPairWith26i5(int playerId) throws ExceptionsInGame {
 		List<Card> twoPair2 = new ArrayList<>();
 		twoPair2.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
 		twoPair2.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
@@ -480,7 +480,7 @@ public class JudgeTest {
 		return new Human(twoPair2, currentTable, playerId);
 	}
 
-	private Player playerWithTwoPairWithA7iK(int playerId) {
+	private Player playerWithTwoPairWithA7iK(int playerId) throws ExceptionsInGame {
 		List<Card> twoPair = new ArrayList<>();
 		twoPair.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
 		twoPair.add(new Card(CourtEnum.ACE, SuitEnum.HEART));
@@ -490,7 +490,7 @@ public class JudgeTest {
 		return new Human(twoPair, currentTable, playerId);
 	}
 
-	private Player playerWithTwoPair2WithA7iQ(int playerId) {
+	private Player playerWithTwoPair2WithA7iQ(int playerId) throws ExceptionsInGame {
 		List<Card> twoPair = new ArrayList<>();
 		twoPair.add(new Card(CourtEnum.ACE, SuitEnum.SPADE));
 		twoPair.add(new Card(CourtEnum.ACE, SuitEnum.CLUB));
@@ -500,7 +500,7 @@ public class JudgeTest {
 		return new Human(twoPair, currentTable, playerId);
 	}
 
-	private Player playerWithTwoPairWithA7iQ(int playerId) {
+	private Player playerWithTwoPairWithA7iQ(int playerId) throws ExceptionsInGame {
 		List<Card> twoPair = new ArrayList<>();
 		twoPair.add(new Card(CourtEnum.ACE, SuitEnum.HEART));
 		twoPair.add(new Card(CourtEnum.ACE, SuitEnum.DIAMOND));
@@ -510,7 +510,7 @@ public class JudgeTest {
 		return new Human(twoPair, currentTable, playerId);
 	}
 
-	private Player playerWithThreeOfAKindWith5(int playerId) {
+	private Player playerWithThreeOfAKindWith5(int playerId) throws ExceptionsInGame {
 		List<Card> threeOfAKind = new ArrayList<>();
 		threeOfAKind.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		threeOfAKind.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -520,7 +520,7 @@ public class JudgeTest {
 		return new Human(threeOfAKind, currentTable, playerId);
 	}
 
-	private Player playerWithThreeOfAKindWith6(int playerId) {
+	private Player playerWithThreeOfAKindWith6(int playerId) throws ExceptionsInGame {
 		List<Card> threeOfAKind2 = new ArrayList<>();
 		threeOfAKind2.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		threeOfAKind2.add(new Card(CourtEnum.EIGHT, SuitEnum.HEART));
@@ -530,7 +530,7 @@ public class JudgeTest {
 		return new Human(threeOfAKind2, currentTable, playerId);
 	}
 
-	private Player playerWithThreeOfAKindWith7(int playerId) {
+	private Player playerWithThreeOfAKindWith7(int playerId) throws ExceptionsInGame {
 		List<Card> threeOfAKind3 = new ArrayList<>();
 		threeOfAKind3.add(new Card(CourtEnum.SEVEN, SuitEnum.DIAMOND));
 		threeOfAKind3.add(new Card(CourtEnum.SEVEN, SuitEnum.HEART));
@@ -540,7 +540,7 @@ public class JudgeTest {
 		return new Human(threeOfAKind3, currentTable, playerId);
 	}
 
-	private Player playerWithStraightStartWith2(int playerId) {
+	private Player playerWithStraightStartWith2(int playerId) throws ExceptionsInGame {
 		List<Card> straight = new ArrayList<>();
 		straight.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
@@ -550,7 +550,7 @@ public class JudgeTest {
 		return new Human(straight, currentTable, playerId);
 	}
 
-	private Player playerWithStraightStartWith3(int playerId) {
+	private Player playerWithStraightStartWith3(int playerId) throws ExceptionsInGame {
 		List<Card> straight = new ArrayList<>();
 		straight.add(new Card(CourtEnum.THREE, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
@@ -560,7 +560,7 @@ public class JudgeTest {
 		return new Human(straight, currentTable, playerId);
 	}
 
-	private Player playerWithStraightStartWith4(int playerId) {
+	private Player playerWithStraightStartWith4(int playerId) throws ExceptionsInGame {
 		List<Card> straight = new ArrayList<>();
 		straight.add(new Card(CourtEnum.FOUR, SuitEnum.DIAMOND));
 		straight.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -570,7 +570,7 @@ public class JudgeTest {
 		return new Human(straight, currentTable, playerId);
 	}
 
-	private Player playerWithStraight2StartWith4(int playerId) {
+	private Player playerWithStraight2StartWith4(int playerId) throws ExceptionsInGame {
 		List<Card> straight = new ArrayList<>();
 		straight.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		straight.add(new Card(CourtEnum.FIVE, SuitEnum.DIAMOND));
@@ -580,7 +580,7 @@ public class JudgeTest {
 		return new Human(straight, currentTable, playerId);
 	}
 
-	private Player playerWithFlushWithClub(int playerId) {
+	private Player playerWithFlushWithClub(int playerId) throws ExceptionsInGame {
 		List<Card> flush = new ArrayList<>();
 		flush.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		flush.add(new Card(CourtEnum.TEN, SuitEnum.CLUB));
@@ -590,7 +590,7 @@ public class JudgeTest {
 		return new Human(flush, currentTable, 2);
 	}
 
-	private Player playerWithFlushWithSpade(int playerId) {
+	private Player playerWithFlushWithSpade(int playerId) throws ExceptionsInGame {
 		List<Card> flush2 = new ArrayList<>();
 		flush2.add(new Card(CourtEnum.ACE, SuitEnum.SPADE));
 		flush2.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
@@ -600,7 +600,7 @@ public class JudgeTest {
 		return new Human(flush2, currentTable, playerId);
 	}
 
-	private Player playerWithFlushWithDiamond(int playerId) {
+	private Player playerWithFlushWithDiamond(int playerId) throws ExceptionsInGame {
 		List<Card> flush3 = new ArrayList<>();
 		flush3.add(new Card(CourtEnum.TEN, SuitEnum.DIAMOND));
 		flush3.add(new Card(CourtEnum.NINE, SuitEnum.DIAMOND));
@@ -610,7 +610,7 @@ public class JudgeTest {
 		return new Human(flush3, currentTable, playerId);
 	}
 
-	private Player playerWithFlushWithHeart(int playerId) {
+	private Player playerWithFlushWithHeart(int playerId) throws ExceptionsInGame {
 		List<Card> flush4 = new ArrayList<>();
 		flush4.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		flush4.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -620,7 +620,7 @@ public class JudgeTest {
 		return new Human(flush4, currentTable, playerId);
 	}
 
-	private Player playerWithFullHouseWith6i2(int playerId) {
+	private Player playerWithFullHouseWith6i2(int playerId) throws ExceptionsInGame {
 		List<Card> fullHouseHand = new ArrayList<>();
 		fullHouseHand.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		fullHouseHand.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -630,7 +630,7 @@ public class JudgeTest {
 		return new Human(fullHouseHand, currentTable, playerId);
 	}
 
-	private Player playerWithFullHouseWith9i10(int playerId) {
+	private Player playerWithFullHouseWith9i10(int playerId) throws ExceptionsInGame {
 		List<Card> fullHouseHand = new ArrayList<>();
 		fullHouseHand.add(new Card(CourtEnum.NINE, SuitEnum.CLUB));
 		fullHouseHand.add(new Card(CourtEnum.NINE, SuitEnum.SPADE));
@@ -640,7 +640,7 @@ public class JudgeTest {
 		return new Human(fullHouseHand, currentTable, playerId);
 	}
 
-	private Player playerWithFourOfAKindWith6(int playerId) {
+	private Player playerWithFourOfAKindWith6(int playerId) throws ExceptionsInGame {
 		List<Card> fourOfAKind = new ArrayList<>();
 		fourOfAKind.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		fourOfAKind.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
@@ -650,7 +650,7 @@ public class JudgeTest {
 		return new Human(fourOfAKind, currentTable, playerId);
 	}
 
-	private Player playerWithFourOfAKindWith8(int playerId) {
+	private Player playerWithFourOfAKindWith8(int playerId) throws ExceptionsInGame {
 		List<Card> fourOfAKind = new ArrayList<>();
 		fourOfAKind.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
 		fourOfAKind.add(new Card(CourtEnum.EIGHT, SuitEnum.SPADE));
@@ -660,7 +660,7 @@ public class JudgeTest {
 		return new Human(fourOfAKind, currentTable, playerId);
 	}
 
-	private Player playerWithStraightFlushStartingWith2Club(int playerId) {
+	private Player playerWithStraightFlushStartingWith2Club(int playerId) throws ExceptionsInGame {
 		List<Card> straightFlush = new ArrayList<>();
 		straightFlush.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		straightFlush.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
@@ -670,7 +670,7 @@ public class JudgeTest {
 		return new Human(straightFlush, currentTable, playerId);
 	}
 
-	private Player playerWithStraightFlushStartingWith10(int playerId) {
+	private Player playerWithStraightFlushStartingWith10(int playerId) throws ExceptionsInGame {
 		List<Card> straightFlush = new ArrayList<>();
 		straightFlush.add(new Card(CourtEnum.TEN, SuitEnum.HEART));
 		straightFlush.add(new Card(CourtEnum.JACK, SuitEnum.HEART));
@@ -680,7 +680,7 @@ public class JudgeTest {
 		return new Human(straightFlush, currentTable, 2);
 	}
 
-	private Player playerWithStarightFlushStartingWith2Spade(int playerId) {
+	private Player playerWithStarightFlushStartingWith2Spade(int playerId) throws ExceptionsInGame {
 		List<Card> straightFlush3 = new ArrayList<>();
 		straightFlush3.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
 		straightFlush3.add(new Card(CourtEnum.THREE, SuitEnum.SPADE));
@@ -690,7 +690,7 @@ public class JudgeTest {
 		return new Human(straightFlush3, currentTable, playerId);
 	}
 
-	public Player playerWithStraightFlushStartingWith2Heart(int playerId) {
+	public Player playerWithStraightFlushStartingWith2Heart(int playerId) throws ExceptionsInGame {
 		List<Card> straightFlush4 = new ArrayList<>();
 		straightFlush4.add(new Card(CourtEnum.TWO, SuitEnum.HEART));
 		straightFlush4.add(new Card(CourtEnum.THREE, SuitEnum.HEART));
@@ -700,7 +700,7 @@ public class JudgeTest {
 		return new Human(straightFlush4, currentTable, playerId);
 	}
 
-	public Player playerWithStraightFlushStartingWith2Diamond(int playerId) {
+	public Player playerWithStraightFlushStartingWith2Diamond(int playerId) throws ExceptionsInGame {
 		List<Card> straightFlush5 = new ArrayList<>();
 		straightFlush5.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		straightFlush5.add(new Card(CourtEnum.THREE, SuitEnum.DIAMOND));

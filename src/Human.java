@@ -2,7 +2,7 @@ import java.util.List;
 
 public class Human extends Player {
 
-	public Human(List<Card> someCards, Table currentTable, int playerID) {
+	public Human(List<Card> someCards, Table currentTable, int playerID) throws ExceptionsInGame {
 		super(someCards, currentTable, playerID);
 	}
 

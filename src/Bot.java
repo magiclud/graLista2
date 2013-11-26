@@ -8,7 +8,7 @@ public class Bot extends Player {
 	private MakeOrder order;
 	private Sorter s;
 
-	public Bot(List<Card> givenCards, Table currentTable, int playerID) {
+	public Bot(List<Card> givenCards, Table currentTable, int playerID) throws ExceptionsInGame {
 		super(givenCards, currentTable, playerID);
 		s = new Sorter();
 		s.sort(ownCards);
@@ -165,7 +165,6 @@ public class Bot extends Player {
 	int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves, List<StatusEnum> playersMoves) {
 		// wstępne obliczenia
 
-
 		return 0;
 	}
 
@@ -205,17 +204,16 @@ public class Bot extends Player {
 	public StatusEnum makeMove() {
 		Random botsMove = new Random();
 
-		if (currentTable.getStatusPlayersInGame().equals(StatusEnum.BET) || currentTable.getStatusPlayersInGame().equals(StatusEnum.RAISE)
-				|| currentTable.getStatusPlayersInGame().equals(StatusEnum.CALL)) {
+		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.BET)
+				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.RAISE)
+				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.CALL)) {
 			// moze wylosowac call(3), raise(5), all-i(4)
 			return StatusEnum.values()[botsMove.nextInt(3) + 3];
 		}
 		if (currentTable.getStatusPlayersInGame().size() < 1) {
 			return StatusEnum.values()[botsMove.nextInt(2) + 1];
 		}
-		// TODO znowu ten equals !!!!!!!!!!! sprawdz wszystkie wywolania tej metody bo mi sie tego nie chce
-		// sprawdzac!!!!!!
-		if (currentTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)) {
+		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
 			return StatusEnum.values()[botsMove.nextInt(2) + 2];
 		}
 		return StatusEnum.values()[botsMove.nextInt(5) + 2];

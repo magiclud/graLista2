@@ -153,7 +153,7 @@ public class PlayerTest {
 	// }
 
 	@Test(expected = IllegalStateException.class)
-	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() {
+	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaWiecejNiz5Elementow() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
@@ -165,7 +165,7 @@ public class PlayerTest {
 	}
 
 	@Test(expected = IllegalStateException.class)
-	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaMniejNiz5Elementow() {
+	public void testPoprawnosciWyjatkuGdyPrzekazanaListaMaMniejNiz5Elementow() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));
@@ -174,7 +174,7 @@ public class PlayerTest {
 	}
 
 	@Test
-	public void testPoprawnosciKonstruktoraGdyPrzekazanaListaMa5Elementow() {
+	public void testPoprawnosciKonstruktoraGdyPrzekazanaListaMa5Elementow() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.FOUR, SuitEnum.HEART));
 		someCards.add(new Card(CourtEnum.KING, SuitEnum.SPADE));

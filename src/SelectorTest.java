@@ -13,7 +13,7 @@ public class SelectorTest {
 	Player firstPlayer;
 
 	@Test
-	public void testPoprawnosciWybraniaNajwyzszejKartyZFlushaOrStraight() {
+	public void testPoprawnosciWybraniaNajwyzszejKartyZFlushaOrStraight() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.THREE, SuitEnum.CLUB));
@@ -27,7 +27,7 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void testPoprawnosciWybranaiNajwyzszejKartyZCzworki() {
+	public void testPoprawnosciWybranaiNajwyzszejKartyZCzworki() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.SIX, SuitEnum.SPADE));
@@ -41,7 +41,7 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void testPoprawnosciWybraniaNajwyzszejKartyZCzworkiFromBeggining() {
+	public void testPoprawnosciWybraniaNajwyzszejKartyZCzworkiFromBeggining() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.CLUB));
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.SPADE));
@@ -55,7 +55,7 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void testPickHighestFromThree() {
+	public void testPickHighestFromThree() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -69,7 +69,7 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void testPickHighestFromTwo() {
+	public void testPickHighestFromTwo() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -83,7 +83,7 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void testPickSecondHighestFromTwo() {
+	public void testPickSecondHighestFromTwo() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));
@@ -97,7 +97,7 @@ public class SelectorTest {
 	}
 
 	@Test
-	public void testPickHighestFromOne() {
+	public void testPickHighestFromOne() throws ExceptionsInGame {
 		someCards = new ArrayList<>();
 		someCards.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		someCards.add(new Card(CourtEnum.FIVE, SuitEnum.HEART));

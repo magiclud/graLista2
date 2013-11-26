@@ -11,7 +11,7 @@ public abstract class Player {
 	// private Boolean alreadyChangedCards = false;
 
 	private int playerID;
-	int chipsForBidding;
+	int obecniePostawioneZetony;
 
 	private String newPlayerID;
 	// public int newToBet;
@@ -19,9 +19,9 @@ public abstract class Player {
 
 	private StatusEnum playerStatus;
 
-	public Player(List<Card> givenCards, Table currentTable, int playerID) {
+	public Player(List<Card> givenCards, Table currentTable, int playerID) throws ExceptionsInGame {
 		if (givenCards.size() != 5) {
-			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
+			throw new ExceptionsInGame("Niepoprawna ilosc kart dla gracza");
 		}
 		this.playerID = playerID;
 		this.ownCards = givenCards;
@@ -66,8 +66,9 @@ public abstract class Player {
 
 	public void joinGame() {
 		// wykorzystanie metody toString2
-		System.out.println("Dolaczam do gry - " + this);
 		currentTable.addPlayerToGame(this);
+		System.out.println("Dolaczam do gry playera o id:- " + getPlayerID());
+
 	}
 
 	public SequenceEnum checkScore() {
@@ -99,8 +100,8 @@ public abstract class Player {
 	}
 
 	abstract void gameStrategy();
-	abstract int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves, List<StatusEnum> playersMoves);
 
+	abstract int zacznijLicytacje(int currentMax, List<ActionsEnum> possibleMoves, List<StatusEnum> playersMoves);
 
 	public List<Card> getOwnCards() {
 		return ownCards;
@@ -110,9 +111,10 @@ public abstract class Player {
 		return score;
 	}
 
-	public void increaseScore(int score) {
-		this.score = score;
+	public void increaseScore() {
+		this.score = score++;
 	}
+
 	public abstract boolean isHuman();
 
 	@Override
@@ -120,15 +122,13 @@ public abstract class Player {
 		return "Player id: " + playerID + ", karty: " + ownCards + ", wynik: " + checkScore();
 	}
 
-	public void check() {
+	public void check() throws ExceptionsInGame {
 		// w ifie sprawdzam czy ktos z graczy dal all-in, raise lub bet - gdyz
 		// wowczs nie moge CHECK
 		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)
 				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.RAISE)
 				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.BET)) {
-			// TODO rzuc inny wyjatek, taki wlasnej roboty z odpowiednia nazwa, bo ten wyjatek musi byc main obsluzony,
-			// zeby odopwiedni komunikat zaprezentowac userowi
-			throw new IllegalStateException("Wczesniejszy gracz postawil stawke.\n Niemozlwy jest ruch CHECK.");
+			throw new ExceptionsInGame("Wczesniejszy gracz postawil stawke.\n Niemozlwy jest ruch CHECK.");
 		}
 		System.out.println("Player: Czekam");
 		playerStatus = StatusEnum.CHECK;
@@ -143,11 +143,9 @@ public abstract class Player {
 		playerStatus = StatusEnum.BET;
 	}
 
-	public void raise(int chipsForBidding) {// throws Exception {//TODO
+	public void raise(int chipsForBidding) throws ExceptionsInGame {
 		if (chipsForBidding <= currentTable.getCurrentMax()) {
-			// TODO rzuc inny wyjatek, taki wlasnej roboty z odpowiednia nazwa, bo ten wyjatek musi byc main obsluzony,
-			// zeby odopwiedni komunikat zaprezentowac userowi
-			throw new IllegalStateException("Za mało obstawiasz !");
+			throw new ExceptionsInGame("Za mało obstawiasz !");
 		}
 		payChipsToPool(chipsForBidding);
 		currentTable.setCurrentMax(chipsForBidding);
@@ -159,7 +157,8 @@ public abstract class Player {
 		// sprawdzam czy obecny najwyzsze zagranie jest mniejsze niz ilosc
 		// zetonow jaka chce teraz zagrac gracz - jest tak wowczas ustawiam nowe
 		// najwyzsze zagranie
-		// TODO a jesli ten if nie jest speniony to co? gracz nadal obstawia all-in - do poprawy - wychodzi fakt, że nie
+		// TODO a jesli ten if nie jest speniony to co? gracz nadal obstawia
+		// all-in - do poprawy - wychodzi fakt, że nie
 		// piszesz testow
 		if (currentTable.getCurrentMax() < ownChips) {
 			currentTable.setCurrentMax(ownChips);
@@ -170,11 +169,11 @@ public abstract class Player {
 
 	}
 
-	public void call() {
+	public void call() throws ExceptionsInGame {
 		// sprawdzam czy zetony ktore posiada gracz ownChips sa
 		// wystarczajace
 		if (ownChips < currentTable.getCurrentMax()) {
-			throw new IllegalStateException("Za mało masz coins !");
+			throw new ExceptionsInGame("Za mało masz coins !");
 		}
 
 		payChipsToPool(currentTable.getCurrentMax());
