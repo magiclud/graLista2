@@ -123,57 +123,6 @@ public abstract class Player {
 	public String toString() {
 		return "Player id: " + playerID + ", karty: " + ownCards + ", wynik: " + checkScore();
 	}
-	
-	int bet(int ileObstawiam, int currentMax) {
-		if (ileObstawiam <= currentMax)
-			throw new IllegalStateException("Za mało obstawiasz !");
-		if (ileObstawiam > ownChips)
-			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
-		playerStatus = StatusEnum.BET;
-		chipsForBidding = ileObstawiam;
-		return chipsForBidding;
-	}
-
-	int raise(int ileObstawiam, int currentMax) {
-		if (ileObstawiam <= currentMax)
-			throw new IllegalStateException("Za mało obstawiasz !");
-		if (ileObstawiam > ownChips)
-			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
-		playerStatus = StatusEnum.RAISE;
-		chipsForBidding = ileObstawiam;
-		return chipsForBidding;
-	}
-
-	int call(int currentMax) {
-		int ileObstawiam = currentMax;
-		if (ileObstawiam > ownChips)
-			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
-		playerStatus = StatusEnum.CALL;
-		chipsForBidding = ileObstawiam;
-		return chipsForBidding;
-	}
-
-	int allIn() {
-		if (playerStatus == StatusEnum.FOLD)
-			throw new IllegalStateException("Przecież wcześniej odszedłeś z gry !");
-		playerStatus = StatusEnum.ALL_IN;
-		chipsForBidding = ownChips;
-		return chipsForBidding;
-	}
-
-	int check(int currentMax) {
-		int ileObstawiam = currentMax;
-		if (ileObstawiam > ownChips)
-			throw new IllegalStateException("Nie masz wystarczająco dużo żetonów !");
-		playerStatus = StatusEnum.CHECK;
-		chipsForBidding = ileObstawiam;
-		return chipsForBidding;
-	}
-
-	int fold(int currentMax) {
-		playerStatus = StatusEnum.FOLD;
-		return currentMax;
-	}
 
 	public void check() {
 		// w ifie sprawdzam czy ktos z graczy dal all-in, raise lub bet - gdyz
