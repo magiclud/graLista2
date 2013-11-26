@@ -434,6 +434,8 @@ public class Bot extends Player {
 		if (currentTable.getStatusPlayersInGame().size() < 1) {
 			return StatusEnum.values()[botsMove.nextInt(2) + 1];
 		}
+		// TODO znowu ten equals !!!!!!!!!!! sprawdz wszystkie wywolania tej metody bo mi sie tego nie chce
+		// sprawdzac!!!!!!
 		if (currentTable.getStatusPlayersInGame().equals(StatusEnum.ALL_IN)) {
 			return StatusEnum.values()[botsMove.nextInt(2) + 2];
 		}
