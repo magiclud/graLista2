@@ -1,7 +1,8 @@
 import java.util.ArrayList;
-import java.util.Arrays;
 import java.util.List;
 import java.util.Random;
+
+import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class Table {
 
@@ -117,6 +118,8 @@ public class Table {
 
 	public void ustawGraczaRozpoczynajacego() {
 		if (getPlayersInGame().size() == 4) {
+			// jesli plajerow grajacych jest cztery to zamieniam ich miejscami
+			// przesuwajac kazdego o 1 pozycje w lewo
 			Player temp = getPlayersInGame().get(3);
 			getPlayersInGame().set(3, getPlayersInGame().get(0));
 			getPlayersInGame().set(0, getPlayersInGame().get(1));
@@ -136,8 +139,11 @@ public class Table {
 
 	public void sprawdzCzyGraczeMajaWystarczajacaIloscZetonow() {
 		Iterator<Player> iterator = playersInGame.iterator();
+
 		while (iterator.hasNext()) {
+
 			Player player = iterator.next();
+
 			if (player.getOwnChips() < startWpisowe) {
 				// usuwam gracza z listy grajacych gdy ma mniej zetonow niz
 				// wynosi wpisowe

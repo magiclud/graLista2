@@ -139,7 +139,8 @@ public class GameTest {
 		case CHECK:
 			player.check();
 			break;
-		case BET:// TODO jaka wysokosc tego bet
+		case BET:// TODO jaka wysokosc tego bet ? moze taka jak wpisowe w koncu
+					// to tylko pierwsze zagranie
 			if (!player.isHuman()) {
 				Bot bot = (Bot) player;
 				System.out.println("System: Okresl wysokosc stawki");
