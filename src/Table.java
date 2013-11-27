@@ -8,7 +8,6 @@ public class Table {
 	private List<Player> players = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
 	private List<Integer> winners = new ArrayList<>();
-	private List<Integer> stawkaGraczyWRundzie = new ArrayList<>();
 
 	private int startWpisowe, startZetony;
 	private int pool = 0; // pula gry
@@ -294,30 +293,26 @@ public class Table {
 		return false;
 	}
 
+	/**
+	 * ignorujemy grazcy ktorzy maja allIn, bo oni moga miec miejsza kwota niz wszyscy, ale jesli inni maja
+	 * taka sama to licytacja jest skonczona
+	 * 
+	 * @return
+	 */
 	private boolean sprawdzCzyGraczeMajaJednakoweStawkiWRundzie() {
-		int jakasStawka = stawkaGraczyWRundzie.get(0);
-		int jednakoweStawki = 0;
+
+		int stawkaJakiegosGracza = playersInGame.get(0).getObecniePostawioneZetony();
+
 		for (Player player : playersInGame) {
-			if (stawkaGraczyWRundzie.contains(jakasStawka)) {
-				// zliczam ile jest jednakowych stawek w licytacji
-				// jesli jest ich tyle samo co liczba graczy to licytacja
-				// zakonczona
-				jednakoweStawki++;
+			if (player.getPlayerStatus() != StatusEnum.ALL_IN) {
+
+				if (stawkaJakiegosGracza != player.getObecniePostawioneZetony()) {
+					return false;
+				}
 			}
 		}
-		if (jednakoweStawki == playersInGame.size()) {
-			return true;
-		}
-		return false;
+		return true;
 
-	}
-
-	// TODO przypadek gdy gracz zagral all-in in ale inni wczesniej zagrali juz
-	// wiecej
-	private void ustawInformacjeOStawkachGraczyWRundzie() {
-		for (Player player : playersInGame) {
-			stawkaGraczyWRundzie.add(player.getObecniePostawioneZetony());
-		}
 	}
 
 	public void addToPool(int chipsForBidding) {
