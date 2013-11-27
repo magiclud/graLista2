@@ -297,7 +297,7 @@ public class Table {
 	private boolean sprawdzCzyGraczeMajaJednakoweStawkiWRundzie() {
 		int jakasStawka = stawkaGraczyWRundzie.get(0);
 		int jednakoweStawki = 0;
-		for (Player player : getPlayersInGame()) {
+		for (Player player : playersInGame) {
 			if (stawkaGraczyWRundzie.contains(jakasStawka)) {
 				// zliczam ile jest jednakowych stawek w licytacji
 				// jesli jest ich tyle samo co liczba graczy to licytacja
@@ -305,7 +305,7 @@ public class Table {
 				jednakoweStawki++;
 			}
 		}
-		if (jednakoweStawki == getPlayersInGame().size()) {
+		if (jednakoweStawki == playersInGame.size()) {
 			return true;
 		}
 		return false;
@@ -315,7 +315,7 @@ public class Table {
 	// TODO przypadek gdy gracz zagral all-in in ale inni wczesniej zagrali juz
 	// wiecej
 	private void ustawInformacjeOStawkachGraczyWRundzie() {
-		for (Player player : getPlayersInGame()) {
+		for (Player player : playersInGame) {
 			stawkaGraczyWRundzie.add(player.getObecniePostawioneZetony());
 		}
 	}
