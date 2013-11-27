@@ -12,6 +12,7 @@ public class Table {
 	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
 	private List<Integer> winners = new ArrayList<>();
+	private List<Integer> stawkaGraczyWRundzie = new ArrayList<>();
 
 	private int startWpisowe, startZetony;
 	private int pool = 0; // pula gry
@@ -312,13 +313,18 @@ public class Table {
 		this.startWpisowe = startWpisowe;
 	}
 
+
 	/**
 	 * sprawdza czy licytacja sie zakonczyla
 	 * 
 	 * @return
 	 */
 	public boolean isBiddingOver() {
+
 		int iloscAll_inWGrze = 0, iloscRaiseWGrze = 0;
+
+		ustawInformacjeOStawkachGraczyWRundzie();
+
 		if (playersInGame.size() == 0) {
 			System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
 			getStatusPlayersInGame().clear();
@@ -332,26 +338,40 @@ public class Table {
 			currentMax = 0;
 			return true;
 		}
-		// zliczam ile razy wystapilo All-in i ile razy raise w statusach graczy
-		// jesli raz to znaczy ze doszlo juz do konca licytacji
-		for (Player player : getPlayersInGame()) {
-			if (getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
-				iloscAll_inWGrze++;
-			}
-			if (getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
-				iloscRaiseWGrze++;
-			}
-		}
-		// gracze mogli zagrac jedynie call, check, fold, bo gdyby zagralii
-		// all-in lub raise to licytacja nadal trwa
-		if ((!getStatusPlayersInGame().contains(StatusEnum.ALL_IN) && !getStatusPlayersInGame().contains(StatusEnum.RAISE))
-				|| iloscAll_inWGrze == 1 || iloscRaiseWGrze == 1) {
+		if (sprawdzCzyGraczeMajaJednakoweStawkiWRundzie()) {
 			System.out.println("Gracze wyrownali swoje stawki");
 			getStatusPlayersInGame().clear();
 			currentMax = 0;
 			return true;
 		}
+
 		return false;
+	}
+
+	private boolean sprawdzCzyGraczeMajaJednakoweStawkiWRundzie() {
+		int jakasStawka = stawkaGraczyWRundzie.get(0);
+		int jednakoweStawki = 0;
+		for (Player player : getPlayersInGame()) {
+			if (stawkaGraczyWRundzie.contains(jakasStawka)) {
+				// zliczam ile jest jednakowych stawek w licytacji
+				// jesli jest ich tyle samo co liczba graczy to licytacja
+				// zakonczona
+				jednakoweStawki++;
+			}
+		}
+		if (jednakoweStawki == getPlayersInGame().size()) {
+			return true;
+		}
+		return false;
+
+	}
+
+	// TODO przypadek gdy gracz zagral all-in in ale inni wczesniej zagrali juz
+	// wiecej
+	private void ustawInformacjeOStawkachGraczyWRundzie() {
+		for (Player player : getPlayersInGame()) {
+			stawkaGraczyWRundzie.add(player.getObecniePostawioneZetony());
+		}
 	}
 
 	public void addToPool(int chipsForBidding) {

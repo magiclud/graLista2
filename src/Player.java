@@ -13,6 +13,10 @@ public abstract class Player {
 	private int playerID;
 	int obecniePostawioneZetony;
 
+	public int getObecniePostawioneZetony() {
+		return obecniePostawioneZetony;
+	}
+
 	private String newPlayerID;
 	// public int newToBet;
 	private boolean newAlreadyChangedCards = false;
@@ -157,9 +161,7 @@ public abstract class Player {
 		// sprawdzam czy obecny najwyzsze zagranie jest mniejsze niz ilosc
 		// zetonow jaka chce teraz zagrac gracz - jest tak wowczas ustawiam nowe
 		// najwyzsze zagranie
-		// TODO a jesli ten if nie jest speniony to co? gracz nadal obstawia
-		// all-in - do poprawy - wychodzi fakt, że nie
-		// piszesz testow
+		// TODO a jesli ten if nie jest speniony ?
 		if (currentTable.getCurrentMax() < ownChips) {
 			currentTable.setCurrentMax(ownChips);
 		}
@@ -182,6 +184,7 @@ public abstract class Player {
 	}
 
 	public void payChipsToPool(int chipsToPool) {
+		obecniePostawioneZetony = chipsToPool;
 		ownChips = ownChips - chipsToPool;
 		currentTable.addToPool(chipsToPool);
 	}
