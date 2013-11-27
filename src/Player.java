@@ -141,6 +141,7 @@ public abstract class Player {
 	public void bet(int chipsForBidding) {
 		// if (chipsForBidding < currentTable.getCurrentMax()) {
 		// usunela if bo bet ma byc tylko przy pierwszej licytacji
+		// TODO blad - druga licytacja jest pomijana tylko jesli w pierwszej bylo ALL-IN, popraw jesli sie myle
 		payChipsToPool(chipsForBidding);
 		currentTable.setCurrentMax(chipsForBidding);
 		System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");
