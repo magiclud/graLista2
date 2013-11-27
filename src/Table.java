@@ -135,11 +135,13 @@ public class Table {
 	}
 
 	public void sprawdzCzyGraczeMajaWystarczajacaIloscZetonow() {
-		for (Player player : getPlayersInGame()) {
-			if (player.getOwnChips() < getStartWpisowe()) {
+		Iterator<Player> iterator = playersInGame.iterator();
+		while (iterator.hasNext()) {
+			Player player = iterator.next();
+			if (player.getOwnChips() < startWpisowe) {
 				// usuwam gracza z listy grajacych gdy ma mniej zetonow niz
 				// wynosi wpisowe
-				getPlayersInGame().remove(player);
+				iterator.remove();
 			}
 		}
 	}
@@ -195,52 +197,6 @@ public class Table {
 
 	public List<Card> giveCards(int numbOfCards) {
 		return actualDeck.giveCards(numbOfCards);
-	}
-
-	public List<Card> newSafeChangeCards(List<Integer> abandonedIndexes, String PlayerID) {
-		int numberCardsToReturn = abandonedIndexes.size();
-		Player player = findPlayer(PlayerID);
-		if (player.isNewAlreadyChangedCards())
-			throw new IllegalStateException("Już wymieniałeś karty !");
-		else
-			player.setNewAlreadyChangedCards(true);
-		if (numberCardsToReturn > 4) {
-			throw new IllegalStateException("Niepoprawna ilosc kart dla gracza");
-		}
-		List<Card> tempPlayerCards = player.ownCards;
-		Sorter s = new Sorter();
-		s.sort(tempPlayerCards);
-
-		/** usuwam karty po indeksie **/
-		// SORTOWANIE AHAHAHAH :D
-		int[] sorted = new int[abandonedIndexes.size()];
-		for (int i = 0; i < abandonedIndexes.size(); ++i) {
-			sorted[i] = abandonedIndexes.get(i);
-		}
-		Arrays.sort(sorted);
-		for (int i = 0; i < abandonedIndexes.size(); ++i) {
-			abandonedIndexes.set(i, sorted[abandonedIndexes.size() - 1 - i]);
-		}
-		// KONIEC SORTOWANIA
-		for (int i = 0; i < numberCardsToReturn; ++i) {
-			System.out.println("System: Gracz wymienia : [" + abandonedIndexes.get(i) + "]");
-			tempPlayerCards.remove((int) abandonedIndexes.get(i));
-		}
-		/*
-		 * for(int i = 0; i < tempPlayerCards.size(); ++i) {
-		 * System.out.println("Po usunieciu: " +
-		 * tempPlayerCards.get(i).getCourt() + "" +
-		 * tempPlayerCards.get(i).getSuit() + " " + i); }
-		 */
-		// Pobiera nowe karty
-		List<Card> tempCards = giveCards(abandonedIndexes.size());
-		for (int i = 0; i < tempCards.size(); ++i) {
-			tempPlayerCards.add(tempCards.get(i));
-			System.out
-					.println("System: Oddaję graczowi: " + tempCards.get(i).getCourt() + "" + tempCards.get(i).getSuit() + " [" + i + "]");
-		}
-		player.ownCards = tempPlayerCards;
-		return tempPlayerCards;
 	}
 
 	public void setCoinsIfOnePlayerWin() {
