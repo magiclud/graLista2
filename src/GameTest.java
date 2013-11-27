@@ -110,6 +110,10 @@ public class GameTest {
 		while (!myTable.isBiddingOver()) {
 			// pierwssza licytacja
 			firstBidding(scanIn, myTable);
+			// TODO to tutaj powinna byc obsluga wyjattkow rzucanych przez bet, raise, jesli wystapil wyjatek, np ktos
+			// chce obstawic wiecej niz moze, to system powinien zapytac ponownie co user chce zrobic informujac go ze
+			// zrobil cos niedozwolonego
+
 		}
 	}
 
@@ -147,7 +151,9 @@ public class GameTest {
 				Bot bot = (Bot) player;
 				System.out.println("System: Okresl wysokosc stawki");
 				System.out.println("Player(BOT): BET ustawiam na " + bot.chipsToRaise());
+					// TODO CO ru robi raise?
 				player.raise(bot.chipsToRaise());
+					// TODO usun tego breaka i zrob elsa do ifa jak czlowiek - popraw w innych casach
 				break;
 			}
 			System.out.println("System: Okresl wysokosc stawki ");
