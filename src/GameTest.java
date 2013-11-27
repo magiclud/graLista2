@@ -28,8 +28,7 @@ public class GameTest {
 			System.out.println("nieprawidło wprowadzona liczba graczy/zetonow/wpisowergo");
 		}
 		Scanner scanIn = new Scanner(System.in);
-		/*
-		 * System.out.println(
+		/* System.out.println(
 		 * "System: Jeżeli chcesz zacząć grę, wpisz START i naciśnij ENTER,\n" +
 		 * "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry"); String
 		 * inString; Scanner scanIn = new Scanner(System.in); inString =
@@ -37,13 +36,16 @@ public class GameTest {
 		 * System.out.println("System: Wychodzę z gry"); scanIn.close(); } else
 		 * {
 		 * 
-		 * inString = scanIn.nextLine();
-		 */
+		 * inString = scanIn.nextLine(); */
 			Table myTable = null;
 			try {
+			// TODO tu jest problem, kontruktor tworzy graczy, którzy "daje" zetowny startowe "ownChips" ze stolu, ale
+			// stul nie ma jeszzce ustawionych tych zetonow i wynik jest taki ze wszystczy zaczynaja z 0 ownChips,
+			// nalezaloby ustawiac "poczatkoweZetony" przez konstruktor stolu
 				myTable = new Table(numHum, numBot);
 
 				myTable.setStartWpisowe(wpisowe);
+
 				myTable.setInitialChipsForPlayers(poczatkoweZetony);
 				// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
 				// wpisowe

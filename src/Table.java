@@ -1,16 +1,11 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Random;
 
 import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class Table {
 
 	private List<Player> players = new ArrayList<>();
-	private List<List<Card>> playersCards = new ArrayList<>();
-	private Random randomPlayer = new Random();
-	private List<List<Card>> endOfGame;
-	private List<Boolean> alreadyChangedCards = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
 	private List<Integer> winners = new ArrayList<>();
 	private List<Integer> stawkaGraczyWRundzie = new ArrayList<>();
@@ -18,9 +13,7 @@ public class Table {
 	private int startWpisowe, startZetony;
 	private int pool = 0; // pula gry
 
-	private int numHumans, numBots;
-
-	private int currentMax = startWpisowe; // ile maksymalnie ostatnio
+	private int currentMax; // ile maksymalnie ostatnio
 											// obstawiono
 
 	private StatusEnum roundStatus = StatusEnum.CLEAN;// początkowy status
@@ -55,19 +48,12 @@ public class Table {
 		// Dodawanie graczy przy starcie, trzeba dodać wyjątki
 		if (numHumans + numBots < 2 || numHumans + numBots > 4)
 			throw new IllegalStateException("Niepoprawna ilość graczy.");
-		for (int i = 0; i < numHumans + numBots; ++i) {
-
-			playersCards.add(actualDeck.giveCards(5));
-			alreadyChangedCards.add(false);
-		}
 		for (int i = 0; i < numHumans; ++i) {
-			players.add(new Human(playersCards.get(i), this, i));
+			players.add(new Human(actualDeck.giveCards(5), this, i));
 		}
 		for (int i = numHumans; i < numHumans + numBots; ++i) {
-			players.add(new Bot(playersCards.get(i), this, i));
+			players.add(new Bot(actualDeck.giveCards(5), this, i));
 		}
-		this.numHumans = numHumans;
-		this.numBots = numBots;
 
 		// trzeba ustawaic cos co bedzie mowilo ile graczy faktycznie chce
 		// zagrac i zaplaciic
@@ -87,16 +73,14 @@ public class Table {
 	//
 	// }
 
-	/*
-	 * void startGame() {
+	/* void startGame() {
 	 * 
 	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
 	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
 	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
 	 * PRZEZ SERVER ADAPTER }
 	 * 
-	 * }
-	 */
+	 * } */
 	void check() {
 		rozpocznijRunde();
 	}
