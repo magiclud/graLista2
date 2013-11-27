@@ -266,10 +266,6 @@ public class Table {
 	 */
 	public boolean isBiddingOver() {
 
-		int iloscAll_inWGrze = 0, iloscRaiseWGrze = 0;
-
-		ustawInformacjeOStawkachGraczyWRundzie();
-
 		if (playersInGame.size() == 0) {
 			System.out.println("Wszyscy gracze spasowali. \n Koniec rundy.");
 			getStatusPlayersInGame().clear();
