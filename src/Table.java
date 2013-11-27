@@ -134,11 +134,13 @@ public class Table {
 	}
 
 	public void sprawdzCzyGraczeMajaWystarczajacaIloscZetonow() {
-		for (Player player : getPlayersInGame()) {
-			if (player.getOwnChips() < getStartWpisowe()) {
+		Iterator<Player> iterator = playersInGame.iterator();
+		while (iterator.hasNext()) {
+			Player player = iterator.next();
+			if (player.getOwnChips() < startWpisowe) {
 				// usuwam gracza z listy grajacych gdy ma mniej zetonow niz
 				// wynosi wpisowe
-				getPlayersInGame().remove(player);
+				iterator.remove();
 			}
 		}
 	}
