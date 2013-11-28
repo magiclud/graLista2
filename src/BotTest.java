@@ -12,7 +12,7 @@ public class BotTest {
 	@Test
 	public void testZwracamOdpowiedniaIloscKartPrzyLosowaniu() throws ExceptionsInGame {
 		Deck exampleDeck = new Deck();
-		Table exampleTable = new Table(2, 2); // <<<< tylko z powodów
+		Table exampleTable = new Table(2, 2, 2000); // <<<< tylko z powodów
 												// formalnych
 		Bot exampleBot = new Bot(exampleDeck.giveCards(5), exampleTable, 2);
 		assertEquals(exampleBot.randomDifferentNumbers(4).size(), 4);
@@ -21,7 +21,7 @@ public class BotTest {
 	@Test
 	public void testRozneLiczbyPrzyLosowaniu() throws ExceptionsInGame {
 		Deck exampleDeck0 = new Deck();
-		Table exampleTable0 = new Table(2, 2); // <<<< tylko z powodów
+		Table exampleTable0 = new Table(2, 2, 2000); // <<<< tylko z powodów
 												// formalnych
 		Bot exampleBot0 = new Bot(exampleDeck0.giveCards(5), exampleTable0, 2);
 		List<Integer> exampleNumbers0 = exampleBot0.randomDifferentNumbers(4);
@@ -36,7 +36,7 @@ public class BotTest {
 	@Test(expected = Exception.class)
 	public void testJuzWymienialKartyINieMozeWiecej() throws ExceptionsInGame {
 		Deck exampleDeck = new Deck();
-		Table exampleTable = new Table(2, 2); // <<<< tylko z powodów
+		Table exampleTable = new Table(2, 2, 2000); // <<<< tylko z powodów
 												// formalnych
 		Bot exampleBot = new Bot(exampleDeck.giveCards(5), exampleTable, 2);
 		exampleBot.wybierzLosowo();
@@ -62,7 +62,7 @@ public class BotTest {
 	@Test
 	public void testMyStrategy() throws ExceptionsInGame {
 		Deck exampleDeck1 = new Deck();
-		Table exampleTable1 = new Table(2, 2);
+		Table exampleTable1 = new Table(2, 2, 2000);
 		List<Card> cards12 = new ArrayList<Card>();
 		cards12.add(new Card(CourtEnum.TWO, SuitEnum.DIAMOND));
 		cards12.add(new Card(CourtEnum.THREE, SuitEnum.DIAMOND));
@@ -78,7 +78,7 @@ public class BotTest {
 	@Test
 	public void testWymieńKarty() throws ExceptionsInGame {
 		System.out.println("___");
-		Table exampleTable11 = new Table(2, 2);
+		Table exampleTable11 = new Table(2, 2, 2000);
 		Player exampleBot11 = exampleTable11.getPlayers().get(3);
 		exampleBot11.getOwnCards();
 		List<Integer> abandonedIndexes = new ArrayList<Integer>();

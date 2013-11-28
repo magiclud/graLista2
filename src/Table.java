@@ -1,7 +1,6 @@
 import java.util.ArrayList;
+import java.util.Iterator;
 import java.util.List;
-
-import javax.swing.text.html.HTMLDocument.Iterator;
 
 public class Table {
 
@@ -13,7 +12,7 @@ public class Table {
 	private int pool = 0; // pula gry
 
 	private int currentMax; // ile maksymalnie ostatnio
-											// obstawiono
+							// obstawiono
 
 	private StatusEnum roundStatus = StatusEnum.CLEAN;// początkowy status
 	// rundy
@@ -40,8 +39,9 @@ public class Table {
 	public Table() {
 	};
 
-	public Table(int numHumans, int numBots) throws ExceptionsInGame {
+	public Table(int numHumans, int numBots, int poczatkoweZetony) throws ExceptionsInGame {
 
+		this.startZetony = poczatkoweZetony;
 		this.actualDeck = new Deck(); // Tutaj już mają być karty rozdane,
 										// znaczy się :-)
 		// Dodawanie graczy przy starcie, trzeba dodać wyjątki
@@ -72,14 +72,16 @@ public class Table {
 	//
 	// }
 
-	/* void startGame() {
+	/*
+	 * void startGame() {
 	 * 
 	 * StatusEnum status = StatusEnum.CLEAN; // int currentMax = minimum; //
 	 * ustaw każdemu graczowi pole newToBet na minimum ! ! ! void startRound() {
 	 * void makeRequest(PlayerID) //TO BĘDZIE NASŁUCHIWANE ACTION LISTENEREM
 	 * PRZEZ SERVER ADAPTER }
 	 * 
-	 * } */
+	 * }
+	 */
 	void check() {
 		rozpocznijRunde();
 	}
@@ -210,9 +212,9 @@ public class Table {
 		return startZetony;
 	}
 
-	public void setInitialChipsForPlayers(int startZetony) {
-		this.startZetony = startZetony;
-	}
+	// public void setInitialChipsForPlayers(int startZetony) {
+	// this.startZetony = startZetony;
+	// }
 
 	public List<Player> getPlayers() {
 		return players;
@@ -258,7 +260,6 @@ public class Table {
 		this.startWpisowe = startWpisowe;
 	}
 
-
 	/**
 	 * sprawdza czy licytacja sie zakonczyla
 	 * 
@@ -290,15 +291,15 @@ public class Table {
 	}
 
 	/**
-	 * ignorujemy grazcy ktorzy maja allIn, bo oni moga miec miejsza kwota niz wszyscy, ale jesli inni maja
-	 * taka sama to licytacja jest skonczona
+	 * ignorujemy grazcy ktorzy maja allIn, bo oni moga miec miejsza kwota niz
+	 * wszyscy, ale jesli inni maja taka sama to licytacja jest skonczona
 	 * 
 	 * @return
 	 */
 	private boolean sprawdzCzyGraczeMajaJednakoweStawkiWRundzie() {
 
 		int stawkaJakiegosGracza = playersInGame.get(0).getObecniePostawioneZetony();
-
+		System.out.println("stawkaJakiegosGracza " + stawkaJakiegosGracza);
 		for (Player player : playersInGame) {
 			if (player.getPlayerStatus() != StatusEnum.ALL_IN) {
 

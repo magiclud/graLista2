@@ -28,7 +28,8 @@ public class GameTest {
 			System.out.println("nieprawidło wprowadzona liczba graczy/zetonow/wpisowergo");
 		}
 		Scanner scanIn = new Scanner(System.in);
-		/* System.out.println(
+		/*
+		 * System.out.println(
 		 * "System: Jeżeli chcesz zacząć grę, wpisz START i naciśnij ENTER,\n" +
 		 * "w przeciwnym razie naciśnij ENTER i wyjdziesz z gry"); String
 		 * inString; Scanner scanIn = new Scanner(System.in); inString =
@@ -36,45 +37,49 @@ public class GameTest {
 		 * System.out.println("System: Wychodzę z gry"); scanIn.close(); } else
 		 * {
 		 * 
-		 * inString = scanIn.nextLine(); */
-			Table myTable = null;
-			try {
-			// TODO tu jest problem, kontruktor tworzy graczy, którzy "daje" zetowny startowe "ownChips" ze stolu, ale
-			// stul nie ma jeszzce ustawionych tych zetonow i wynik jest taki ze wszystczy zaczynaja z 0 ownChips,
-			// nalezaloby ustawiac "poczatkoweZetony" przez konstruktor stolu
-				myTable = new Table(numHum, numBot);
+		 * inString = scanIn.nextLine();
+		 */
+		Table myTable = null;
+		try {
 
-				myTable.setStartWpisowe(wpisowe);
+			myTable = new Table(numHum, numBot, poczatkoweZetony);
 
-				myTable.setInitialChipsForPlayers(poczatkoweZetony);
-				// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
-				// wpisowe
-				askEverybodyToJoinTheGame(scanIn, myTable);
+			myTable.setStartWpisowe(wpisowe);
 
-				firstBiddingLoop(scanIn, myTable);
+			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
+			// wpisowe
+			askEverybodyToJoinTheGame(scanIn, myTable);
 
-				askToChangeCards(scanIn, myTable);
+			firstBiddingLoop(scanIn, myTable);
 
-				secondBiddingLoop(scanIn, myTable);
+			askToChangeCards(scanIn, myTable);
 
-				showWhoWin(myTable);
+			secondBiddingLoop(scanIn, myTable);
 
-				dotychczasowyRanking(myTable);
-			} catch (ExceptionsInGame e) {
-				System.out.println(e.getMessage());
-			}
+			showWhoWin(myTable);
+
+			dotychczasowyRanking(myTable);
+		} catch (ExceptionsInGame e) {
+			System.out.println(e.getMessage());
+		}
 		// }
 		System.out.println("Doszedłem do końca");
 		scanIn.close();
 	}
 
-	private static void secondBiddingLoop(Scanner scanIn, Table myTable) throws ExceptionsInGame {
+	private static void secondBiddingLoop(Scanner scanIn, Table myTable) {
 
 		// sprawdzam czy w pierwszej rundzie wystapilo juz all-in
 		if (myTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
 			return;
 		}
-		firstBiddingLoop(scanIn, myTable);
+		try {
+			firstBidding(scanIn, myTable);
+		} catch (ExceptionsInGame e) {
+			System.out.println(e.getMessage());
+			System.out.println("Ponownie okresl ruch.");
+			secondBiddingLoop(scanIn, myTable);
+		}
 
 	}
 
@@ -101,7 +106,7 @@ public class GameTest {
 		}
 	}
 
-	private static void firstBiddingLoop(Scanner scanIn, Table myTable) throws ExceptionsInGame {
+	private static void firstBiddingLoop(Scanner scanIn, Table myTable) {
 
 		myTable.sprawdzCzyGraczeMajaWystarczajacaIloscZetonow();// jesli nie
 																// odpada z gry
@@ -109,11 +114,13 @@ public class GameTest {
 		// dopoki licytacja sie NIE skonczyla
 		while (!myTable.isBiddingOver()) {
 			// pierwssza licytacja
-			firstBidding(scanIn, myTable);
-			// TODO to tutaj powinna byc obsluga wyjattkow rzucanych przez bet, raise, jesli wystapil wyjatek, np ktos
-			// chce obstawic wiecej niz moze, to system powinien zapytac ponownie co user chce zrobic informujac go ze
-			// zrobil cos niedozwolonego
-
+			try {
+				firstBidding(scanIn, myTable);
+			} catch (ExceptionsInGame e) {
+				System.out.println(e.getMessage());
+				System.out.println("Ponownie okresl ruch.");
+				firstBiddingLoop(scanIn, myTable);
+			}
 		}
 	}
 
@@ -145,35 +152,33 @@ public class GameTest {
 		case CHECK:
 			player.check();
 			break;
-		case BET:// TODO jaka wysokosc tego bet ? moze taka jak wpisowe w koncu
-					// to tylko pierwsze zagranie
+		case BET:
 			if (!player.isHuman()) {
 				Bot bot = (Bot) player;
 				System.out.println("System: Okresl wysokosc stawki");
 				System.out.println("Player(BOT): BET ustawiam na " + bot.chipsToRaise());
-					// TODO CO ru robi raise?
-				player.raise(bot.chipsToRaise());
-					// TODO usun tego breaka i zrob elsa do ifa jak czlowiek - popraw w innych casach
+				player.bet(bot.chipsToRaise());
+			} else if (player.isHuman()) {
+				System.out.println("System: Okresl wysokosc stawki ");
+				System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
+				howMuch = Integer.parseInt(getAnswerForMoney(scanIn));
+				player.bet(howMuch);
 				break;
 			}
-			System.out.println("System: Okresl wysokosc stawki ");
-			System.out.println("Player: BET ustawiam na " + getAnswerForMoney(scanIn));
-			howMuch = Integer.parseInt(getAnswerForMoney(scanIn));
-			player.bet(howMuch);
-			break;
+
 		case RAISE:
 			if (!player.isHuman()) {
 				Bot bot = (Bot) player;
 				System.out.println("System: Okresl wysokosc stawki");
 				System.out.println("Player(BOT): RAISE ustawiam na " + bot.chipsToRaise());
 				player.raise(bot.chipsToRaise());
+			} else if (player.isHuman()) {
+				System.out.println("System: Okresl wysokosc stawki");
+				System.out.println("Player: RAISE ustawiam na " + getAnswerForMoney(scanIn));
+				howMuch = Integer.parseInt(getAnswerForMoney(scanIn));
+				player.raise(howMuch);
 				break;
 			}
-			System.out.println("System: Okresl wysokosc stawki");
-			System.out.println("Player: RAISE ustawiam na " + getAnswerForMoney(scanIn));
-			howMuch = Integer.parseInt(getAnswerForMoney(scanIn));
-			player.raise(howMuch);
-			break;
 		case ALL_IN:
 			player.allin();
 			break;
@@ -210,9 +215,10 @@ public class GameTest {
 				if (answer.equals("T")) {
 					player.joinGame();
 				}
-			} else {
+			} else {// TODO tutaj w ogole nie wchodzi
 				Bot bot = (Bot) player;
 				if (bot.randomIfJoinTogame()) {
+					System.out.println("Bot " + bot.getPlayerID() + " dolacza do gry.");
 					bot.joinGame();
 				}
 			}

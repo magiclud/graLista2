@@ -11,7 +11,7 @@ public abstract class Player {
 	// private Boolean alreadyChangedCards = false;
 
 	private int playerID;
-	int obecniePostawioneZetony;
+	int obecniePostawioneZetony = 0;
 
 	public int getObecniePostawioneZetony() {
 		return obecniePostawioneZetony;
@@ -140,8 +140,8 @@ public abstract class Player {
 
 	public void bet(int chipsForBidding) {
 		// if (chipsForBidding < currentTable.getCurrentMax()) {
-		// usunela if bo bet ma byc tylko przy pierwszej licytacji
-		// TODO blad - druga licytacja jest pomijana tylko jesli w pierwszej bylo ALL-IN, popraw jesli sie myle
+		// if jest usuniety bo pzeciez bet zaczyna licytacje wiec w CurrentMax
+		// powinno byc 0
 		payChipsToPool(chipsForBidding);
 		currentTable.setCurrentMax(chipsForBidding);
 		System.out.println("Player: BET -stawiam pierwsza stawke w danej rundzie");

@@ -12,7 +12,7 @@ public class TableTest {
 	// Gdy niepoprawna ilość graczy
 	@Test(expected = Exception.class)
 	public void testTooManyPlayers() throws ExceptionsInGame {
-		test = new Table(3, 4);
+		test = new Table(3, 4, 2000);
 	}
 
 }
