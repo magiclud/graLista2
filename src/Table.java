@@ -204,7 +204,7 @@ public class Table {
 	 * @param player
 	 */
 	public void addPlayerToGame(Player player) {
-		player.payChipsToPool(startWpisowe);
+		player.zaplacWpisowe(startWpisowe);
 		playersInGame.add(player);
 	}
 
@@ -303,6 +303,10 @@ public class Table {
 		for (Player player : playersInGame) {
 			if (player.getPlayerStatus() != StatusEnum.ALL_IN) {
 
+				if (stawkaJakiegosGracza == 0 && player.getObecniePostawioneZetony() == 0) {
+					// oznacza to ze jeszcze gracze nie zaczeli licytowac
+					return false;
+				}
 				if (stawkaJakiegosGracza != player.getObecniePostawioneZetony()) {
 					return false;
 				}

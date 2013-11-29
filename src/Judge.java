@@ -3,6 +3,19 @@ import java.util.List;
 
 public class Judge {
 
+	public static List<Player> selectWinners1(List<Player> listOfPlayers) {
+
+		List<Integer> selectWinners = selectWinners(listOfPlayers);
+		List<Player> winners = new ArrayList<>();
+		int i = 0;
+		for (Player player : listOfPlayers) {
+			if (selectWinners.contains(i)) {
+				winners.add(player);
+			}
+		}
+		return winners;
+	}
+
 	public static List<Integer> selectWinners(List<Player> listOfPlayers) {
 
 		int possibleWinnerIndex = possibleWinnerIndex(listOfPlayers);

@@ -55,6 +55,7 @@ public class MultiThreadChatServer {
 						break;
 					}
 				}
+				// new table
 				// jesli jednak nie znalazlem wolnego miejsca to wyczerpany zostal limit liczby jednoczesnie
 				// obslugiwanych klientow
 				if (i == maxClientsCount) {
@@ -82,12 +83,17 @@ class ClientThread extends Thread {
 	private Socket clientSocket = null;
 	private final ClientThread[] threads;
 	private int maxClientsCount;
+	private int playerID;
 
 
-	public ClientThread(Socket clientSocket, ClientThread[] threads) {
+	public ClientThread(Socket clientSocket, ClientThread[] threads/*
+																	 * , int
+																	 * playerID
+																	 */) {
 		this.clientSocket = clientSocket;
 		this.threads = threads;
 		maxClientsCount = threads.length;
+		// this.playerID;
 	}
 
 	@Override

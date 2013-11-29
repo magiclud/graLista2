@@ -14,6 +14,7 @@ public abstract class Player {
 	int obecniePostawioneZetony = 0;
 
 	public int getObecniePostawioneZetony() {
+		System.out.println("obeniePostawioneZetony w get w Player " + obecniePostawioneZetony);
 		return obecniePostawioneZetony;
 	}
 
@@ -182,6 +183,11 @@ public abstract class Player {
 		payChipsToPool(currentTable.getCurrentMax());
 		playerStatus = StatusEnum.CALL;
 		System.out.println("Player: CALL -wyrównuje");
+	}
+
+	public void zaplacWpisowe(int wpisoweToPool) {
+		ownChips = ownChips - wpisoweToPool;
+		currentTable.addToPool(wpisoweToPool);
 	}
 
 	public void payChipsToPool(int chipsToPool) {

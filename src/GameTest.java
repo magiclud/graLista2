@@ -48,6 +48,7 @@ public class GameTest {
 
 			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
 			// wpisowe
+
 			askEverybodyToJoinTheGame(scanIn, myTable);
 
 			firstBiddingLoop(scanIn, myTable);
@@ -211,11 +212,12 @@ public class GameTest {
 	private static void askEverybodyToJoinTheGame(Scanner scanIn, Table myTable) {
 		for (Player player : myTable.getPlayers()) {
 			if (player.isHuman()) {
+
 				String answer = getAnswerFor(player, scanIn);
 				if (answer.equals("T")) {
 					player.joinGame();
 				}
-			} else {// TODO tutaj w ogole nie wchodzi
+			} else {
 				Bot bot = (Bot) player;
 				if (bot.randomIfJoinTogame()) {
 					System.out.println("Bot " + bot.getPlayerID() + " dolacza do gry.");
