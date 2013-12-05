@@ -1,4 +1,5 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
@@ -204,14 +205,21 @@ public class Bot extends Player {
 
 	public StatusEnum makeMove() {
 		Random botsMove = new Random();
-
-		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.BET)
-				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.RAISE)
-				|| currentTable.getStatusPlayersInGame().contains(StatusEnum.CALL)) {
+		// TODO
+		if (currentTable.getPlayers().contains(StatusEnum.BET)// Czzy tak moge ?
+																// czy to
+																// zadziala?
+				// chce dobra sie do informacji jakie ruchy juz mieli gracze -
+				// te informajce powinny byc w PublicInformation
+				// playerInformation
+				// stól ma metode updatePlayerInformation() ktora jakby ustwia
+				// informacje playerom
+				|| currentTable.getPlayers().contains(StatusEnum.RAISE) || currentTable.getPlayers().contains(StatusEnum.CALL)) {
 			// moze wylosowac call(3), raise(5), all-i(4)
 			return StatusEnum.values()[botsMove.nextInt(3) + 3];
 		}
-		if (currentTable.getStatusPlayersInGame().size() < 1) {
+		if (currentTable.getStatusPlayersInGame().size() < 1) {// czym to teraz
+																// zamienic ????
 			return StatusEnum.values()[botsMove.nextInt(2) + 1];
 		}
 		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {

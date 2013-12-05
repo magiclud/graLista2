@@ -5,4 +5,16 @@ public class PublicInformation {
 	public int chipsBidded;
 	public int allChips;
 	public String playerStatus;
+
+	public String getPlayerStatus() {
+		return playerStatus;
+	}
+
+	/**
+	 * @param playerStatus
+	 *            the playerStatus to set
+	 */
+	public void setPlayerStatus(String playerStatus) {
+		this.playerStatus = playerStatus;
+	}
 }

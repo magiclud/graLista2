@@ -1,13 +1,14 @@
 package model;
+
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
-import controller.PlayerWindow;
 import controller.PublicInformation;
 
 public class Table {
-	// Ta lista odpowiada List<PlayerWindow> playerWindowsList z klasy Rozgrywka, jest tak samo indeksowana
+	// Ta lista odpowiada List<PlayerWindow> playerWindowsList z klasy
+	// Rozgrywka, jest tak samo indeksowana
 	private List<Player> players = new ArrayList<>();
 	private List<Player> playersInGame = new ArrayList<>();
 	private List<Integer> winners = new ArrayList<>();
@@ -31,10 +32,11 @@ public class Table {
 		}
 		return null;
 	}
-	
+
 	public void updatePlayerInformation(int playerIndex, PublicInformation playerInformation) {
 		players.get(playerIndex).updatePublicInformation(playerInformation);
 	}
+
 	public PublicInformation getPlayerInformation(int playerIndex, PublicInformation playerInformation) {
 		return players.get(playerIndex).getPublicInformation(playerInformation);
 	}
@@ -51,7 +53,7 @@ public class Table {
 	};
 
 	public Table(int numHumans, int numBots, int poczatkoweZetony, int startWpisowe) {
-		
+
 		this.startWpisowe = startWpisowe;
 		this.startZetony = poczatkoweZetony;
 		this.actualDeck = new Deck(); // Tutaj już mają być karty rozdane,
@@ -75,20 +77,20 @@ public class Table {
 
 			}
 		}
-	
 
 		// trzeba ustawaic cos co bedzie mowilo ile graczy faktycznie chce
 		// zagrac i zaplaciic
 		//
 	}
-		void addPlayer(int oldPlayerID) {
-		
-			try {
-				players.add(new Human(actualDeck.giveCards(5), this, oldPlayerID));
-			} catch (ExceptionsInGame e) {
-				e.getMessage();
-			}
+
+	void addPlayer(int oldPlayerID) {
+
+		try {
+			players.add(new Human(actualDeck.giveCards(5), this, oldPlayerID));
+		} catch (ExceptionsInGame e) {
+			e.getMessage();
 		}
+	}
 
 	void check() {
 		rozpocznijRunde();

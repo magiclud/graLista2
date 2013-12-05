@@ -1,5 +1,5 @@
 package model;
-import java.awt.event.ActionListener;
+
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Scanner;
@@ -14,53 +14,45 @@ public class GameTest {
 	static String poprawnyNapis = "human|bot";
 
 	public static void main(String[] args) {
-/****
-		try {// w konsoli np. STaRT
-			numHum = Integer.parseInt(args[0]);
-			args[1].matches(poprawnyNapis);
-			numBot = Integer.parseInt(args[2]);
-			args[3].matches(poprawnyNapis);
-			poczatkoweZetony = Integer.parseInt(args[4]);
-			wpisowe = Integer.parseInt(args[5]);
-			if (args[1].equals("bot")) {
-				int temp = numHum;
-				numHum = numBot;
-				numBot = temp;
-			}
-
-		} catch (NumberFormatException ex) {
-			System.out.println("nieprawidło wprowadzona liczba graczy/zetonow/wpisowergo");
-	*/	
+		/****
+		 * try {// w konsoli np. STaRT numHum = Integer.parseInt(args[0]);
+		 * args[1].matches(poprawnyNapis); numBot = Integer.parseInt(args[2]);
+		 * args[3].matches(poprawnyNapis); poczatkoweZetony =
+		 * Integer.parseInt(args[4]); wpisowe = Integer.parseInt(args[5]); if
+		 * (args[1].equals("bot")) { int temp = numHum; numHum = numBot; numBot
+		 * = temp; }
+		 * 
+		 * } catch (NumberFormatException ex) { System.out.println(
+		 * "nieprawidło wprowadzona liczba graczy/zetonow/wpisowergo");
+		 */
 		MultiThreadChatServer server;
 
-		
 		server = new MultiThreadChatServer();
 		server.wlaczSie();
 		Scanner scanIn = new Scanner(System.in);
-	//	MultiThreadChatServer server = new MultiThreadChatServer();
-	//	server.wlaczSie();
-	
-		
+		// MultiThreadChatServer server = new MultiThreadChatServer();
+		// server.wlaczSie();
+
 		Table myTable = null;
-	//		myTable = new Table(numHum, numBot, poczatkoweZetony);
+		// myTable = new Table(numHum, numBot, poczatkoweZetony);
 
-			myTable.setStartWpisowe(wpisowe);
+		myTable.setStartWpisowe(wpisowe);
 
-			// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
-			// wpisowe
+		// pytam wszystkihc playerow czy graja, jesli tak, to pobieram
+		// wpisowe
 
-			askEverybodyToJoinTheGame(scanIn, myTable);
+		askEverybodyToJoinTheGame(scanIn, myTable);
 
-			firstBiddingLoop(scanIn, myTable);
+		firstBiddingLoop(scanIn, myTable);
 
-			askToChangeCards(scanIn, myTable);
+		askToChangeCards(scanIn, myTable);
 
-			secondBiddingLoop(scanIn, myTable);
+		secondBiddingLoop(scanIn, myTable);
 
-			showWhoWin(myTable);
+		showWhoWin(myTable);
 
-			dotychczasowyRanking(myTable);
-		
+		dotychczasowyRanking(myTable);
+
 		// }
 		System.out.println("Doszedłem do końca");
 		scanIn.close();

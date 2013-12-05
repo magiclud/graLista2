@@ -1,4 +1,5 @@
 package model;
+
 import java.util.Iterator;
 import java.util.List;
 
@@ -41,30 +42,46 @@ public abstract class Player {
 	public void updatePublicInformation(PublicInformation in) {
 		ownChips = in.allChips;
 		obecniePostawioneZetony = in.chipsBidded;
-		switch(in.playerStatus) {
-		case "CLEAN": this.playerStatus = StatusEnum.CLEAN;
-		case "BET": this.playerStatus = StatusEnum.BET;
-		case "FOLD": this.playerStatus = StatusEnum.FOLD;
-		case "ALL_IN": this.playerStatus = StatusEnum.ALL_IN;
-		case "CHECK": this.playerStatus = StatusEnum.CHECK;
-		case "CALL": this.playerStatus = StatusEnum.CALL;
-		case "RAISE": this.playerStatus = StatusEnum.RAISE;
+		switch (in.getPlayerStatus()) {
+		case "CLEAN":
+			this.playerStatus = StatusEnum.CLEAN;
+		case "BET":
+			this.playerStatus = StatusEnum.BET;
+		case "FOLD":
+			this.playerStatus = StatusEnum.FOLD;
+		case "ALL_IN":
+			this.playerStatus = StatusEnum.ALL_IN;
+		case "CHECK":
+			this.playerStatus = StatusEnum.CHECK;
+		case "CALL":
+			this.playerStatus = StatusEnum.CALL;
+		case "RAISE":
+			this.playerStatus = StatusEnum.RAISE;
 		}
 	}
+
 	public PublicInformation getPublicInformation(PublicInformation in) {
 		in.allChips = ownChips;
 		in.chipsBidded = obecniePostawioneZetony;
-		switch(this.playerStatus) {
-		case CLEAN: in.playerStatus = "CLEAN" ;
-		case BET: in.playerStatus = "BET";
-		case FOLD: in.playerStatus = "FOLD";
-		case ALL_IN: in.playerStatus = "ALL_IN";
-		case CHECK: in.playerStatus = "CHECK";
-		case CALL: in.playerStatus = "CALL";
-		case RAISE: in.playerStatus = "RAISE";
+		switch (this.playerStatus) {
+		case CLEAN:
+			in.setPlayerStatus("CLEAN");
+		case BET:
+			in.setPlayerStatus("BET");
+		case FOLD:
+			in.setPlayerStatus("FOLD");
+		case ALL_IN:
+			in.setPlayerStatus("ALL_IN");
+		case CHECK:
+			in.setPlayerStatus("CHECK");
+		case CALL:
+			in.setPlayerStatus("CALL");
+		case RAISE:
+			in.setPlayerStatus("RAISE");
 		}
 		return in;
 	}
+
 	public boolean isNewAlreadyChangedCards() {
 		return newAlreadyChangedCards;
 	}

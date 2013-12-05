@@ -2,7 +2,7 @@ package model;
 
 public class ExceptionsInGame extends Exception {
 
-	ExceptionsInGame(String str) {
+	public ExceptionsInGame(String str) {
 		super(str);
 	}
 
