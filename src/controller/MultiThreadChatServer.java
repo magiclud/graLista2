@@ -4,7 +4,6 @@
 
 package controller;
 
-
 import java.io.DataInputStream;
 import java.io.IOException;
 import java.io.PrintStream;
@@ -26,23 +25,32 @@ public class MultiThreadChatServer {
 	// tablica z watkami wszystkich klientow
 	private static final ClientThread[] threads = new ClientThread[maxClientsCount];
 
+	public static ServerTranslator translator;
+	
 
-	public static void main(String args[]) {
+	public MultiThreadChatServer() {
+		
+		}
+
+	public void wlaczSie() {
 
 		// The default port number.
-		int portNumber = 2222;
-
-		/* Open a server socket on the portNumber (default 2222). Note that we can
-		 * not choose a port less than 1023 if we are not privileged users (root). */
+		int portNumber = 3333;
+		/*
+		 * Open a server socket on the portNumber (default 2222). Note that we
+		 * can not choose a port less than 1023 if we are not privileged users
+		 * (root).
+		 */
 		try {
 			serverSocket = new ServerSocket(portNumber);
-		}
-		catch (IOException e) {
+		} catch (IOException e) {
 			System.out.println(e);
 		}
 
-		/* Create a client socket for each connection and pass it to a new client
-		 * thread. */
+		/*
+		 * Create a client socket for each connection and pass it to a new
+		 * client thread.
+		 */
 		while (true) {
 			try {
 				// akceptuje wstepnie wszystkich klientow
@@ -50,31 +58,35 @@ public class MultiThreadChatServer {
 				int i = 0;
 				for (i = 0; i < maxClientsCount; i++) {
 					if (threads[i] == null) {
-						// wyszukuje pierwszego wolnego miejsca w tablicy i tworze watek klienta
-						(threads[i] = new ClientThread(clientSocket, threads)).start();
+						// wyszukuje pierwszego wolnego miejsca w tablicy i
+						// tworze watek klienta
+						(threads[i] = new ClientThread(clientSocket, threads,
+								this)).start();
 						break;
 					}
 				}
 				// new table
-				// jesli jednak nie znalazlem wolnego miejsca to wyczerpany zostal limit liczby jednoczesnie
+				// jesli jednak nie znalazlem wolnego miejsca to wyczerpany
+				// zostal limit liczby jednoczesnie
 				// obslugiwanych klientow
 				if (i == maxClientsCount) {
-					PrintStream os = new PrintStream(clientSocket.getOutputStream());
+					PrintStream os = new PrintStream(
+							clientSocket.getOutputStream());
 					os.println("Server too busy. Try later.");
 					os.close();
 					clientSocket.close();
 				}
-			}
-			catch (IOException e) {
+			} catch (IOException e) {
 				System.out.println(e);
 			}
 		}
 	}
+
 }
 
 /**
  * Klasa reprezentujaca watek klienta
- *
+ * 
  */
 class ClientThread extends Thread {
 
@@ -83,16 +95,15 @@ class ClientThread extends Thread {
 	private Socket clientSocket = null;
 	private final ClientThread[] threads;
 	private int maxClientsCount;
-	private int playerID;
+	private String playerID;
+	MultiThreadChatServer server;
 
-
-	public ClientThread(Socket clientSocket, ClientThread[] threads/*
-																	 * , int
-																	 * playerID
-																	 */) {
+	public ClientThread(Socket clientSocket, ClientThread[] threads,
+			MultiThreadChatServer server) {
 		this.clientSocket = clientSocket;
 		this.threads = threads;
 		maxClientsCount = threads.length;
+		this.server = server;
 		// this.playerID;
 	}
 
@@ -104,8 +115,9 @@ class ClientThread extends Thread {
 			is = new DataInputStream(clientSocket.getInputStream());
 			os = new PrintStream(clientSocket.getOutputStream());
 			os.println("Enter your name.");
-			// zczytuje odpowiedz od klienta
+			// sczytuje odpowiedz od klienta
 			String name = is.readLine().trim();
+			this.playerID = name;
 			os.println("Hello " + name
 					+ " to our chat room.\nTo leave enter /quit in a new line");
 			// rozsylam odpowiedz do wszystkich innych klientow
@@ -117,25 +129,46 @@ class ClientThread extends Thread {
 				if (line.startsWith("/quit")) {
 					break;
 				}
+				if (line.startsWith(playerID)) {
+					
+					String[] splitted = line.split(":");
+					ServerTranslator.startMethod(playerID, splitted[1]);
+				}
+
+				if (CommunicationBox.orderForServer != null &&
+						CommunicationBox.whichPlayerServer == playerID) {
+					String polecenie = CommunicationBox.orderForServer;
+					os.println(polecenie);
+					
+					CommunicationBox.orderForServer = null;
+					CommunicationBox.whichPlayerServer=null;
+					
+				}
 				// cokolwiek odczytam od klienta to rozsylam do innych
-				powiadomWszystkichKlietow("<" + name + "> " + line);
+				// powiadomWszystkichKlietow("<" + name + "> " + line);
 			}
-			// jesli wyszedlem z petli to znaczy ze skonczylem, wysylam ta inforamcje rowniez do wszystkich klientow
+			// jesli wyszedlem z petli to znaczy ze skonczylem, wysylam ta
+			// inforamcje rowniez do wszystkich klientow
 			powiadomWszystkichKlietow("*** The user " + name
 					+ " is leaving the chat room !!! ***");
 
 			os.println("*** Bye " + name + " ***");
 
-			/* Clean up. Set the current thread variable to null so that a new client
-			 * could be accepted by the server. */
+			/*
+			 * Clean up. Set the current thread variable to null so that a new
+			 * client could be accepted by the server.
+			 */
 			posprzatajPolaczenie();
 
-			/* Close the output stream, close the input stream, close the socket. */
+			/*
+			 * Close the output stream, close the input stream, close the
+			 * socket.
+			 */
 			is.close();
 			os.close();
 			clientSocket.close();
+		} catch (IOException e) {
 		}
-		catch (IOException e) {}
 	}
 
 	private void posprzatajPolaczenie() {

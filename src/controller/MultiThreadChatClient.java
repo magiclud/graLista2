@@ -20,18 +20,19 @@ public class MultiThreadChatClient implements Runnable {
 	// The output stream
 	private static PrintStream os = null;
 	// The input stream
-	private static DataInputStream is = null;
+	public static DataInputStream is = null;
 
 	private static BufferedReader inputLine = null;
 	private static boolean closed = false;
 
-
 	public static void main(String[] args) {
-
+		
+		
 		// The default port.
-		int portNumber = 2222;
+		int portNumber = 3333;
 		// The default host.
 		String host = "localhost";
+
 
 		if (args.length < 2) {
 			System.out
@@ -92,6 +93,11 @@ public class MultiThreadChatClient implements Runnable {
 				System.out.println(responseLine);
 				if (responseLine.indexOf("*** Bye") != -1)
 					break;
+				if(responseLine.startsWith("from")) {
+					System.out.println("dziala");
+				}
+				
+				
 			}
 			closed = true;
 		}
