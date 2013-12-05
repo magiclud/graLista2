@@ -38,7 +38,7 @@ public class PlayerWindow extends JFrame implements ActionListener {
 	public int numPlayers;
 	public String lastMove;
 
-	PlayerWindow(int numPlayers) {
+	public PlayerWindow(int numPlayers) {
 		super("Okno Playera");
 		setBounds(100, 100, 800, 600);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);

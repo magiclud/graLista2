@@ -10,7 +10,7 @@ public class Table {
 	// Ta lista odpowiada List<PlayerWindow> playerWindowsList z klasy
 	// Rozgrywka, jest tak samo indeksowana
 	private List<Player> players = new ArrayList<>();
-	private List<Player> playersInGame = new ArrayList<>();
+	private List<Player> playersInGame;
 	private List<Integer> winners = new ArrayList<>();
 
 	private int startWpisowe, startZetony;
@@ -96,20 +96,25 @@ public class Table {
 		rozpocznijRunde();
 	}
 
-	public void losujGraczaRozpoczynajacego() {
-		List<Player> tempListOfPlayers = new ArrayList();
-		// losuje gracza rozpoczynajacego runde
-		Player random = playersInGame.get(playersInGame.size());
-		tempListOfPlayers.add(random);
-		playersInGame.remove(random);
-		// nastepnie do listy grajacych dodaje pozostalych graczy
-		for (int i = 0; i < playersInGame.size(); i++) {
-			tempListOfPlayers.add(playersInGame.get(i));
-		}
-		playersInGame.clear();
-		playersInGame = tempListOfPlayers;
+	// public List<PlayerWindow> losujGraczaRozpoczynajacego(List<PlayerWindow>
+	// playerWindowsList) {
+	// playersInGame = new ArrayList();
+		// for(int i; i<playerWindowsList.size(); i++){
+		// playersInGame.add(playerWindowsList.get(i).);
+		// }
+		// // losuje gracza rozpoczynajacego runde
+		// Player random = playerWindowsList.get(playerWindowsList.size());
+		// playerWindowsList.add(random);
+		// playersInGame.remove(random);
+		// // nastepnie do listy grajacych dodaje pozostalych graczy
+		// for (int i = 0; i < playersInGame.size(); i++) {
+		// tempListOfPlayers.add(playersInGame.get(i));
+		// }
+		// this.playersInGame.clear();
+		// this.playersInGame = tempListOfPlayers;
+		// return playerWindowsList.g;
 
-	}
+	// }
 
 	public void ustawGraczaRozpoczynajacego() {
 		if (getPlayersInGame().size() == 4) {

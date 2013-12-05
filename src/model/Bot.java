@@ -218,14 +218,20 @@ public class Bot extends Player {
 			// moze wylosowac call(3), raise(5), all-i(4)
 			return StatusEnum.values()[botsMove.nextInt(3) + 3];
 		}
+		// jezeli jest to pierwsy gracz to moze tylko bet
 		if (currentTable.getStatusPlayersInGame().size() < 1) {// czym to teraz
 																// zamienic ????
 			return StatusEnum.values()[botsMove.nextInt(2) + 1];
 		}
-		if (currentTable.getStatusPlayersInGame().contains(StatusEnum.ALL_IN)) {
-			return StatusEnum.values()[botsMove.nextInt(2) + 2];
+		if (currentTable.getPlayers().contains(StatusEnum.ALL_IN)) {
+			return StatusEnum.values()[botsMove.nextInt(2) + 2];// bot moze
+																// tylko folt
+																// lub all-in
+																// //a czy moze
+																// wyrownac?
 		}
-		return StatusEnum.values()[botsMove.nextInt(5) + 2];
+		return StatusEnum.values()[botsMove.nextInt(5) + 2];// moze jakikoliwiek
+															// ruch bez bet
 	}
 }
 
